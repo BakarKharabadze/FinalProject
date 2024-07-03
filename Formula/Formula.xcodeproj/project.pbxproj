@@ -35,11 +35,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		FB9400D92C355B7500A1437A /* Common */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Common; path = "../../../Desktop/TBC ios/Common"; sourceTree = "<group>"; };
-		FB9400DA2C355B7C00A1437A /* Network */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Network; path = "../../../Desktop/TBC ios/Network"; sourceTree = "<group>"; };
-		FB9400DB2C355B8200A1437A /* Domain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Domain; path = "../../../Desktop/TBC ios/Domain"; sourceTree = "<group>"; };
-		FB9400DC2C355B8900A1437A /* Data */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Data; path = "../../../Desktop/TBC ios/Data"; sourceTree = "<group>"; };
-		FB9400DD2C355B8C00A1437A /* Presentation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Presentation; path = "../../../Desktop/TBC ios/Presentation"; sourceTree = "<group>"; };
 		FBCCC7C92C33311400B0D1E9 /* Formula.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Formula.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBCCC7CC2C33311400B0D1E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FBCCC7CE2C33311400B0D1E9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -52,6 +47,11 @@
 		FBCCC7E92C33311600B0D1E9 /* FormulaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FormulaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBCCC7ED2C33311600B0D1E9 /* FormulaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormulaUITests.swift; sourceTree = "<group>"; };
 		FBCCC7EF2C33311600B0D1E9 /* FormulaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormulaUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		FBDBDF762C35736E00284502 /* Network */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Network; sourceTree = "<group>"; };
+		FBDBDF772C35736E00284502 /* Presentation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Presentation; sourceTree = "<group>"; };
+		FBDBDF782C35736E00284502 /* Common */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Common; sourceTree = "<group>"; };
+		FBDBDF792C35736E00284502 /* Data */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Data; sourceTree = "<group>"; };
+		FBDBDF7A2C35736E00284502 /* Domain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Domain; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,11 +82,11 @@
 		FB9400D82C355B5F00A1437A /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				FB9400DD2C355B8C00A1437A /* Presentation */,
-				FB9400DC2C355B8900A1437A /* Data */,
-				FB9400DB2C355B8200A1437A /* Domain */,
-				FB9400DA2C355B7C00A1437A /* Network */,
-				FB9400D92C355B7500A1437A /* Common */,
+				FBDBDF782C35736E00284502 /* Common */,
+				FBDBDF792C35736E00284502 /* Data */,
+				FBDBDF7A2C35736E00284502 /* Domain */,
+				FBDBDF762C35736E00284502 /* Network */,
+				FBDBDF772C35736E00284502 /* Presentation */,
 			);
 			path = Packages;
 			sourceTree = "<group>";
