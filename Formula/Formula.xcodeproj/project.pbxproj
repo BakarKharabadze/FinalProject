@@ -47,6 +47,11 @@
 		FBCCC7E92C33311600B0D1E9 /* FormulaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FormulaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBCCC7ED2C33311600B0D1E9 /* FormulaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormulaUITests.swift; sourceTree = "<group>"; };
 		FBCCC7EF2C33311600B0D1E9 /* FormulaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormulaUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		FBDBDF762C35736E00284502 /* Network */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Network; sourceTree = "<group>"; };
+		FBDBDF772C35736E00284502 /* Presentation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Presentation; sourceTree = "<group>"; };
+		FBDBDF782C35736E00284502 /* Common */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Common; sourceTree = "<group>"; };
+		FBDBDF792C35736E00284502 /* Data */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Data; sourceTree = "<group>"; };
+		FBDBDF7A2C35736E00284502 /* Domain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Domain; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,9 +79,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FB9400D82C355B5F00A1437A /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				FBDBDF782C35736E00284502 /* Common */,
+				FBDBDF792C35736E00284502 /* Data */,
+				FBDBDF7A2C35736E00284502 /* Domain */,
+				FBDBDF762C35736E00284502 /* Network */,
+				FBDBDF772C35736E00284502 /* Presentation */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
 		FBCCC7C02C33311400B0D1E9 = {
 			isa = PBXGroup;
 			children = (
+				FB9400D82C355B5F00A1437A /* Packages */,
 				FBCCC7CB2C33311400B0D1E9 /* Formula */,
 				FBCCC7E22C33311500B0D1E9 /* FormulaTests */,
 				FBCCC7EC2C33311600B0D1E9 /* FormulaUITests */,
