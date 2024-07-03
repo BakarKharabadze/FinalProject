@@ -9,12 +9,12 @@
 /* Begin PBXBuildFile section */
 		FBCCC7CD2C33311400B0D1E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCCC7CC2C33311400B0D1E9 /* AppDelegate.swift */; };
 		FBCCC7CF2C33311400B0D1E9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCCC7CE2C33311400B0D1E9 /* SceneDelegate.swift */; };
-		FBCCC7D12C33311400B0D1E9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCCC7D02C33311400B0D1E9 /* ViewController.swift */; };
 		FBCCC7D62C33311500B0D1E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBCCC7D52C33311500B0D1E9 /* Assets.xcassets */; };
 		FBCCC7D92C33311500B0D1E9 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = FBCCC7D82C33311500B0D1E9 /* Base */; };
 		FBCCC7E42C33311500B0D1E9 /* FormulaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCCC7E32C33311500B0D1E9 /* FormulaTests.swift */; };
 		FBCCC7EE2C33311600B0D1E9 /* FormulaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCCC7ED2C33311600B0D1E9 /* FormulaUITests.swift */; };
 		FBCCC7F02C33311600B0D1E9 /* FormulaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCCC7EF2C33311600B0D1E9 /* FormulaUITestsLaunchTests.swift */; };
+		FBF701132C357F4E0019BEDD /* Presentation in Frameworks */ = {isa = PBXBuildFile; productRef = FBF701122C357F4E0019BEDD /* Presentation */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,7 +38,6 @@
 		FBCCC7C92C33311400B0D1E9 /* Formula.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Formula.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBCCC7CC2C33311400B0D1E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FBCCC7CE2C33311400B0D1E9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		FBCCC7D02C33311400B0D1E9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		FBCCC7D52C33311500B0D1E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FBCCC7D82C33311500B0D1E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FBCCC7DA2C33311500B0D1E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -59,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBF701132C357F4E0019BEDD /* Presentation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,6 +99,7 @@
 				FBCCC7E22C33311500B0D1E9 /* FormulaTests */,
 				FBCCC7EC2C33311600B0D1E9 /* FormulaUITests */,
 				FBCCC7CA2C33311400B0D1E9 /* Products */,
+				FBF701112C357F4E0019BEDD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -117,7 +118,6 @@
 			children = (
 				FBCCC7CC2C33311400B0D1E9 /* AppDelegate.swift */,
 				FBCCC7CE2C33311400B0D1E9 /* SceneDelegate.swift */,
-				FBCCC7D02C33311400B0D1E9 /* ViewController.swift */,
 				FBCCC7D52C33311500B0D1E9 /* Assets.xcassets */,
 				FBCCC7D72C33311500B0D1E9 /* LaunchScreen.storyboard */,
 				FBCCC7DA2C33311500B0D1E9 /* Info.plist */,
@@ -142,6 +142,13 @@
 			path = FormulaUITests;
 			sourceTree = "<group>";
 		};
+		FBF701112C357F4E0019BEDD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -158,6 +165,9 @@
 			dependencies = (
 			);
 			name = Formula;
+			packageProductDependencies = (
+				FBF701122C357F4E0019BEDD /* Presentation */,
+			);
 			productName = Formula;
 			productReference = FBCCC7C92C33311400B0D1E9 /* Formula.app */;
 			productType = "com.apple.product-type.application";
@@ -272,7 +282,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBCCC7D12C33311400B0D1E9 /* ViewController.swift in Sources */,
 				FBCCC7CD2C33311400B0D1E9 /* AppDelegate.swift in Sources */,
 				FBCCC7CF2C33311400B0D1E9 /* SceneDelegate.swift in Sources */,
 			);
@@ -374,7 +383,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -431,7 +440,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -455,6 +464,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -483,6 +493,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -609,6 +620,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FBF701122C357F4E0019BEDD /* Presentation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Presentation;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = FBCCC7C12C33311400B0D1E9 /* Project object */;
 }

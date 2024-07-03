@@ -1,5 +1,5 @@
 //
-//  Cancelable.swift
+//  Cancellable.swift
 //
 //
 //  Created by Bakar Kharabadze on 7/3/24.
@@ -7,6 +7,6 @@
 
 import Foundation
 
-public protocol Cancelable {
+public protocol Cancellable {
     func cancel()
 }

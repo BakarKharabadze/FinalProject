@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Presentation
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -17,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: scene)
-        let navigationController = UINavigationController(rootViewController: ViewController())
+        let navigationController = UINavigationController(rootViewController: TabBarController())
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
