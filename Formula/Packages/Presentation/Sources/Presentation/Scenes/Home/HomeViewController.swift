@@ -130,9 +130,9 @@ final class HomeViewController: UIViewController {
     }
     
     @objc private func handleRaceViewTap() {
-        let raceDetailVC = RaceDetailViewController()
-        raceDetailVC.modalPresentationStyle = .automatic
-        present(raceDetailVC, animated: true, completion: nil)
+//        let raceDetailVC = RaceDetailViewController()
+//        raceDetailVC.modalPresentationStyle = .automatic
+//        present(raceDetailVC, animated: true, completion: nil)
     }
     
     private func setupStandingLabel() {
