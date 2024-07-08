@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "Presentation",
-    platforms: [.iOS(.v16)],
+    platforms: [.iOS(.v17)],
     products: [
         .library(
             name: "Presentation",
@@ -18,7 +18,8 @@ let package = Package(
     targets: [
         .target(
             name: "Presentation",
-            dependencies: ["Common", "Data"]),
+            dependencies: ["Common", "Data"],
+            resources: [.process("Resources")]),
         .testTarget(
             name: "PresentationTests",
             dependencies: ["Presentation"]),

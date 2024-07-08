@@ -1,6 +1,6 @@
 //
 //  TabBarController.swift
-//  
+//
 //
 //  Created by Bakar Kharabadze on 7/3/24.
 //
@@ -8,12 +8,12 @@
 import UIKit
 
 final public class TabBarController: UITabBarController {
-
+    
     override public func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupTabs()
-
+        setupTabBarAppearance()
     }
     
     private func setupTabs() {
@@ -24,7 +24,7 @@ final public class TabBarController: UITabBarController {
         
         setViewControllers([home, schedule, standing, highlights], animated: false)
     }
-
+    
     private func createNav(with title: String, and image: UIImage, vc: UIViewController) -> UINavigationController {
         let nav = UINavigationController(rootViewController: vc)
         
@@ -33,6 +33,26 @@ final public class TabBarController: UITabBarController {
         
         return nav
     }
-
+    
+    private func setupTabBarAppearance() {
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor(white: 0.1, alpha: 1.0) 
+        
+        let itemAppearance = UITabBarItemAppearance()
+        itemAppearance.normal.iconColor = UIColor.lightGray
+        itemAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.lightGray]
+        itemAppearance.selected.iconColor = UIColor.white
+        itemAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor.white]
+        
+        appearance.stackedLayoutAppearance = itemAppearance
+        appearance.inlineLayoutAppearance = itemAppearance
+        appearance.compactInlineLayoutAppearance = itemAppearance
+        
+        tabBar.standardAppearance = appearance
+        tabBar.scrollEdgeAppearance = appearance
+    }
 }
+
+
 
