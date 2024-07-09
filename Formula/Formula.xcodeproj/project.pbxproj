@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB7D1EEA2C3D35480067E04B /* AppDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7D1EE92C3D35480067E04B /* AppDIContainer.swift */; };
+		FB7D1EEC2C3D358E0067E04B /* AppConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7D1EEB2C3D358E0067E04B /* AppConfigurations.swift */; };
+		FB7D1EEE2C3D3EE90067E04B /* HomeSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7D1EED2C3D3EE90067E04B /* HomeSceneDIContainer.swift */; };
+		FB7D1EF02C3D51FC0067E04B /* NewsSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7D1EEF2C3D51FC0067E04B /* NewsSceneDIContainer.swift */; };
 		FBCCC7CD2C33311400B0D1E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCCC7CC2C33311400B0D1E9 /* AppDelegate.swift */; };
 		FBCCC7CF2C33311400B0D1E9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCCC7CE2C33311400B0D1E9 /* SceneDelegate.swift */; };
 		FBCCC7D62C33311500B0D1E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBCCC7D52C33311500B0D1E9 /* Assets.xcassets */; };
@@ -35,6 +39,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FB7D1EE92C3D35480067E04B /* AppDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDIContainer.swift; sourceTree = "<group>"; };
+		FB7D1EEB2C3D358E0067E04B /* AppConfigurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigurations.swift; sourceTree = "<group>"; };
+		FB7D1EED2C3D3EE90067E04B /* HomeSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSceneDIContainer.swift; sourceTree = "<group>"; };
+		FB7D1EEF2C3D51FC0067E04B /* NewsSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsSceneDIContainer.swift; sourceTree = "<group>"; };
 		FBCCC7C92C33311400B0D1E9 /* Formula.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Formula.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBCCC7CC2C33311400B0D1E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FBCCC7CE2C33311400B0D1E9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -79,6 +87,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FB7D1EE62C3D34DA0067E04B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FBCCC7D52C33311500B0D1E9 /* Assets.xcassets */,
+				FBCCC7D72C33311500B0D1E9 /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		FB7D1EE72C3D34E80067E04B /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				FB7D1EE82C3D35080067E04B /* DIContainer */,
+				FBCCC7CE2C33311400B0D1E9 /* SceneDelegate.swift */,
+				FBCCC7CC2C33311400B0D1E9 /* AppDelegate.swift */,
+				FB7D1EEB2C3D358E0067E04B /* AppConfigurations.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		FB7D1EE82C3D35080067E04B /* DIContainer */ = {
+			isa = PBXGroup;
+			children = (
+				FB7D1EE92C3D35480067E04B /* AppDIContainer.swift */,
+				FB7D1EED2C3D3EE90067E04B /* HomeSceneDIContainer.swift */,
+				FB7D1EEF2C3D51FC0067E04B /* NewsSceneDIContainer.swift */,
+			);
+			path = DIContainer;
+			sourceTree = "<group>";
+		};
 		FB9400D82C355B5F00A1437A /* Packages */ = {
 			isa = PBXGroup;
 			children = (
@@ -116,10 +154,8 @@
 		FBCCC7CB2C33311400B0D1E9 /* Formula */ = {
 			isa = PBXGroup;
 			children = (
-				FBCCC7CC2C33311400B0D1E9 /* AppDelegate.swift */,
-				FBCCC7CE2C33311400B0D1E9 /* SceneDelegate.swift */,
-				FBCCC7D52C33311500B0D1E9 /* Assets.xcassets */,
-				FBCCC7D72C33311500B0D1E9 /* LaunchScreen.storyboard */,
+				FB7D1EE72C3D34E80067E04B /* Application */,
+				FB7D1EE62C3D34DA0067E04B /* Resources */,
 				FBCCC7DA2C33311500B0D1E9 /* Info.plist */,
 			);
 			path = Formula;
@@ -284,6 +320,10 @@
 			files = (
 				FBCCC7CD2C33311400B0D1E9 /* AppDelegate.swift in Sources */,
 				FBCCC7CF2C33311400B0D1E9 /* SceneDelegate.swift in Sources */,
+				FB7D1EF02C3D51FC0067E04B /* NewsSceneDIContainer.swift in Sources */,
+				FB7D1EEC2C3D358E0067E04B /* AppConfigurations.swift in Sources */,
+				FB7D1EEA2C3D35480067E04B /* AppDIContainer.swift in Sources */,
+				FB7D1EEE2C3D3EE90067E04B /* HomeSceneDIContainer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -458,7 +498,10 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
+				FORMULA_API_BASE_URL = "http://ergast.com";
 				GENERATE_INFOPLIST_FILE = YES;
+				GOOGLE_API_BASE_URL = "https://www.googleapis.com";
+				GOOGLE_API_KEY = "AIzaSyBIIfbiqHk725UMvOyR1HYJNtdycXd2z-c";
 				INFOPLIST_FILE = Formula/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -470,6 +513,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				NEWS_API_BASE_URL = "https://newsapi.org";
+				NEWS_API_KEY = 57a97376638a49eeb91a6fd7dad7f1be;
 				PRODUCT_BUNDLE_IDENTIFIER = TBC.Formula;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -487,7 +532,10 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
+				FORMULA_API_BASE_URL = "http://ergast.com";
 				GENERATE_INFOPLIST_FILE = YES;
+				GOOGLE_API_BASE_URL = "https://www.googleapis.com";
+				GOOGLE_API_KEY = "AIzaSyBIIfbiqHk725UMvOyR1HYJNtdycXd2z-c";
 				INFOPLIST_FILE = Formula/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -499,6 +547,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				NEWS_API_BASE_URL = "https://newsapi.org";
+				NEWS_API_KEY = 57a97376638a49eeb91a6fd7dad7f1be;
 				PRODUCT_BUNDLE_IDENTIFIER = TBC.Formula;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
