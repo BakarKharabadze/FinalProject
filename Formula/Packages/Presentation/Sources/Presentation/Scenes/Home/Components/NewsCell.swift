@@ -6,11 +6,14 @@
 //
 
 import UIKit
+import Domain
 
 class NewsCell: UITableViewCell {
     
     private let mainStackView = UIStackView()
     private let newsImageView = UIImageView()
+    private let titleLabel = UILabel()
+    private let descriptionLabel = UILabel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -27,6 +30,7 @@ class NewsCell: UITableViewCell {
         mainStackView.layer.masksToBounds = true
         setupMainStackView()
         setupNewsImage()
+        setupLabels()
     }
     
     private func setupMainStackView() {
@@ -39,10 +43,10 @@ class NewsCell: UITableViewCell {
         mainStackView.spacing = 10
         
         NSLayoutConstraint.activate([
-            mainStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            mainStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            mainStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            mainStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
             mainStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            mainStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            mainStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
         ])
     }
     
@@ -57,10 +61,42 @@ class NewsCell: UITableViewCell {
             newsImageView.widthAnchor.constraint(equalToConstant: 130),
             newsImageView.heightAnchor.constraint(equalToConstant: 130)
         ])
-        
     }
     
-    func configure(with imageName: String) {
-            newsImageView.image = UIImage(named: imageName)
+    private func setupLabels() {
+        let textStackView = UIStackView()
+        textStackView.axis = .vertical
+        textStackView.alignment = .leading
+        textStackView.distribution = .fill
+        textStackView.spacing = 5
+        
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        titleLabel.numberOfLines = 2
+        
+        descriptionLabel.font = UIFont.systemFont(ofSize: 14)
+        descriptionLabel.numberOfLines = 3
+        
+        textStackView.addArrangedSubview(titleLabel)
+        textStackView.addArrangedSubview(descriptionLabel)
+        
+        mainStackView.addArrangedSubview(textStackView)
+    }
+    
+    func configure(with newsEntity: NewsEntity) {
+        titleLabel.text = newsEntity.title
+        descriptionLabel.text = newsEntity.description
+        
+        if let urlString = newsEntity.urlToImage, let url = URL(string: urlString) {
+            DispatchQueue.global().async {
+                if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self.newsImageView.image = image
+                    }
+                }
+            }
+        } else {
+            newsImageView.image = nil
         }
+    }
 }
+
