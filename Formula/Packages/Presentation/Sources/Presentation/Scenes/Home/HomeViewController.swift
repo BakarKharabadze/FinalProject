@@ -9,7 +9,7 @@ import UIKit
 import SwiftUI
 import Domain
 
-final class HomeViewController: UIViewController {
+public final class HomeViewController: UIViewController {
     
     private let mainStackView = UIStackView()
     private let logo = UIImageView()
@@ -17,8 +17,17 @@ final class HomeViewController: UIViewController {
     private let standingLabel = UILabel()
     private let newsLabel = UILabel()
     private let scrollView = UIScrollView()
+    public var viewModel: HomeViewModel!
     
     private let topDriversHostingController: UIHostingController<TopDriversCoverFlowView>
+    
+    public class func create(with viewModel: HomeViewModel,
+                             newsViewControllersFactory: NewsDetailViewControllerFactory) -> HomeViewController {
+        let vc = HomeViewController()
+        vc.viewModel = viewModel
+        vc.viewModel.router = DefaultHomeViewRouter(view: vc, newsViewControllerFactory: newsViewControllersFactory)
+        return vc
+    }
     
     init() {
         let drivers = [
@@ -39,10 +48,11 @@ final class HomeViewController: UIViewController {
     
     private let driverImages = ["max", "max", "max"]
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        navigationController?.setNavigationBarHidden(true, animated: false)
+        viewModel.delegate = self
+        viewModel.viewDidLoad()
     }
     
     private func setupUI() {
@@ -130,9 +140,9 @@ final class HomeViewController: UIViewController {
     }
     
     @objc private func handleRaceViewTap() {
-//        let raceDetailVC = RaceDetailViewController()
-//        raceDetailVC.modalPresentationStyle = .automatic
-//        present(raceDetailVC, animated: true, completion: nil)
+        //        let raceDetailVC = RaceDetailViewController()
+        //        raceDetailVC.modalPresentationStyle = .automatic
+        //        present(raceDetailVC, animated: true, completion: nil)
     }
     
     private func setupStandingLabel() {
@@ -183,15 +193,24 @@ final class HomeViewController: UIViewController {
 }
 
 extension HomeViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return driverImages.count
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+          viewModel.news.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell", for: indexPath) as? NewsCell else {
             return UITableViewCell()
         }
-        cell.configure(with: driverImages[indexPath.row])
-        return cell
+        let newsEntity = viewModel.news[indexPath.row]
+               cell.configure(with: newsEntity)
+               return cell
+    }
+}
+
+extension HomeViewController: HomeViewModelDelegate {
+    public func newsFetched(_ news: [Domain.NewsEntity]) {
+        DispatchQueue.main.async {
+            self.newsTableView.reloadData()
+        }
     }
 }

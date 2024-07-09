@@ -11,6 +11,7 @@ import Presentation
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    let appDIContainer = AppDIContainer()
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -18,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: scene)
-        let navigationController = UINavigationController(rootViewController: TabBarController())
+        let navigationController = TabBarController(homeSceneViewControllerFactory: appDIContainer.makeHomeSceneDIContainer())
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }

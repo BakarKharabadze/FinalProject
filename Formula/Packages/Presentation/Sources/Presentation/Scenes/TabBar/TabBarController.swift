@@ -9,6 +9,17 @@ import UIKit
 
 final public class TabBarController: UITabBarController {
     
+    var homeSceneViewControllerFactory: HomeViewControllerFactory
+    
+    public init(homeSceneViewControllerFactory: HomeViewControllerFactory) {
+        self.homeSceneViewControllerFactory = homeSceneViewControllerFactory
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override public func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -17,7 +28,7 @@ final public class TabBarController: UITabBarController {
     }
     
     private func setupTabs() {
-        let home = createNav(with: "Home", and: UIImage(systemName: "house") ?? UIImage(), vc: HomeViewController())
+        let home = createNav(with: "Home", and: UIImage(systemName: "house") ?? UIImage(), vc: homeSceneViewControllerFactory.makeHomeViewController())
         let schedule = createNav(with: "Schedule", and: UIImage(systemName: "calendar") ?? UIImage(), vc: ScheduleViewController())
         let standing = createNav(with: "Standing", and: UIImage(systemName: "chart.bar") ?? UIImage(), vc: StandingViewController())
         let highlights = createNav(with: "Highlights", and: UIImage(systemName: "star.fill") ?? UIImage(), vc: HighlightsViewController())
