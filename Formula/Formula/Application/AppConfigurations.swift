@@ -15,5 +15,4 @@ class AppConfigurations {
     
     lazy var newsApiKey = Bundle.main.object(forInfoDictionaryKey: "NewsApiKey") as! String
     lazy var newsApiBaseURL = Bundle.main.object(forInfoDictionaryKey: "NewsApiBaseURL") as! String
-
 }

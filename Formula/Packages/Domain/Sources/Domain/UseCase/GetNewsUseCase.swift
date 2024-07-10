@@ -13,9 +13,7 @@ public protocol GetNewsUseCase {
 }
 
 public final class DefaultGetNewsUseCase: GetNewsUseCase {
-    
-    
-    
+
     private let repository: NewsRepository
     
     public init(repository: NewsRepository) {

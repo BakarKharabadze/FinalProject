@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import Domain
 
-class ScheduleViewController: UIViewController {
+public final class ScheduleViewController: UIViewController {
     
     private let upcomingButton: UIButton = {
         let button = UIButton(type: .system)
@@ -37,23 +38,21 @@ class ScheduleViewController: UIViewController {
     
     private let upcomingTableView = UITableView()
     private let pastTableView = UITableView()
+    public var viewModel: ScheduleViewModel!
     
-    private let upcomingData = [
-        ("Upcoming Race 1", "Subtitle 1", "Detail 1", UIImage(named: "imageName")),
-        ("Upcoming Race 2", "Subtitle 2", "Detail 2", UIImage(named: "imageName")),
-        ("Upcoming Race 3", "Subtitle 3", "Detail 3", UIImage(named: "imageName"))
-    ]
+    public class func create(with viewModel: ScheduleViewModel) -> ScheduleViewController {
+        let vc = ScheduleViewController()
+        vc.viewModel = viewModel
+        vc.viewModel.delegate = vc
+        return vc
+    }
     
-    private let pastData = [
-        ("Past Race A", "Subtitle A", "Detail A", UIImage(named: "yourImageName")),
-        ("Past Race B", "Subtitle B", "Detail B", UIImage(named: "yourImageName")),
-        ("Past Race C", "Subtitle C", "Detail C", UIImage(named: "yourImageName"))
-    ]
-    
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: false)
         setupUI()
+        viewModel.viewDidLoad()
+        viewModel.delegate = self
     }
     
     private func setupUI() {
@@ -179,38 +178,48 @@ class ScheduleViewController: UIViewController {
 }
 
 extension ScheduleViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView == upcomingTableView {
-            return upcomingData.count + 1
-        } else if tableView == pastTableView {
-            return pastData.count + 1 
-        }
-        return 0
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.races.count + 1
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == upcomingTableView {
             if indexPath.row == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "UpcomingFirstRaceViewCell", for: indexPath) as! UpcomingFirstRaceViewCell
+                if let firstRace = viewModel.races.first {
+                    cell.configure(with: firstRace)
+                }
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "ScheduleViewCell", for: indexPath) as! ScheduleViewCell
-                let data = upcomingData[indexPath.row - 1]
-                cell.configure(round: data.0, title: data.1, date: data.2, flagImage: data.3)
+                let race = viewModel.races[indexPath.row - 1]
+                cell.configure(round: race.round, title: race.grandPrixName, date: race.date, flagImage: UIImage(systemName: "flag"))
                 return cell
             }
         } else if tableView == pastTableView {
             if indexPath.row == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "PastFirstRaceViewCell", for: indexPath) as! PastFirstRaceViewCell
+                if let firstRace = viewModel.races.first {
+                    cell.configure(with: firstRace)
+                }
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "ScheduleViewCell", for: indexPath) as! ScheduleViewCell
-                let data = pastData[indexPath.row - 1]
-                cell.configure(round: data.0, title: data.1, date: data.2, flagImage: data.3)
+                let race = viewModel.races[indexPath.row - 1]
+                cell.configure(round: race.round, title: race.grandPrixName, date: race.date, flagImage: UIImage(systemName: "flag"))
                 return cell
             }
         }
         return UITableViewCell()
     }
 }
-    
+
+
+extension ScheduleViewController: ScheduleViewModelDelegate {
+    public func racesFetched(_ races: [RaceEntity]) {
+        DispatchQueue.main.async {
+            self.upcomingTableView.reloadData()
+            self.pastTableView.reloadData()
+        }
+    }
+}
