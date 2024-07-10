@@ -1,6 +1,6 @@
 //
-//  ScheduleViewCellScheduleViewCell.swift
-//  
+//  ScheduleViewCell.swift
+//
 //
 //  Created by Bakar Kharabadze on 7/4/24.
 //
@@ -109,6 +109,6 @@ class ScheduleViewCell: UITableViewCell {
         roundLabel.text = round
         titleLabel.text = title
         dateLabel.text = date
-        flagImageView.image = flagImage
+        flagImageView.image = flagImage ?? UIImage(named: "placeholderImage")
     }
 }

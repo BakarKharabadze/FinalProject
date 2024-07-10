@@ -19,6 +19,7 @@
 		FBCCC7EE2C33311600B0D1E9 /* FormulaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCCC7ED2C33311600B0D1E9 /* FormulaUITests.swift */; };
 		FBCCC7F02C33311600B0D1E9 /* FormulaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCCC7EF2C33311600B0D1E9 /* FormulaUITestsLaunchTests.swift */; };
 		FBF701132C357F4E0019BEDD /* Presentation in Frameworks */ = {isa = PBXBuildFile; productRef = FBF701122C357F4E0019BEDD /* Presentation */; };
+		FBFD91542C3EAC360008947F /* ScheduleSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFD91532C3EAC360008947F /* ScheduleSceneDIContainer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		FBDBDF782C35736E00284502 /* Common */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Common; sourceTree = "<group>"; };
 		FBDBDF792C35736E00284502 /* Data */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Data; sourceTree = "<group>"; };
 		FBDBDF7A2C35736E00284502 /* Domain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Domain; sourceTree = "<group>"; };
+		FBFD91532C3EAC360008947F /* ScheduleSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSceneDIContainer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 			children = (
 				FB7D1EE92C3D35480067E04B /* AppDIContainer.swift */,
 				FB7D1EED2C3D3EE90067E04B /* HomeSceneDIContainer.swift */,
+				FBFD91532C3EAC360008947F /* ScheduleSceneDIContainer.swift */,
 				FB7D1EEF2C3D51FC0067E04B /* NewsSceneDIContainer.swift */,
 			);
 			path = DIContainer;
@@ -318,6 +321,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBFD91542C3EAC360008947F /* ScheduleSceneDIContainer.swift in Sources */,
 				FBCCC7CD2C33311400B0D1E9 /* AppDelegate.swift in Sources */,
 				FBCCC7CF2C33311400B0D1E9 /* SceneDelegate.swift in Sources */,
 				FB7D1EF02C3D51FC0067E04B /* NewsSceneDIContainer.swift in Sources */,

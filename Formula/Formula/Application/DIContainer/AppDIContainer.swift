@@ -49,5 +49,10 @@ class AppDIContainer {
         return NewsSceneDIContainer(dependencies: dependencies)
     }
     
+    func makeScheduleSceneDIContainer() -> ScheduleSceneDIContainer {
+        let dependencies = ScheduleSceneDIContainer.Dependencies(formulaApiDataTransferService: formulaApiDataTransferService)
+        return ScheduleSceneDIContainer(dependencies: dependencies)
+    }
+    
 }
 

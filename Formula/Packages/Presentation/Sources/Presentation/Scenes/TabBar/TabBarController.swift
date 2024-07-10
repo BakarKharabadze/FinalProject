@@ -10,9 +10,11 @@ import UIKit
 final public class TabBarController: UITabBarController {
     
     var homeSceneViewControllerFactory: HomeViewControllerFactory
+    var scheduleSceneViewControllerFactory: ScheduleViewControllerFactory
     
-    public init(homeSceneViewControllerFactory: HomeViewControllerFactory) {
+    public init(homeSceneViewControllerFactory: HomeViewControllerFactory, scheduleSceneViewControllerFactory: ScheduleViewControllerFactory) {
         self.homeSceneViewControllerFactory = homeSceneViewControllerFactory
+        self.scheduleSceneViewControllerFactory = scheduleSceneViewControllerFactory
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -29,7 +31,7 @@ final public class TabBarController: UITabBarController {
     
     private func setupTabs() {
         let home = createNav(with: "Home", and: UIImage(systemName: "house") ?? UIImage(), vc: homeSceneViewControllerFactory.makeHomeViewController())
-        let schedule = createNav(with: "Schedule", and: UIImage(systemName: "calendar") ?? UIImage(), vc: ScheduleViewController())
+        let schedule = createNav(with: "Schedule", and: UIImage(systemName: "calendar") ?? UIImage(), vc: scheduleSceneViewControllerFactory.makeScheduleViewController())
         let standing = createNav(with: "Standing", and: UIImage(systemName: "chart.bar") ?? UIImage(), vc: StandingViewController())
         let highlights = createNav(with: "Highlights", and: UIImage(systemName: "star.fill") ?? UIImage(), vc: HighlightsViewController())
         

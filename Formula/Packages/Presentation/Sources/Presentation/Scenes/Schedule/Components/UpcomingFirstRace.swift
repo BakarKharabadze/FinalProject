@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import Domain
 
 struct UpcomingFirstRace: View {
+    let race: RaceEntity
+
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 15)
@@ -17,16 +20,16 @@ struct UpcomingFirstRace: View {
             
             HStack {
                 VStack(alignment: .leading) {
-                    Text("Round 03")
+                    Text("Round \(race.round)")
                         .foregroundColor(.yellow)
                         .padding(.bottom, 2)
                     
-                    Text("Australian GP")
+                    Text(race.grandPrixName)
                         .font(.title)
                         .foregroundColor(.white)
                         .padding(.bottom, 1)
                     
-                    Text("22-24 March")
+                    Text(race.date)
                         .foregroundColor(.white)
                         .padding(.bottom, 20)
                     
@@ -83,6 +86,3 @@ struct UpcomingFirstRace: View {
     }
 }
 
-#Preview {
-    UpcomingFirstRace()
-}
