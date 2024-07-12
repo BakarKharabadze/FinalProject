@@ -26,6 +26,7 @@ public final class HomeViewModel {
     private let getNewsUseCase: GetNewsUseCase
     weak var delegate: HomeViewModelDelegate?
     
+    public var drivers: [DriverEntity] = []
     public var news: [NewsEntity] = []
     
     public init(getNewsUseCase: GetNewsUseCase) {

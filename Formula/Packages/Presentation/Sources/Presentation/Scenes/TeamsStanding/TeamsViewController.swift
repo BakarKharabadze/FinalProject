@@ -7,28 +7,24 @@
 
 import UIKit
 
-class TeamsViewController: UIViewController {
+public final class TeamsViewController: UIViewController {
     
     private let tableView = UITableView()
-    private var drivers: [Driver] = []
+    private var viewModel: TeamsViewModel!
 
-    override func viewDidLoad() {
+    public class func create(with viewModel: TeamsViewModel) -> TeamsViewController {
+        let vc = TeamsViewController()
+        vc.viewModel = viewModel
+        return vc
+    }
+    
+    public override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-        
-        drivers = [
-            Driver(ranking: "01", name: "Red Bull", team: "RB20", points: 87, imageName: "Max"),
-            Driver(ranking: "02", name: "Ferrari", team: "SF-24", points: 49, imageName: "Max"),
-            Driver(ranking: "03", name: "Mclaren", team: "MCL38", points: 28, imageName: "Max"),
-            Driver(ranking: "04", name: "Mercedes", team: "W15", points: 26, imageName: "Max"),
-            Driver(ranking: "05", name: "Aston Martin", team: "AMR24", points: 13, imageName: "Max")
-        ]
-
     }
     
     private func setupTableView() {
         tableView.register(TeamsTableViewCell.self, forCellReuseIdentifier: "TeamsTableViewCell")
-        
         tableView.dataSource = self
         
         view.addSubview(tableView)
@@ -46,14 +42,14 @@ class TeamsViewController: UIViewController {
 }
 
 extension TeamsViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        drivers.count
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.teams.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TeamsTableViewCell", for: indexPath) as! TeamsTableViewCell
-        let driver = drivers[indexPath.row]
-        cell.configure(with: driver)
+        let team = viewModel.teams[indexPath.row]
+        cell.configure(with: team)
         return cell
     }
 }

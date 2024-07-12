@@ -15,7 +15,7 @@ struct PastFirstRace: View {
         ZStack {
             RoundedRectangle(cornerRadius: 15)
                 .fill(Color(UIColor(white: 0.15, alpha: 1.0)))
-                .frame(width: 345, height: 230)
+                .frame(width: 350, height: 260)
                 .shadow(radius: 5)
             
             VStack(alignment: .leading) {
