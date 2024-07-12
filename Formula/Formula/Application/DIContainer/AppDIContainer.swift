@@ -54,5 +54,30 @@ class AppDIContainer {
         return ScheduleSceneDIContainer(dependencies: dependencies)
     }
     
-}
+    func makeStandingSceneDIContainer() -> StandingSceneDIContainer {
+           let dependencies = StandingSceneDIContainer.Dependencies(
+               formulaApiDataTransferService: formulaApiDataTransferService,
+               driverViewControllerFactory: makeDriversSceneDIContainer(), teamsViewControllerFactory: makeTeamsSceneDIContainer()
+           )
+           return StandingSceneDIContainer(dependencies: dependencies)
+       }
+    
+    func makeDriversSceneDIContainer() -> DriversSceneDIContainer {
+         let dependencies = DriversSceneDIContainer.Dependencies(
+             formulaApiDataTransferService: formulaApiDataTransferService
+         )
+         return DriversSceneDIContainer(dependencies: dependencies)
+     }
+    
+    func makeTeamsSceneDIContainer() -> TeamsSceneDIContainer {
+        let dependencies = TeamsSceneDIContainer.Dependencies(formulaApiDataTransferService: formulaApiDataTransferService)
+        return TeamsSceneDIContainer(dependencies: dependencies)
+    }
+    
+    func makeHighlightSceneDIContainer() -> HighlighsSceneDIContainer {
+        let dependencies = HighlighsSceneDIContainer.Dependencies(googleApiDataTransferService: googleApiDataTransferService)
+        return HighlighsSceneDIContainer(dependencies: dependencies)
+    }
+    
+ }
 
