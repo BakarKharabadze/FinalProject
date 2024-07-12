@@ -22,6 +22,7 @@ public final class DefaultNewsRepository  {
 
 extension DefaultNewsRepository: NewsRepository {
     public func getNews(query: String, from: String, sortBy: String, language: String, apiKey: String, with result: @escaping (Result<[NewsEntity], any Error>) -> Void) -> Cancellable? {
+        
         let endpoint = NewsAPIEndpoints.news(query: query, from: from, sortBy: sortBy, language: language, apiKey: apiKey)
         
         return self.dataTransferService.request(with: endpoint) { (response: Result<NewsResponse, Error>) in
