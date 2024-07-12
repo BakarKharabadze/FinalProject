@@ -214,7 +214,6 @@ extension ScheduleViewController: UITableViewDataSource {
     }
 }
 
-
 extension ScheduleViewController: ScheduleViewModelDelegate {
     public func racesFetched(_ races: [RaceEntity]) {
         DispatchQueue.main.async {

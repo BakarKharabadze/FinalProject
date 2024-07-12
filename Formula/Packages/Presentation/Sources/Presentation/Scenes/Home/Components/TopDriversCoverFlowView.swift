@@ -24,10 +24,10 @@ struct TopDriversCoverFlowView: View {
             items: drivers
         ) { driver in
             HStack {
-                Text(driver.name)
+                Text(driver.givenName)
                     .font(.title)
                 VStack {
-                    Image(driver.imageName, bundle: .module)
+                    Image("max", bundle: .module)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(height: 150)
