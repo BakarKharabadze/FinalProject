@@ -44,15 +44,7 @@ public final class ScheduleViewModel {
                     self?.delegate?.racesFetched(races)
                 }
             case .failure(let error):
-                // Print more detailed error information
                 print("Failed to fetch races: \(error.localizedDescription)")
-                if let urlError = error as? URLError {
-                    print("URLError: \(urlError)")
-                } else if let decodingError = error as? DecodingError {
-                    print("DecodingError: \(decodingError)")
-                } else {
-                    print("Other error: \(error)")
-                }
             }
         }
     }

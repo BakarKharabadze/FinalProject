@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Domain
 
 class TeamsTableViewCell: UITableViewCell {
     
@@ -146,11 +147,10 @@ class TeamsTableViewCell: UITableViewCell {
     }
     
     
-    func configure(with team: Driver) {
-        rankingLabel.text = team.ranking
-        teamNameLabel.text = team.name
-        liveryNameLabel.text = team.team
+    func configure(with team: TeamsEntity) {
+        rankingLabel.text = team.position
+        teamNameLabel.text = team.constructorName
+        liveryNameLabel.text = team.nationality
         teamPointsLabel.text = "\(team.points)"
-        liveryImageView.image = UIImage(named: team.imageName)
     }
 }

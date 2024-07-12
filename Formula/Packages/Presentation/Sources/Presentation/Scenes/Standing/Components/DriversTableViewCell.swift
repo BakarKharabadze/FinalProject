@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Domain
 
 class DriversTableViewCell: UITableViewCell {
     
@@ -72,13 +73,8 @@ class DriversTableViewCell: UITableViewCell {
         rankingLabel.font = .systemFont(ofSize: 18, weight: .bold)
         rankingLabel.textColor = .white
         
-        mainStackView.addSubview(rankingLabel)
+        mainStackView.addArrangedSubview(rankingLabel)
         rankingLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            rankingLabel.topAnchor.constraint(equalTo: mainStackView.topAnchor, constant: 5),
-            rankingLabel.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor, constant: 5)
-        ])
     }
     
     private func setupTextStackView() {
@@ -87,11 +83,6 @@ class DriversTableViewCell: UITableViewCell {
         textStackView.spacing = 4
         
         mainStackView.addArrangedSubview(textStackView)
-        
-        NSLayoutConstraint.activate([
-            textStackView.topAnchor.constraint(equalTo: mainStackView.topAnchor, constant: 5),
-            textStackView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor, constant: 40)
-        ])
     }
     
     private func setupNameLabel() {
@@ -109,7 +100,7 @@ class DriversTableViewCell: UITableViewCell {
     }
     
     private func setupPointsStackView() {
-        pointsStackView.axis = .vertical
+        pointsStackView.axis = .horizontal
         pointsStackView.alignment = .leading
         pointsStackView.spacing = 4
         
@@ -144,11 +135,11 @@ class DriversTableViewCell: UITableViewCell {
         ])
     }
     
-    func configure(with driver: Driver) {
-        rankingLabel.text = driver.ranking
-        nameLabel.text = driver.name
-        teamLabel.text = driver.team
+    func configure(with driver: DriverEntity) {
+        rankingLabel.text = driver.position
+        nameLabel.text = driver.givenName + " " + driver.familyName
+        teamLabel.text = driver.constructorName
         pointsLabel.text = "\(driver.points)"
-        driverImageView.image = UIImage(named: driver.imageName)
+
     }
 }

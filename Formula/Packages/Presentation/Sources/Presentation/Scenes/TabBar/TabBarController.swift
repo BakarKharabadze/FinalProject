@@ -11,10 +11,14 @@ final public class TabBarController: UITabBarController {
     
     var homeSceneViewControllerFactory: HomeViewControllerFactory
     var scheduleSceneViewControllerFactory: ScheduleViewControllerFactory
+    var standingSceneViewControllerFactory: StandingViewControllerFactory
+    var highlightSceneViewControllerFactory: HighlightViewControllerFactory
     
-    public init(homeSceneViewControllerFactory: HomeViewControllerFactory, scheduleSceneViewControllerFactory: ScheduleViewControllerFactory) {
+    public init(homeSceneViewControllerFactory: HomeViewControllerFactory, scheduleSceneViewControllerFactory: ScheduleViewControllerFactory, standingSceneViewControllerFactory: StandingViewControllerFactory, highlightSceneViewControllerFactory: HighlightViewControllerFactory) {
         self.homeSceneViewControllerFactory = homeSceneViewControllerFactory
         self.scheduleSceneViewControllerFactory = scheduleSceneViewControllerFactory
+        self.standingSceneViewControllerFactory = standingSceneViewControllerFactory
+        self.highlightSceneViewControllerFactory = highlightSceneViewControllerFactory
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -32,8 +36,8 @@ final public class TabBarController: UITabBarController {
     private func setupTabs() {
         let home = createNav(with: "Home", and: UIImage(systemName: "house") ?? UIImage(), vc: homeSceneViewControllerFactory.makeHomeViewController())
         let schedule = createNav(with: "Schedule", and: UIImage(systemName: "calendar") ?? UIImage(), vc: scheduleSceneViewControllerFactory.makeScheduleViewController())
-        let standing = createNav(with: "Standing", and: UIImage(systemName: "chart.bar") ?? UIImage(), vc: StandingViewController())
-        let highlights = createNav(with: "Highlights", and: UIImage(systemName: "star.fill") ?? UIImage(), vc: HighlightsViewController())
+        let standing = createNav(with: "Standing", and: UIImage(systemName: "chart.bar") ?? UIImage(), vc: standingSceneViewControllerFactory.makeStandingViewController())
+        let highlights = createNav(with: "Highlights", and: UIImage(systemName: "star.fill") ?? UIImage(), vc: highlightSceneViewControllerFactory.makeHighlightViewController())
         
         setViewControllers([home, schedule, standing, highlights], animated: false)
     }

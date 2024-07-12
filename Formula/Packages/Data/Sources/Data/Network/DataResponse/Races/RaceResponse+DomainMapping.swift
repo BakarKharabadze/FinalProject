@@ -8,8 +8,8 @@
 import Foundation
 import Domain
 
-extension Race {
-    static func map(raceResponse: [Race]) -> [RaceEntity] {
+extension RaceEntity {
+    static func map(raceResponse: [F1Season.Race]) -> [RaceEntity] {
         return raceResponse.map { race in
             RaceEntity(
                 round: race.round,

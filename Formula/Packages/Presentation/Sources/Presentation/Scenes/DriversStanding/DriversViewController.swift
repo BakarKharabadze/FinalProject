@@ -6,55 +6,71 @@
 //
 
 import UIKit
+import Domain
 
-class DriversViewController: UIViewController {
+public final class DriversViewController: UIViewController {
     
     private let tableView = UITableView()
-    private var drivers: [Driver] = []
     
-    override func viewDidLoad() {
+    private var viewModel: DriversViewModel!
+    
+    public class func create(with viewModel: DriversViewModel) -> DriversViewController {
+        let vc = DriversViewController()
+        vc.viewModel = viewModel
+        return vc
+    }
+    
+    public override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
+    }
+    
+    private func setupUI() {
         setupTableView()
-        
-        drivers = [
-            Driver(ranking: "01", name: "Max Verstappen", team: "Red Bull", points: 51, imageName: "Max"),
-            Driver(ranking: "02", name: "Sergio Perez", team: "Red Bull", points: 36, imageName: "Max"),
-            Driver(ranking: "03", name: "Charles Leclerc", team: "Ferrari", points: 28, imageName: "Max"),
-            Driver(ranking: "04", name: "George Russell", team: "Mercedes", points: 18, imageName: "Max"),
-            Driver(ranking: "05", name: "Oscar Piastri", team: "McLaren", points: 16, imageName: "Max")
-        ]
+        setupTitleLabel()
     }
     
     private func setupTableView() {
-        tableView.register(DriversTableViewCell.self, forCellReuseIdentifier: "DriversTableViewCell")
-        
-        tableView.dataSource = self
-        
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(DriversTableViewCell.self, forCellReuseIdentifier: "DriversTableViewCell")
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-        
-        tableView.reloadData()
     }
     
+    private func setupTitleLabel() {
+        title = "Drivers"
+    }
 }
 
-extension DriversViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        drivers.count
+extension DriversViewController: UITableViewDataSource, UITableViewDelegate {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.drivers.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DriversTableViewCell", for: indexPath) as! DriversTableViewCell
-        let driver = drivers[indexPath.row]
+        let driver = viewModel.drivers[indexPath.row]
         cell.configure(with: driver)
         return cell
     }
 }
 
+extension DriversViewController: StandingViewModelDelegate {
+    public func teamsFetched(_ teams: [TeamsEntity]) {
+        
+    }
+    
+    public func driversFetched(_ drivers: [DriverEntity]) {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+}

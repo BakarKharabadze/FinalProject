@@ -22,19 +22,14 @@ public final class HomeViewController: UIViewController {
     private let topDriversHostingController: UIHostingController<TopDriversCoverFlowView>
     
     public class func create(with viewModel: HomeViewModel, newsViewControllersFactory: NewsDetailViewControllerFactory) -> HomeViewController {
-        let vc = HomeViewController()
-        vc.viewModel = viewModel
+        let vc = HomeViewController(viewModel: viewModel)
         vc.viewModel.router = DefaultHomeViewRouter(view: vc, newsViewControllerFactory: newsViewControllersFactory)
         return vc
     }
     
-    init() {
-        let drivers = [
-            DriverEntity(name: "Max Verstappen", imageName: "Max"),
-            DriverEntity(name: "Lewis Hamilton", imageName: "Max"),
-            DriverEntity(name: "Max Verstappen", imageName: "Max")
-        ]
-        self.topDriversHostingController = UIHostingController(rootView: TopDriversCoverFlowView(drivers: drivers))
+    init(viewModel: HomeViewModel) {
+        self.viewModel = viewModel
+        self.topDriversHostingController = UIHostingController(rootView: TopDriversCoverFlowView(drivers: viewModel.drivers))
         super.init(nibName: nil, bundle: nil)
     }
     

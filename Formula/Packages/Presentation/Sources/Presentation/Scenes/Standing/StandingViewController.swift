@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import Domain
 
-final class StandingViewController: UIViewController {
+public final class StandingViewController: UIViewController {
     
     private let mainStackView = UIStackView()
     private let titleLabel = UILabel()
@@ -17,12 +18,19 @@ final class StandingViewController: UIViewController {
     private let teamsView = UIView()
     private let teamsTitle = UILabel()
     private let teamsImage = UIImageView()
+    var viewModel: StandingViewModel!
     
-    override func viewDidLoad() {
+    public class func create(with viewModel: StandingViewModel, driversViewControllerFactory: DriversViewControllerFactory, teamsViewControllerFactory: TeamsViewControllerFactory) -> StandingViewController {
+        let vc = StandingViewController()
+        vc.viewModel = viewModel
+        vc.viewModel.router = DefaultStandingViewRouter(view: vc, driversViewControllerFactory: driversViewControllerFactory, teamsViewControllerFactory: teamsViewControllerFactory )
+        return vc
+    }
+    
+    public override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        
-        
+        viewModel.viewDidLoad()
     }
     
     private func setupUI() {
@@ -35,8 +43,6 @@ final class StandingViewController: UIViewController {
         setupTeamsTitle()
         setupTeamsImage()
         setupGestureRecognizers()
-        
-        
         setupCustomSpacing()
     }
     
@@ -48,7 +54,7 @@ final class StandingViewController: UIViewController {
         mainStackView.alignment = .center
         
         NSLayoutConstraint.activate([
-            mainStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 70),
+            mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
@@ -155,17 +161,23 @@ final class StandingViewController: UIViewController {
         
         let teamsTapGesture = UITapGestureRecognizer(target: self, action: #selector(teamsViewTapped))
         teamsView.addGestureRecognizer(teamsTapGesture)
-        
     }
     
     @objc private func driversViewTapped() {
-        let driversVC = DriversViewController()
-        navigationController?.pushViewController(driversVC, animated: false)
+        viewModel.driversViewTapped()
     }
     
     @objc private func teamsViewTapped() {
-        let teamsVC = TeamsViewController()
-        navigationController?.pushViewController(teamsVC, animated: false)
+        viewModel.teamsViewTapped()
     }
 }
 
+extension StandingViewController: StandingViewModelDelegate {
+    public func teamsFetched(_ teams: [Domain.TeamsEntity]) {
+        
+    }
+    
+    public func driversFetched(_ drivers: [DriverEntity]) {
+        // handle drivers fetched, if necessary
+    }
+}
