@@ -9,7 +9,7 @@ import SwiftUI
 import Domain
 
 struct PastFirstRace: View {
-    let race: RaceEntity
+    let raceResult: RaceResultEntity
 
     var body: some View {
         ZStack {
@@ -21,16 +21,16 @@ struct PastFirstRace: View {
             VStack(alignment: .leading) {
                 HStack {
                     VStack(alignment: .leading) {
-                        Text("Round \(race.round)")
+                        Text("Round \(raceResult.round)")
                             .foregroundColor(.blue)
                             .padding(.bottom, 2)
                         
-                        Text(race.grandPrixName)
+                        Text(raceResult.grandPrixName)
                             .font(.title)
                             .foregroundColor(.white)
                             .padding(.bottom, 1)
                         
-                        Text(race.date)
+                        Text(raceResult.date)
                             .foregroundColor(.gray)
                             .padding(.bottom, 20)
                     }
@@ -38,7 +38,7 @@ struct PastFirstRace: View {
                     
                     Spacer()
                     
-                    Image("Bahrein", bundle: .module)
+                    Image(raceResult.grandPrixName, bundle: .module)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 100, height: 100)
@@ -49,50 +49,50 @@ struct PastFirstRace: View {
                 HStack(spacing: 50) {
                     VStack {
                         ZStack(alignment: .topLeading) {
-                            Image("Lewis", bundle: .module)
+                            Image(raceResult.firstPlaceLastName, bundle: .module)
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: 50, height: 70)
-                            Text("1")
-                                .font(.system(size: 16))
+                            Text("01")
+                                .font(.system(size: 14))
                                 .fontWeight(.bold)
                                 .foregroundColor(.white)
-                                .padding([.top, .leading], -4)
+                                .offset(x: -5)
 
                         }
-                        Text("Hamilton")
+                        Text(raceResult.firstPlaceLastName)
                             .foregroundColor(.white)
                     }
                     
                     VStack {
                         ZStack(alignment: .topLeading) {
-                            Image("Verstappen", bundle: .module)
+                            Image(raceResult.secondPlaceLastName, bundle: .module)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 70, height: 70)
-                            Text("2")
-                                .font(.system(size: 16))
+                            Text("02")
+                                .font(.system(size: 14))
                                 .fontWeight(.bold)
                                 .foregroundColor(.white)
-                                .padding([.top, .leading], -4)
+                                .offset(x: 4)
                         }
-                        Text("Verstappen")
+                        Text(raceResult.secondPlaceLastName)
                             .foregroundColor(.white)
                     }
                     
                     VStack {
                         ZStack(alignment: .topLeading) {
-                            Image("Lando", bundle: .module)
+                            Image(raceResult.thirdPlaceLastName, bundle: .module)
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: 50, height: 70)
-                            Text("3")
-                                .font(.system(size: 16))
+                            Text("03")
+                                .font(.system(size: 14))
                                 .fontWeight(.bold)
                                 .foregroundColor(.white)
-                                .padding([.top, .leading], -4)
+                                .offset(x: -6)
                         }
-                        Text("Norris")
+                        Text(raceResult.thirdPlaceLastName)
                             .foregroundColor(.white)
                     }
                 }
@@ -101,5 +101,23 @@ struct PastFirstRace: View {
             }
             .padding()
         }
+    }
+}
+
+struct PastFirstRace_Previews: PreviewProvider {
+    static var previews: some View {
+        PastFirstRace(
+            raceResult: RaceResultEntity(
+                round: "1",
+                grandPrixName: "Australia",
+                date: "2024-01-01",
+                circuitId: "australia",
+                firstPlaceLastName: "Verstappen",
+                secondPlaceLastName: "Hamilton",
+                thirdPlaceLastName: "Leclerc"
+            )
+        )
+        .previewLayout(.sizeThatFits)
+        .padding()
     }
 }

@@ -59,7 +59,7 @@ class NewsCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             newsImageView.widthAnchor.constraint(equalToConstant: 350),
-            newsImageView.heightAnchor.constraint(equalToConstant: 150)
+            newsImageView.heightAnchor.constraint(equalToConstant: 200)
         ])
     }
     

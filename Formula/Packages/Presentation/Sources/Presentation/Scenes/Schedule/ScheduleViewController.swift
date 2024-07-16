@@ -207,7 +207,7 @@ extension ScheduleViewController: UITableViewDataSource {
         } else if tableView == pastTableView {
             if indexPath.row == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "PastFirstRaceViewCell", for: indexPath) as! PastFirstRaceViewCell
-                if let firstRace = viewModel.pastRaces.first {
+                if let firstRace = viewModel.raceResults.first {
                     cell.configure(with: firstRace)
                 }
                 return cell
@@ -224,6 +224,10 @@ extension ScheduleViewController: UITableViewDataSource {
 }
 
 extension ScheduleViewController: ScheduleViewModelDelegate {
+    public func raceResultFetched(_ raceResults: [Domain.RaceResultEntity]) {
+        self.pastTableView.reloadData()
+    }
+    
     public func racesFetched(_ races: [RaceEntity]) {
         DispatchQueue.main.async {
             self.upcomingTableView.reloadData()

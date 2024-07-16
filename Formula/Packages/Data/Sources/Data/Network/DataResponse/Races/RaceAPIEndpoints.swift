@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  RaceAPIEndpoints.swift
+//
 //
 //  Created by Bakar Kharabadze on 7/10/24.
 //

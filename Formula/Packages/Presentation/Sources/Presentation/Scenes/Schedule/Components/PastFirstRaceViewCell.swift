@@ -23,9 +23,9 @@ class PastFirstRaceViewCell: UITableViewCell {
     }
     
     private func setupUI() {
-        backgroundColor = .clear // Cell background color set to clear
+        backgroundColor = .clear
         guard let hostingView = hostingController?.view else { return }
-        hostingView.backgroundColor = .clear // Hosting view background color set to clear
+        hostingView.backgroundColor = .clear
         contentView.addSubview(hostingView)
         hostingView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -36,15 +36,15 @@ class PastFirstRaceViewCell: UITableViewCell {
         ])
     }
     
-    func configure(with race: RaceEntity) {
-        let pastFirstRaceView = PastFirstRace(race: race)
+    func configure(with race: RaceResultEntity) {
+        let pastFirstRaceView = PastFirstRace(raceResult: race)
         if let hostingController = hostingController {
             hostingController.rootView = pastFirstRaceView
         } else {
             let hostingController = UIHostingController(rootView: pastFirstRaceView)
             self.hostingController = hostingController
             guard let hostingView = hostingController.view else { return }
-            hostingView.backgroundColor = .clear // Hosting view background color set to clear
+            hostingView.backgroundColor = .clear
             contentView.addSubview(hostingView)
             hostingView.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([

@@ -51,7 +51,6 @@ public final class DriversViewController: UIViewController {
         title = "Drivers"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
     }
-
 }
 
 extension DriversViewController: UITableViewDataSource, UITableViewDelegate {
@@ -62,7 +61,7 @@ extension DriversViewController: UITableViewDataSource, UITableViewDelegate {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DriversTableViewCell", for: indexPath) as! DriversTableViewCell
         let driver = viewModel.drivers[indexPath.row]
-        cell.configure(with: driver)
+        cell.configure(with: driver, viewModel: viewModel)
         return cell
     }
 }
