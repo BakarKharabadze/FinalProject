@@ -12,7 +12,7 @@ import Domain
 public final class HighlightsViewController: UIViewController {
     
     private let mainStackView = UIStackView()
-    private let titleLabel = UILabel()
+    private let logoImageView = UIImageView()
     private let highlightsTableView = UITableView()
     private var webView: WKWebView?
     
@@ -35,6 +35,8 @@ public final class HighlightsViewController: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor(named: "CustomBackground")
+        navigationController?.setNavigationBarHidden(true, animated: false)
         setupUI()
         viewModel.delegate = self
         viewModel.viewDidLoad()
@@ -42,7 +44,7 @@ public final class HighlightsViewController: UIViewController {
     
     private func setupUI() {
         setupMainStackView()
-        setupTitleLabel()
+        setupLogoImageView()
         setupHighlightsTableView()
     }
     
@@ -56,57 +58,52 @@ public final class HighlightsViewController: UIViewController {
         mainStackView.spacing = 10
         
         NSLayoutConstraint.activate([
-            mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+            mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -20), // შეცვლილი
+            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
     
-    private func setupTitleLabel() {
-        titleLabel.text = "Highlights"
-        titleLabel.font = .systemFont(ofSize: 24, weight: .bold)
-        titleLabel.textAlignment = .left
+    private func setupLogoImageView() {
+        logoImageView.image = UIImage(named: "Youtube", in: Bundle.module, with: nil)
+        logoImageView.contentMode = .scaleAspectFit
+        logoImageView.translatesAutoresizingMaskIntoConstraints = false
         
-        mainStackView.addArrangedSubview(titleLabel)
+        mainStackView.addArrangedSubview(logoImageView)
+        
+        NSLayoutConstraint.activate([
+            logoImageView.heightAnchor.constraint(equalToConstant: 100),
+            logoImageView.widthAnchor.constraint(equalToConstant: 200),
+            logoImageView.centerXAnchor.constraint(equalTo: mainStackView.centerXAnchor)
+        ])
     }
     
     private func setupHighlightsTableView() {
         highlightsTableView.register(HighlightsTableViewCell.self, forCellReuseIdentifier: "HighlightsTableViewCell")
         highlightsTableView.dataSource = self
         highlightsTableView.delegate = self
-        highlightsTableView.rowHeight = 220
+        highlightsTableView.rowHeight = 340
         highlightsTableView.separatorStyle = .none
+        highlightsTableView.backgroundColor = UIColor(named: "CustomBackground")
         
         view.addSubview(highlightsTableView)
         highlightsTableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             highlightsTableView.topAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: 5),
-            highlightsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            highlightsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            highlightsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20)
+            highlightsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            highlightsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            highlightsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10)
         ])
     }
     
-    private func showVideoPlayer(videoId: String) {
-        let videoURLString = "https://www.youtube.com/embed/\(videoId)"
+    private func openVideoOnYouTube(videoId: String) {
+        let videoURLString = "https://www.youtube.com/watch?v=\(videoId)"
         guard let videoURL = URL(string: videoURLString) else { return }
         
-        let webView = WKWebView()
-        webView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(webView)
-        
-        NSLayoutConstraint.activate([
-            webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            webView.topAnchor.constraint(equalTo: view.topAnchor),
-            webView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-        
-        let request = URLRequest(url: videoURL)
-        webView.load(request)
-        
-        self.webView = webView
+        if UIApplication.shared.canOpenURL(videoURL) {
+            UIApplication.shared.open(videoURL, options: [:], completionHandler: nil)
+        }
     }
 }
 
@@ -126,7 +123,7 @@ extension HighlightsViewController: UITableViewDataSource, UITableViewDelegate {
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let highlight = viewModel.videos[indexPath.row]
-        showVideoPlayer(videoId: highlight.fetchedVideosId)
+        openVideoOnYouTube(videoId: highlight.fetchedVideosId)
     }
 }
 

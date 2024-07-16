@@ -48,7 +48,7 @@ struct RaceView: View {
         .padding()
         .background(
             RoundedRectangle(cornerRadius: 10)
-                .fill(Color.gray)
+                .fill(Color("CustomCellBackground"))
         )
         .frame(width: 340, height: 150)
         .cornerRadius(10)

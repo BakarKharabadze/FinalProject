@@ -29,7 +29,9 @@ public final class StandingViewController: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor(named: "CustomBackground")
         setupUI()
+        viewModel.delegate = self
         viewModel.viewDidLoad()
     }
     
@@ -68,12 +70,13 @@ public final class StandingViewController: UIViewController {
     private func setupTitleLabel() {
         titleLabel.text = "Standings"
         titleLabel.font = .systemFont(ofSize: 24, weight: .bold)
+        titleLabel.textColor = .white
         
         mainStackView.addArrangedSubview(titleLabel)
     }
     
     private func setupDriversView() {
-        driversView.backgroundColor = .gray
+        driversView.backgroundColor = UIColor(named: "CustomCellBackground")
         driversView.layer.cornerRadius = 10
         driversView.layer.masksToBounds = true
         
@@ -83,7 +86,6 @@ public final class StandingViewController: UIViewController {
             driversView.widthAnchor.constraint(equalToConstant: 350),
             driversView.heightAnchor.constraint(equalToConstant: 250)
         ])
-        
     }
     
     private func setupDriversTitle() {
@@ -98,7 +100,6 @@ public final class StandingViewController: UIViewController {
             driversTitle.leadingAnchor.constraint(equalTo: driversView.leadingAnchor, constant: 15),
             driversTitle.topAnchor.constraint(equalTo: driversView.topAnchor, constant: 25)
         ])
-        
     }
     
     private func setupDriversImage() {
@@ -106,16 +107,16 @@ public final class StandingViewController: UIViewController {
         driversImage.contentMode = .scaleAspectFill
         
         driversImage.translatesAutoresizingMaskIntoConstraints = false
-        
         driversView.addSubview(driversImage)
         
         NSLayoutConstraint.activate([
-            driversImage.trailingAnchor.constraint(equalTo: driversView.trailingAnchor, constant: -30)
+            driversImage.trailingAnchor.constraint(equalTo: driversView.trailingAnchor, constant: -10),
+            driversImage.bottomAnchor.constraint(equalTo: driversView.bottomAnchor, constant: 30)
         ])
     }
     
     private func setupTeamsView() {
-        teamsView.backgroundColor = .gray
+        teamsView.backgroundColor = UIColor(named: "CustomCellBackground")
         teamsView.layer.cornerRadius = 10
         teamsView.layer.masksToBounds = true
         
@@ -125,7 +126,6 @@ public final class StandingViewController: UIViewController {
             teamsView.widthAnchor.constraint(equalToConstant: 350),
             teamsView.heightAnchor.constraint(equalToConstant: 250)
         ])
-        
     }
     
     private func setupTeamsTitle() {
@@ -143,15 +143,16 @@ public final class StandingViewController: UIViewController {
     }
     
     private func setupTeamsImage() {
-        teamsImage.image = UIImage(named: "Livery")
+        teamsImage.image = UIImage(named: "Ferrari")
         teamsImage.contentMode = .scaleAspectFill
         
         teamsImage.translatesAutoresizingMaskIntoConstraints = false
-        
         teamsView.addSubview(teamsImage)
         
         NSLayoutConstraint.activate([
-            teamsImage.bottomAnchor.constraint(equalTo: teamsView.bottomAnchor)
+            teamsImage.bottomAnchor.constraint(equalTo: teamsView.bottomAnchor),
+            teamsImage.leadingAnchor.constraint(equalTo: teamsView.leadingAnchor, constant: 20),
+            teamsImage.trailingAnchor.constraint(equalTo: teamsView.trailingAnchor, constant: -20)
         ])
     }
     
@@ -178,6 +179,6 @@ extension StandingViewController: StandingViewModelDelegate {
     }
     
     public func driversFetched(_ drivers: [DriverEntity]) {
-        // handle drivers fetched, if necessary
+        
     }
 }

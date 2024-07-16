@@ -26,15 +26,16 @@ struct TopDriversCoverFlowView: View {
             HStack {
                 Text(driver.givenName)
                     .font(.title)
+                    .foregroundStyle(.white)
                 VStack {
-                    Image("max", bundle: .module)
+                    Image("Max", bundle: .module)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(height: 150)
                 }
             }
             .frame(width: 340, height: 150)
-            .background(Color.gray)
+            .background(Color("CustomCellBackground"))
             .cornerRadius(10)
         }
         .frame(height: 180)
