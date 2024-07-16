@@ -11,6 +11,7 @@ import Common
 
 public protocol HomeViewModelDelegate: AnyObject {
     func newsFetched(_ news: [NewsEntity])
+    func driversFetched(_ drivers: [DriverEntity])
 }
 
 public enum HomeViewRoute {
@@ -23,21 +24,26 @@ public protocol HomeViewRouter {
 
 public final class HomeViewModel {
     public var router: HomeViewRouter?
-    private let getNewsUseCase: GetNewsUseCase
     weak var delegate: HomeViewModelDelegate?
+    
+    private let getNewsUseCase: GetNewsUseCase
+    private let getDriversUseCase: GetDriversUseCase
     
     public var drivers: [DriverEntity] = []
     public var news: [NewsEntity] = []
+    public var selectedNews: NewsEntity?
     
-    public init(getNewsUseCase: GetNewsUseCase) {
+    public init(getNewsUseCase: GetNewsUseCase, getDriversUseCase: GetDriversUseCase) {
         self.getNewsUseCase = getNewsUseCase
+        self.getDriversUseCase = getDriversUseCase
     }
     
     public func viewDidLoad() {
         fetchNews(query: "f1", from: "current", sortBy: "publishedAt", language: "en", apiKey: "57a97376638a49eeb91a6fd7dad7f1be")
+        fetchDrivers()
     }
     
-    public func fetchNews(query: String, from: String, sortBy: String, language: String, apiKey: String) {
+    private func fetchNews(query: String, from: String, sortBy: String, language: String, apiKey: String) {
         
         getNewsUseCase.execute(query: query, from: from, sortBy: sortBy, language: language, apiKey: apiKey) { [weak self] result in
             switch result {
@@ -53,4 +59,22 @@ public final class HomeViewModel {
         
     }
     
+    private func fetchDrivers() {
+        getDriversUseCase.execute { [weak self] result in
+            switch result {
+            case .success(let drivers):
+                DispatchQueue.main.async {
+                    self?.drivers = drivers
+                    self?.delegate?.driversFetched(drivers)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func newsViewTapped(news: NewsEntity) {
+        selectedNews = news
+        router?.perform(to: .showNewsDetail)
+    }
 }

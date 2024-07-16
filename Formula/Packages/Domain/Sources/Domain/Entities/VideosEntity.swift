@@ -12,7 +12,7 @@ public struct VideosEntity {
     public let fetchedVideosImgUrl: String
     public let fetchedVideosId: String
     public var videoURL: String {
-        return "https://www.youtube.com/embed/\(fetchedVideosId)"
+        return "https://www.youtube.com/watch?v=\(fetchedVideosId)"
     }
     
     public init(fetchedVideosTitle: String, fetchedVideosImgUrl: String, fetchedVideosId: String) {

@@ -31,9 +31,11 @@ class DriversTableViewCell: UITableViewCell {
     }
     
     private func setupUI() {
+        contentView.backgroundColor = UIColor(named: "CustomBackground")
+        
         contentView.addSubview(containerView)
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.backgroundColor = UIColor(white: 0.15, alpha: 1.0)
+        containerView.backgroundColor = UIColor(named: "CustomCellBackground")
         containerView.layer.cornerRadius = 10
         
         NSLayoutConstraint.activate([
@@ -131,7 +133,7 @@ class DriversTableViewCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             driverImageView.widthAnchor.constraint(equalToConstant: 80),
-            driverImageView.heightAnchor.constraint(equalToConstant: 80)
+            driverImageView.heightAnchor.constraint(equalToConstant: 100)
         ])
     }
     
@@ -140,6 +142,7 @@ class DriversTableViewCell: UITableViewCell {
         nameLabel.text = driver.givenName + " " + driver.familyName
         teamLabel.text = driver.constructorName
         pointsLabel.text = "\(driver.points)"
-
+        driverImageView.image = UIImage(named: driver.driverImage, in: .module, with: nil)
     }
 }
+

@@ -11,7 +11,7 @@ import Presentation
 import Network
 import Data
 
-final class NewsSceneDIContainer {
+final class NewsDetailsSceneDIContainer {
     
     //MARK: - Dependencies
     struct Dependencies {
@@ -28,23 +28,19 @@ final class NewsSceneDIContainer {
 }
 
 //MARK: - Use Cases
-extension NewsSceneDIContainer {
+extension NewsDetailsSceneDIContainer {
     
 }
 
 //MARK: - Repository
-extension NewsSceneDIContainer {
+extension NewsDetailsSceneDIContainer {
     
 }
 
 
-//MARK: - HomeViewController Factory
-extension NewsSceneDIContainer: NewsDetailViewControllerFactory {
-    func makeNewsDetailViewController() -> UIViewController {
-        NewsDetailViewController.create(with: makeNewsDetailViewModel())
-    }
-    
-    func makeNewsDetailViewModel() -> NewsDetailViewModel {
-        NewsDetailViewModel()
+//MARK: - NewsViewController Factory
+extension NewsDetailsSceneDIContainer: NewsDetailViewControllerFactory {
+    func makeNewsDetailViewController(with viewModel: NewsDetailViewModel) -> NewsDetailViewController {
+        NewsDetailViewController.create(with: viewModel)
     }
 }

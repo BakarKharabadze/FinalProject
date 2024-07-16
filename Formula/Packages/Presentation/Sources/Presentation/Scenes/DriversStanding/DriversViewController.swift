@@ -22,6 +22,7 @@ public final class DriversViewController: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor(named: "CustomBackground")
         setupUI()
     }
     
@@ -35,6 +36,7 @@ public final class DriversViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.backgroundColor = UIColor(named: "CustomBackground")
         tableView.register(DriversTableViewCell.self, forCellReuseIdentifier: "DriversTableViewCell")
         
         NSLayoutConstraint.activate([
@@ -47,7 +49,9 @@ public final class DriversViewController: UIViewController {
     
     private func setupTitleLabel() {
         title = "Drivers"
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
     }
+
 }
 
 extension DriversViewController: UITableViewDataSource, UITableViewDelegate {

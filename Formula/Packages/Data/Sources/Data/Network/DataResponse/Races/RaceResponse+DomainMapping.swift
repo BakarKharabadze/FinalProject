@@ -17,7 +17,8 @@ extension RaceEntity {
                 date: race.date ?? "",
                 image: race.circuit?.url ?? "",
                 startsIn: race.time ?? "",
-                countryFlag: race.circuit?.location.country ?? ""
+                countryFlag: race.circuit?.location.country ?? "", 
+                circuitID: race.circuit?.circuitID ?? ""
             )
         }
     }

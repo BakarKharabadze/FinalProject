@@ -12,11 +12,13 @@ public struct TeamsEntity {
     public let constructorName: String
     public let points: String
     public let nationality: String
+    public let liveryImage: String
     
-    public init(position: String, constructorName: String, points: String, nationality: String) {
+    public init(position: String, constructorName: String, points: String, nationality: String, liveryImage: String) {
         self.position = position
         self.constructorName = constructorName
         self.points = points
         self.nationality = nationality
+        self.liveryImage = liveryImage
     }
 }

@@ -20,12 +20,15 @@ public final class TeamsViewController: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor(named: "CustomBackground")
         setupTableView()
+        setupTitleLabel()
     }
     
     private func setupTableView() {
         tableView.register(TeamsTableViewCell.self, forCellReuseIdentifier: "TeamsTableViewCell")
         tableView.dataSource = self
+        tableView.backgroundColor = UIColor(named: "CustomBackground")
         
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -39,6 +42,12 @@ public final class TeamsViewController: UIViewController {
         
         tableView.reloadData()
     }
+    
+    private func setupTitleLabel() {
+        title = "Teams"
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+    }
+
 }
 
 extension TeamsViewController: UITableViewDataSource {
@@ -53,3 +62,4 @@ extension TeamsViewController: UITableViewDataSource {
         return cell
     }
 }
+

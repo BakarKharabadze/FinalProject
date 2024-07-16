@@ -18,9 +18,7 @@ public final class HomeViewController: UIViewController {
     private let newsLabel = UILabel()
     private let scrollView = UIScrollView()
     public var viewModel: HomeViewModel!
-    
-    private let topDriversHostingController: UIHostingController<TopDriversCoverFlowView>
-    
+        
     public class func create(with viewModel: HomeViewModel, newsViewControllersFactory: NewsDetailViewControllerFactory) -> HomeViewController {
         let vc = HomeViewController(viewModel: viewModel)
         vc.viewModel.router = DefaultHomeViewRouter(view: vc, newsViewControllerFactory: newsViewControllersFactory)
@@ -29,7 +27,6 @@ public final class HomeViewController: UIViewController {
     
     init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
-        self.topDriversHostingController = UIHostingController(rootView: TopDriversCoverFlowView(drivers: viewModel.drivers))
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -44,9 +41,11 @@ public final class HomeViewController: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor(named: "CustomBackground")
         setupUI()
         viewModel.delegate = self
         viewModel.viewDidLoad()
+        newsTableView.delegate = self
     }
     
     private func setupUI() {
@@ -56,7 +55,6 @@ public final class HomeViewController: UIViewController {
         setupRaceNameLabel()
         setupRaceView()
         setupStandingLabel()
-        setupTopDriversView()
         setupCustomSpacing()
         setupNewsTableView()
         setupNewsLabel()
@@ -91,11 +89,11 @@ public final class HomeViewController: UIViewController {
     }
     
     private func setupCustomSpacing() {
-        mainStackView.setCustomSpacing(40, after: raceViewHostingController.view)
+        mainStackView.setCustomSpacing(20, after: raceViewHostingController.view)
     }
     
     private func setupLogo() {
-        logo.image = UIImage(named: "Logo")
+        logo.image = UIImage(named: "Formula1Logo")
         
         logo.translatesAutoresizingMaskIntoConstraints = false
         logo.widthAnchor.constraint(equalToConstant: 20).isActive = true
@@ -114,12 +112,14 @@ public final class HomeViewController: UIViewController {
         raceNameLabel.text = "Race"
         raceNameLabel.font = .systemFont(ofSize: 18)
         raceNameLabel.textAlignment = .left
+        raceNameLabel.textColor = .white
         
         mainStackView.addArrangedSubview(raceNameLabel)
     }
     
     private func setupRaceView() {
         addChild(raceViewHostingController)
+        raceViewHostingController.view.backgroundColor = .clear
         mainStackView.addArrangedSubview(raceViewHostingController.view)
         raceViewHostingController.didMove(toParent: self)
         
@@ -143,13 +143,16 @@ public final class HomeViewController: UIViewController {
         standingLabel.text = "Standing"
         standingLabel.font = .systemFont(ofSize: 18)
         standingLabel.textAlignment = .left
+        standingLabel.textColor = .white
         
         mainStackView.addArrangedSubview(standingLabel)
     }
     
-    private func setupTopDriversView() {
+    private func setupTopDriversView(with drivers: [DriverEntity]) {
+        let topDriversHostingController = UIHostingController(rootView: TopDriversCoverFlowView(drivers: drivers))
+        topDriversHostingController.view.backgroundColor = .clear
         addChild(topDriversHostingController)
-        mainStackView.addArrangedSubview(topDriversHostingController.view)
+        mainStackView.insertArrangedSubview(topDriversHostingController.view, at: 4)
         topDriversHostingController.didMove(toParent: self)
         
         topDriversHostingController.view.translatesAutoresizingMaskIntoConstraints = false
@@ -163,6 +166,7 @@ public final class HomeViewController: UIViewController {
         newsLabel.text = "News"
         newsLabel.font = .systemFont(ofSize: 18)
         newsLabel.textAlignment = .left
+        newsLabel.textColor = .white
         
         mainStackView.addArrangedSubview(newsLabel)
     }
@@ -186,9 +190,16 @@ public final class HomeViewController: UIViewController {
     
 }
 
+extension HomeViewController: UITableViewDelegate {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedNews = viewModel.news[indexPath.row]
+        viewModel.newsViewTapped(news: selectedNews)
+    }
+}
+
 extension HomeViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-          viewModel.news.count
+        viewModel.news.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -196,8 +207,8 @@ extension HomeViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         let newsEntity = viewModel.news[indexPath.row]
-               cell.configure(with: newsEntity)
-               return cell
+        cell.configure(with: newsEntity)
+        return cell
     }
 }
 
@@ -205,6 +216,12 @@ extension HomeViewController: HomeViewModelDelegate {
     public func newsFetched(_ news: [Domain.NewsEntity]) {
         DispatchQueue.main.async {
             self.newsTableView.reloadData()
+        }
+    }
+    
+    public func driversFetched(_ drivers: [DriverEntity]) {
+        DispatchQueue.main.async {
+            self.setupTopDriversView(with: drivers)
         }
     }
 }

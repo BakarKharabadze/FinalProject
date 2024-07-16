@@ -5,6 +5,13 @@
 //  Created by Bakar Kharabadze on 7/3/24.
 //
 
+//
+//  TabBarController.swift
+//
+//
+//  Created by Bakar Kharabadze on 7/3/24.
+//
+
 import UIKit
 
 final public class TabBarController: UITabBarController {
@@ -37,7 +44,7 @@ final public class TabBarController: UITabBarController {
         let home = createNav(with: "Home", and: UIImage(systemName: "house") ?? UIImage(), vc: homeSceneViewControllerFactory.makeHomeViewController())
         let schedule = createNav(with: "Schedule", and: UIImage(systemName: "calendar") ?? UIImage(), vc: scheduleSceneViewControllerFactory.makeScheduleViewController())
         let standing = createNav(with: "Standing", and: UIImage(systemName: "chart.bar") ?? UIImage(), vc: standingSceneViewControllerFactory.makeStandingViewController())
-        let highlights = createNav(with: "Highlights", and: UIImage(systemName: "star.fill") ?? UIImage(), vc: highlightSceneViewControllerFactory.makeHighlightViewController())
+        let highlights = createNav(with: "Highlights", and: resizeImage(image: UIImage(named: "YoutubeLogo") ?? UIImage(), targetSize: CGSize(width: 30, height: 30)), vc: highlightSceneViewControllerFactory.makeHighlightViewController())
         
         setViewControllers([home, schedule, standing, highlights], animated: false)
     }
@@ -51,10 +58,33 @@ final public class TabBarController: UITabBarController {
         return nav
     }
     
+    private func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+        let size = image.size
+        
+        let widthRatio  = targetSize.width  / size.width
+        let heightRatio = targetSize.height / size.height
+        
+        var newSize: CGSize
+        if(widthRatio > heightRatio) {
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        } else {
+            newSize = CGSize(width: size.width * widthRatio, height: size.height * widthRatio)
+        }
+        
+        let rect = CGRect(origin: .zero, size: newSize)
+        
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage!
+    }
+    
     private func setupTabBarAppearance() {
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = UIColor(white: 0.1, alpha: 1.0) 
+        appearance.backgroundColor = UIColor(white: 0.1, alpha: 1.0)
         
         let itemAppearance = UITabBarItemAppearance()
         itemAppearance.normal.iconColor = UIColor.lightGray
@@ -70,6 +100,3 @@ final public class TabBarController: UITabBarController {
         tabBar.scrollEdgeAppearance = appearance
     }
 }
-
-
-

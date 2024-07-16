@@ -15,7 +15,8 @@ extension NewsEntity {
                        description: article.description,
                        url: article.url,
                        urlToImage: article.urlToImage,
-                       publishedAt: article.publishedAt)
+                       publishedAt: article.publishedAt, 
+                       content: article.content)
         }
     }
 }

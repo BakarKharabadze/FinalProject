@@ -1,6 +1,6 @@
 //
 //  TeamsTableViewCell.swift
-//  
+//
 //
 //  Created by Bakar Kharabadze on 7/7/24.
 //
@@ -31,9 +31,11 @@ class TeamsTableViewCell: UITableViewCell {
     }
     
     private func setupUI() {
+        contentView.backgroundColor = UIColor(named: "CustomBackground")
+        
         contentView.addSubview(containerView)
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.backgroundColor = UIColor(white: 0.15, alpha: 1.0)
+        containerView.backgroundColor = UIColor(named: "CustomCellBackground")
         containerView.layer.cornerRadius = 10
         
         NSLayoutConstraint.activate([
@@ -73,13 +75,8 @@ class TeamsTableViewCell: UITableViewCell {
         rankingLabel.font = .systemFont(ofSize: 18, weight: .bold)
         rankingLabel.textColor = .white
         
-        containerView.addSubview(rankingLabel)
+        mainStackView.addArrangedSubview(rankingLabel)
         rankingLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            rankingLabel.topAnchor.constraint(equalTo: mainStackView.topAnchor, constant: 5),
-            rankingLabel.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor, constant: 5)
-        ])
     }
     
     private func setupTextStackView() {
@@ -88,11 +85,6 @@ class TeamsTableViewCell: UITableViewCell {
         textStackView.spacing = 4
         
         mainStackView.addArrangedSubview(textStackView)
-        
-        NSLayoutConstraint.activate([
-            textStackView.topAnchor.constraint(equalTo: mainStackView.topAnchor, constant: 5),
-            textStackView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor, constant: 40)
-        ])
     }
     
     private func setupTeamNameLabel() {
@@ -133,24 +125,24 @@ class TeamsTableViewCell: UITableViewCell {
     }
     
     private func setupLiveryImageView() {
+        mainStackView.addArrangedSubview(liveryImageView)
         liveryImageView.translatesAutoresizingMaskIntoConstraints = false
-        liveryImageView.contentMode = .scaleAspectFill
+        liveryImageView.contentMode = .scaleAspectFit
         liveryImageView.layer.cornerRadius = 8
         liveryImageView.clipsToBounds = true
         
-        mainStackView.addArrangedSubview(liveryImageView)
-        
         NSLayoutConstraint.activate([
-            liveryImageView.widthAnchor.constraint(equalToConstant: 80),
+            liveryImageView.widthAnchor.constraint(equalToConstant: 120),
             liveryImageView.heightAnchor.constraint(equalToConstant: 80)
         ])
     }
-    
     
     func configure(with team: TeamsEntity) {
         rankingLabel.text = team.position
         teamNameLabel.text = team.constructorName
         liveryNameLabel.text = team.nationality
         teamPointsLabel.text = "\(team.points)"
+        liveryImageView.image = UIImage(named: team.liveryImage, in: .module, with: nil)
     }
+
 }

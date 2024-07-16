@@ -34,12 +34,20 @@ extension HomeSceneDIContainer {
     func makeGetNewsUseCase() -> GetNewsUseCase {
         DefaultGetNewsUseCase(repository: makeNewsRepository())
     }
+    
+    func makeGetDriversUseCase() -> GetDriversUseCase {
+        DefaultGetDriversUseCase(repository: makeDriversRepository())
+    }
 }
 
 //MARK: - Repository
 extension HomeSceneDIContainer {
     func makeNewsRepository() -> NewsRepository {
         DefaultNewsRepository(dataTransferService: dependencies.newsApiDataTransferService)
+    }
+    
+    func makeDriversRepository() -> DriversRepository {
+        DefaultDriversRepository(dataTransferService: dependencies.formulaApiDataTransferService)
     }
 }
 
@@ -51,6 +59,6 @@ extension HomeSceneDIContainer: HomeViewControllerFactory {
     }
     
     func makeHomeViewModel() -> HomeViewModel {
-        HomeViewModel(getNewsUseCase: makeGetNewsUseCase())
+        HomeViewModel(getNewsUseCase: makeGetNewsUseCase(), getDriversUseCase: makeGetDriversUseCase())
     }
 }

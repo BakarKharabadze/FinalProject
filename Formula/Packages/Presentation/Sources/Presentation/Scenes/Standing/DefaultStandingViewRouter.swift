@@ -22,10 +22,10 @@ class DefaultStandingViewRouter: StandingViewRouter {
         switch route {
         case .showDriversDetail(let viewModel):
             let vc = driversViewControllerFactory.makeDriversViewController(with: viewModel)
-            view?.navigationController?.pushViewController(vc, animated: true)
+            view?.navigationController?.pushViewController(vc, animated: false)
         case .showTeamsDetail(let viewModel):
             let vc = teamsViewControllerFactory.makeTeamsViewController(with: viewModel)
-            view?.navigationController?.pushViewController(vc, animated: true)
+            view?.navigationController?.pushViewController(vc, animated: false)
         }
     }
 }

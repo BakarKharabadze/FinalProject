@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB786DD32C441F64001FDE8E /* RaceDetailsSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB786DD22C441F64001FDE8E /* RaceDetailsSceneDIContainer.swift */; };
 		FB7D1EEA2C3D35480067E04B /* AppDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7D1EE92C3D35480067E04B /* AppDIContainer.swift */; };
 		FB7D1EEC2C3D358E0067E04B /* AppConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7D1EEB2C3D358E0067E04B /* AppConfigurations.swift */; };
 		FB7D1EEE2C3D3EE90067E04B /* HomeSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7D1EED2C3D3EE90067E04B /* HomeSceneDIContainer.swift */; };
@@ -44,6 +45,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FB786DD22C441F64001FDE8E /* RaceDetailsSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceDetailsSceneDIContainer.swift; sourceTree = "<group>"; };
 		FB7D1EE92C3D35480067E04B /* AppDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDIContainer.swift; sourceTree = "<group>"; };
 		FB7D1EEB2C3D358E0067E04B /* AppConfigurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigurations.swift; sourceTree = "<group>"; };
 		FB7D1EED2C3D3EE90067E04B /* HomeSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSceneDIContainer.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 				FB7D1EED2C3D3EE90067E04B /* HomeSceneDIContainer.swift */,
 				FBFD91532C3EAC360008947F /* ScheduleSceneDIContainer.swift */,
 				FB7D1EEF2C3D51FC0067E04B /* NewsSceneDIContainer.swift */,
+				FB786DD22C441F64001FDE8E /* RaceDetailsSceneDIContainer.swift */,
 				FBB45C092C406D670061BC59 /* DriversSceneDIContainer.swift */,
 				FBFFC0262C4003150093C155 /* StandingSceneDIContainer.swift */,
 				FBB45C0B2C4182660061BC59 /* TeamsSceneDIContainer.swift */,
@@ -342,6 +345,7 @@
 				FB7D1EEC2C3D358E0067E04B /* AppConfigurations.swift in Sources */,
 				FB7D1EEA2C3D35480067E04B /* AppDIContainer.swift in Sources */,
 				FB7D1EEE2C3D3EE90067E04B /* HomeSceneDIContainer.swift in Sources */,
+				FB786DD32C441F64001FDE8E /* RaceDetailsSceneDIContainer.swift in Sources */,
 				FBB45C0E2C41ACE30061BC59 /* HighlighsSceneDIContainer.swift in Sources */,
 				FBFFC0272C4003150093C155 /* StandingSceneDIContainer.swift in Sources */,
 			);
