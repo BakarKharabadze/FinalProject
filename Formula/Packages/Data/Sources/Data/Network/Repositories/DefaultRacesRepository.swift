@@ -33,7 +33,8 @@ extension DefaultRacesRepository: RaceRepository {
                         date: race.date ?? "",
                         image: race.circuit?.url ?? "",
                         startsIn: race.time ?? "",
-                        countryFlag: race.circuit?.location.country ?? ""
+                        countryFlag: race.raceName, 
+                        circuitID: race.circuit?.circuitID ?? ""
                     )
                 }
                 result(.success(races))

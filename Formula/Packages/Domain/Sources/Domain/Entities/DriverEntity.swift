@@ -15,13 +15,15 @@ public struct DriverEntity: Identifiable {
     public let familyName: String
     public let constructorName: String
     public let points: String
+    public let driverImage: String
     
-    public init(driverId: String, position: String, givenName: String, familyName: String, constructorName: String, points: String) {
+    public init(driverId: String, position: String, givenName: String, familyName: String, constructorName: String, points: String, driverImage: String) {
         self.driverId = driverId
         self.position = position
         self.givenName = givenName
         self.familyName = familyName
         self.constructorName = constructorName
         self.points = points
+        self.driverImage = driverImage
     }
 }

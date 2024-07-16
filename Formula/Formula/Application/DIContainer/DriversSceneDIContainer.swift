@@ -48,9 +48,9 @@ extension DriversSceneDIContainer: DriversViewControllerFactory  {
         DriversViewController.create(with: viewModel)
     }
     
-    func makeDriversViewController() -> UIViewController {
-        DriversViewController.create(with: makeDriversDetailViewModel())
-    }
+//    func makeDriversViewController() -> UIViewController {
+//        DriversViewController.create(with: makeDriversDetailViewModel())
+//    }
     
     func makeDriversDetailViewModel() -> DriversViewModel {
         DriversViewModel(drivers: [])

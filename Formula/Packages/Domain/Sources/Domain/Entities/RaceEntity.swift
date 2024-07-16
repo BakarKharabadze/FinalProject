@@ -11,25 +11,18 @@ public struct RaceEntity {
     public let round: String
     public let grandPrixName: String
     public let date: String
-    public let image: String
+    public var image: String
     public let startsIn: String
     public let countryFlag: String
+    public let circuitID: String
     
-    public enum CodingKeys: String, CodingKey {
-        case season, round, url, raceName, circuit, date, time
-        case firstPractice = "FirstPractice"
-        case secondPractice = "SecondPractice"
-        case thirdPractice = "ThirdPractice"
-        case qualifying = "Qualifying"
-        case sprint = "Sprint"
-    }
-    
-    public init(round: String, grandPrixName: String, date: String, image: String, startsIn: String, countryFlag: String) {
+    public init(round: String, grandPrixName: String, date: String, image: String, startsIn: String, countryFlag: String, circuitID: String) {
         self.round = round
         self.grandPrixName = grandPrixName
         self.date = date
         self.image = image
         self.startsIn = startsIn
         self.countryFlag = countryFlag
+        self.circuitID = circuitID
     }
 }

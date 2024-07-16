@@ -17,7 +17,8 @@ extension DriverEntity {
             givenName: driver.driver.givenName,
             familyName: driver.driver.familyName,
             constructorName: driver.constructors.first?.name ?? "",
-            points: driver.points
+            points: driver.points,
+            driverImage: driver.driver.familyName
            )
             
         }
