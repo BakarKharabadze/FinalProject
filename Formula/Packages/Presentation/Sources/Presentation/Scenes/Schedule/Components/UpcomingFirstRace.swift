@@ -14,7 +14,7 @@ struct UpcomingFirstRace: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 15)
-                .fill(Color(UIColor(white: 0.15, alpha: 1.0)))
+                .fill(Color("CustomCellBackground"))
                 .frame(width: 350, height: 260)
                 .shadow(radius: 5)
             
@@ -37,18 +37,20 @@ struct UpcomingFirstRace: View {
                         .foregroundColor(.white)
                         .padding(.bottom, 2)
                     
+                    let remainingTime = calculateRemainingTime(from: race.date)
+                    
                     HStack(spacing: 8) {
-                        Text("04")
+                        Text(remainingTime.days)
                             .font(.title)
                             .foregroundColor(.yellow)
                             .padding(.horizontal, 4)
                         
-                        Text("16")
+                        Text(remainingTime.hours)
                             .font(.title)
                             .foregroundColor(.yellow)
                             .padding(.horizontal, 5)
                         
-                        Text("40")
+                        Text(remainingTime.minutes)
                             .font(.title)
                             .foregroundColor(.yellow)
                             .padding(.horizontal, 0)
@@ -74,15 +76,31 @@ struct UpcomingFirstRace: View {
                 
                 Spacer()
     
-                Image(systemName: "heart")
+                Image(race.circuitID, bundle: .module)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .foregroundColor(.red)
                     .frame(width: 100, height: 100)
                     .padding()
             }
             .padding()
         }
+    }
+    
+    private func calculateRemainingTime(from dateString: String) -> (days: String, hours: String, minutes: String) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        guard let raceDate = dateFormatter.date(from: dateString) else {
+            return ("00", "00", "00")
+        }
+        
+        let currentDate = Date()
+        let components = Calendar.current.dateComponents([.day, .hour, .minute], from: currentDate, to: raceDate)
+        
+        let days = String(format: "%02d", components.day ?? 0)
+        let hours = String(format: "%02d", components.hour ?? 0)
+        let minutes = String(format: "%02d", components.minute ?? 0)
+        
+        return (days, hours, minutes)
     }
 }
 

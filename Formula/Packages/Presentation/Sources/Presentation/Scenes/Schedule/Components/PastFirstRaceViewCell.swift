@@ -1,6 +1,6 @@
 //
 //  PastFirstRaceViewCell.swift
-//  
+//
 //
 //  Created by Bakar Kharabadze on 7/7/24.
 //
@@ -23,7 +23,9 @@ class PastFirstRaceViewCell: UITableViewCell {
     }
     
     private func setupUI() {
+        backgroundColor = .clear // Cell background color set to clear
         guard let hostingView = hostingController?.view else { return }
+        hostingView.backgroundColor = .clear // Hosting view background color set to clear
         contentView.addSubview(hostingView)
         hostingView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -42,6 +44,7 @@ class PastFirstRaceViewCell: UITableViewCell {
             let hostingController = UIHostingController(rootView: pastFirstRaceView)
             self.hostingController = hostingController
             guard let hostingView = hostingController.view else { return }
+            hostingView.backgroundColor = .clear // Hosting view background color set to clear
             contentView.addSubview(hostingView)
             hostingView.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
@@ -53,4 +56,3 @@ class PastFirstRaceViewCell: UITableViewCell {
         }
     }
 }
-

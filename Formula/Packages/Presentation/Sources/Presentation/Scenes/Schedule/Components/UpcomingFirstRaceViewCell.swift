@@ -23,7 +23,9 @@ class UpcomingFirstRaceViewCell: UITableViewCell {
     }
     
     private func setupUI() {
+        backgroundColor = .clear
         guard let hostingView = hostingController?.view else { return }
+        hostingView.backgroundColor = .clear
         contentView.addSubview(hostingView)
         hostingView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -42,6 +44,7 @@ class UpcomingFirstRaceViewCell: UITableViewCell {
             let hostingController = UIHostingController(rootView: upcomingFirstRaceView)
             self.hostingController = hostingController
             guard let hostingView = hostingController.view else { return }
+            hostingView.backgroundColor = .clear
             contentView.addSubview(hostingView)
             hostingView.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
@@ -53,6 +56,4 @@ class UpcomingFirstRaceViewCell: UITableViewCell {
         }
     }
 }
-
-
 
