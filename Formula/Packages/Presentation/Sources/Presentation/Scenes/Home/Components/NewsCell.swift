@@ -16,6 +16,7 @@ class NewsCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        contentView.backgroundColor = UIColor(named: "CustomBackground")
         setupUI()
     }
     
@@ -24,7 +25,7 @@ class NewsCell: UITableViewCell {
     }
     
     private func setupUI() {
-        mainStackView.backgroundColor = .gray
+        mainStackView.backgroundColor = UIColor(named: "CustomCellBackground")
         mainStackView.layer.cornerRadius = 10
         mainStackView.layer.masksToBounds = true
         setupMainStackView()
@@ -65,6 +66,7 @@ class NewsCell: UITableViewCell {
     private func setupTitleLabel() {
         titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
         titleLabel.numberOfLines = 2
+        titleLabel.textColor = .white
         
         mainStackView.addArrangedSubview(titleLabel)
     }

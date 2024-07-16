@@ -8,5 +8,5 @@
 import UIKit
 
 public protocol NewsDetailViewControllerFactory {
-    func makeNewsDetailViewController() -> UIViewController
+    func makeNewsDetailViewController(with viewModel: NewsDetailViewModel) -> NewsDetailViewController
 }
