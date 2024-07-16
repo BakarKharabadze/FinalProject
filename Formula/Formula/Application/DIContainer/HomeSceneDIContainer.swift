@@ -38,6 +38,10 @@ extension HomeSceneDIContainer {
     func makeGetDriversUseCase() -> GetDriversUseCase {
         DefaultGetDriversUseCase(repository: makeDriversRepository())
     }
+    
+    func makeGetRaceUseCase() -> GetRacesUseCase {
+        DefaultGetRacesUseCase(repository: makeRaceRepository())
+    }
 }
 
 //MARK: - Repository
@@ -49,6 +53,10 @@ extension HomeSceneDIContainer {
     func makeDriversRepository() -> DriversRepository {
         DefaultDriversRepository(dataTransferService: dependencies.formulaApiDataTransferService)
     }
+    
+    func makeRaceRepository() -> RaceRepository {
+        DefaultRacesRepository(dataTransferService: dependencies.formulaApiDataTransferService)
+    }
 }
 
 
@@ -59,6 +67,6 @@ extension HomeSceneDIContainer: HomeViewControllerFactory {
     }
     
     func makeHomeViewModel() -> HomeViewModel {
-        HomeViewModel(getNewsUseCase: makeGetNewsUseCase(), getDriversUseCase: makeGetDriversUseCase())
+        HomeViewModel(getNewsUseCase: makeGetNewsUseCase(), getDriversUseCase: makeGetDriversUseCase(), getUpcomingRacesUseCase: makeGetRaceUseCase())
     }
 }

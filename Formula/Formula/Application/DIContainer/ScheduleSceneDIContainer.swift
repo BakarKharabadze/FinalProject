@@ -32,12 +32,20 @@ extension ScheduleSceneDIContainer {
     func makeGetRacesUseCase() -> GetRacesUseCase {
         DefaultGetRacesUseCase(repository: makeRaceRepository())
     }
+    
+    func makeGetRaceResultUseCase() -> GetRaceResultUseCase {
+        DefaultGetRaceResultUseCase(repository: makeRaceResultRepository())
+    }
 }
 
 //MARK: - Repository
 extension ScheduleSceneDIContainer {
     func makeRaceRepository() -> RaceRepository {
         DefaultRacesRepository(dataTransferService: dependencies.formulaApiDataTransferService)
+    }
+    
+    func makeRaceResultRepository() -> RaceResultRepository {
+        DefaultRaceResultRepository(dataTransferService: dependencies.formulaApiDataTransferService)
     }
 
 }
@@ -50,7 +58,7 @@ extension ScheduleSceneDIContainer: ScheduleViewControllerFactory {
     }
 
     func makeScheduleViewModel() -> ScheduleViewModel {
-        ScheduleViewModel(getRacesUseCase: makeGetRacesUseCase())
+        ScheduleViewModel(getRacesUseCase: makeGetRacesUseCase(), getRaceResultUseCase: makeGetRaceResultUseCase())
     }
     
 }
