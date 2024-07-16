@@ -42,6 +42,7 @@ public final class HomeViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "CustomBackground")
+        //navigationController?.setNavigationBarHidden(true, animated: false)
         setupUI()
         viewModel.delegate = self
         viewModel.viewDidLoad()
@@ -96,14 +97,15 @@ public final class HomeViewController: UIViewController {
         logo.image = UIImage(named: "Formula1Logo")
         
         logo.translatesAutoresizingMaskIntoConstraints = false
-        logo.widthAnchor.constraint(equalToConstant: 20).isActive = true
-        logo.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        logo.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        logo.heightAnchor.constraint(equalToConstant: 100).isActive = true
         
         logo.contentMode = .scaleAspectFit
         
         mainStackView.addArrangedSubview(logo)
         
         NSLayoutConstraint.activate([
+            logo.topAnchor.constraint(equalTo: mainStackView.topAnchor, constant: -15),
             logo.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }

@@ -27,7 +27,7 @@ class ScheduleViewCell: UITableViewCell {
     }
     
     private func setupUI() {
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = UIColor(named: "CustomBackground")
         
         setupContainerView()
         setupMainStackView()
@@ -41,7 +41,7 @@ class ScheduleViewCell: UITableViewCell {
     private func setupContainerView() {
         contentView.addSubview(containerView)
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.backgroundColor = UIColor(white: 0.15, alpha: 1.0)
+        containerView.backgroundColor = UIColor(named: "CustomCellBackground")
         containerView.layer.cornerRadius = 10
         
         NSLayoutConstraint.activate([
@@ -76,7 +76,7 @@ class ScheduleViewCell: UITableViewCell {
     
     private func setupRoundLabel() {
         roundLabel.font = UIFont.systemFont(ofSize: 12, weight: .medium)
-        roundLabel.textColor = .red
+        roundLabel.textColor = .white
         textStackView.addArrangedSubview(roundLabel)
     }
     
@@ -100,15 +100,26 @@ class ScheduleViewCell: UITableViewCell {
         mainStackView.addArrangedSubview(flagImageView)
         
         NSLayoutConstraint.activate([
-            flagImageView.widthAnchor.constraint(equalToConstant: 80),
+            flagImageView.widthAnchor.constraint(equalToConstant: 60),
             flagImageView.heightAnchor.constraint(equalToConstant: 60)
         ])
     }
     
-    func configure(round: String, title: String, date: String, flagImage: UIImage?) {
+    func configure(round: String, title: String, date: String, flagImage: String) {
         roundLabel.text = round
         titleLabel.text = title
         dateLabel.text = date
-        flagImageView.image = flagImage ?? UIImage(named: "placeholderImage")
+        flagImageView.image = UIImage(named: flagImage, in: .module, with: nil)
+        
+        roundLabel.textColor = getRandomColor()
+        titleLabel.textColor = getRandomColor()
+        dateLabel.textColor = getRandomColor()
+    }
+    
+    private func getRandomColor() -> UIColor {
+        let colors: [UIColor] = [
+            .red, .green, .blue, .yellow, .orange, .purple, .brown, .cyan, .magenta, .gray, .white
+        ]
+        return colors.randomElement() ?? .white
     }
 }

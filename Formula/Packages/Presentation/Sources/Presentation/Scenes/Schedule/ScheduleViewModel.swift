@@ -14,17 +14,18 @@ public protocol ScheduleViewModelDelegate: AnyObject {
 }
 
 public enum ScheduleViewRoute {
-    case showRaceDetail
+    case showRaceDetail(viewModel: RaceDetailViewModel)
 }
 
 public protocol ScheduleViewRouter {
-    func perform(to: ScheduleViewRoute)
+    func perform(to route: ScheduleViewRoute)
 }
 
 public final class ScheduleViewModel {
     public var router: ScheduleViewRouter?
     private let getRacesUseCase: GetRacesUseCase
-    public var races: [RaceEntity] = []
+    public var upcomingRaces: [RaceEntity] = []
+    public var pastRaces: [RaceEntity] = []
     weak var delegate: ScheduleViewModelDelegate?
     
     public init(getRacesUseCase: GetRacesUseCase) {
@@ -39,7 +40,7 @@ public final class ScheduleViewModel {
         getRacesUseCase.execute { [weak self] result in
             switch result {
             case .success(let races):
-                self?.races = races
+                self?.filterRaces(races: races)
                 DispatchQueue.main.async {
                     self?.delegate?.racesFetched(races)
                 }
@@ -48,6 +49,30 @@ public final class ScheduleViewModel {
             }
         }
     }
+    
+    private func filterRaces(races: [RaceEntity]) {
+        let currentDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        self.upcomingRaces = races.filter { race in
+            if let raceDate = dateFormatter.date(from: race.date) {
+                return raceDate >= currentDate
+            }
+            return false
+        }
+        
+        self.pastRaces = races.filter { race in
+            if let raceDate = dateFormatter.date(from: race.date) {
+                return raceDate < currentDate
+            }
+            return false
+        }
+    }
+    
+    func raceViewTapped(race: RaceEntity) {
+        let raceDetailViewModel = RaceDetailViewModel(race: race)
+        router?.perform(to: .showRaceDetail(viewModel: raceDetailViewModel))
+    }
 }
-    
-    
+

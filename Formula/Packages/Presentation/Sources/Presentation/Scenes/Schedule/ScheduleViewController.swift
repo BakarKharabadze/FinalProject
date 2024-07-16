@@ -30,7 +30,7 @@ public final class ScheduleViewController: UIViewController {
     
     private let underlineView: UIView = {
         let view = UIView()
-        view.backgroundColor = .red
+        view.backgroundColor = UIColor(named: "CustomUnderline")
         return view
     }()
     
@@ -56,7 +56,7 @@ public final class ScheduleViewController: UIViewController {
     }
     
     private func setupUI() {
-        view.backgroundColor = .black
+        view.backgroundColor = UIColor(named: "CustomBackground")
         setupButtons()
         setupUnderlineView()
         setupContainerView()
@@ -136,6 +136,8 @@ public final class ScheduleViewController: UIViewController {
         tableView.register(UpcomingFirstRaceViewCell.self, forCellReuseIdentifier: "UpcomingFirstRaceViewCell")
         tableView.register(ScheduleViewCell.self, forCellReuseIdentifier: "ScheduleViewCell")
         tableView.register(PastFirstRaceViewCell.self, forCellReuseIdentifier: "PastFirstRaceViewCell")
+        tableView.backgroundColor = UIColor(named: "CustomBackground")
+        tableView.separatorStyle = .none
         tableView.isHidden = true
     }
     
@@ -179,34 +181,41 @@ public final class ScheduleViewController: UIViewController {
 
 extension ScheduleViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.races.count + 1
+        if tableView == upcomingTableView {
+            return viewModel.upcomingRaces.count + 1
+        } else if tableView == pastTableView {
+            return viewModel.pastRaces.count + 1
+        }
+        return 0
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == upcomingTableView {
             if indexPath.row == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "UpcomingFirstRaceViewCell", for: indexPath) as! UpcomingFirstRaceViewCell
-                if let firstRace = viewModel.races.first {
+                if let firstRace = viewModel.upcomingRaces.first {
                     cell.configure(with: firstRace)
                 }
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "ScheduleViewCell", for: indexPath) as! ScheduleViewCell
-                let race = viewModel.races[indexPath.row - 1]
-                cell.configure(round: race.round, title: race.grandPrixName, date: race.date, flagImage: UIImage(systemName: "flag"))
+                let race = viewModel.upcomingRaces[indexPath.row - 1]
+                let flagImageName = race.countryFlag
+                cell.configure(round: race.round, title: race.grandPrixName, date: race.date, flagImage: flagImageName)
                 return cell
             }
         } else if tableView == pastTableView {
             if indexPath.row == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "PastFirstRaceViewCell", for: indexPath) as! PastFirstRaceViewCell
-                if let firstRace = viewModel.races.first {
+                if let firstRace = viewModel.pastRaces.first {
                     cell.configure(with: firstRace)
                 }
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "ScheduleViewCell", for: indexPath) as! ScheduleViewCell
-                let race = viewModel.races[indexPath.row - 1]
-                cell.configure(round: race.round, title: race.grandPrixName, date: race.date, flagImage: UIImage(systemName: "flag"))
+                let race = viewModel.pastRaces[indexPath.row - 1]
+                let flagImageName = race.countryFlag
+                cell.configure(round: race.round, title: race.grandPrixName, date: race.date, flagImage: flagImageName)
                 return cell
             }
         }
