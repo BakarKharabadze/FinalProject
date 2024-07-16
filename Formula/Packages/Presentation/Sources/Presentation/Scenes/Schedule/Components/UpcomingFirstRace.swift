@@ -26,6 +26,7 @@ struct UpcomingFirstRace: View {
                     
                     Text(race.grandPrixName)
                         .font(.title)
+                        .fontWeight(.bold)
                         .foregroundColor(.white)
                         .padding(.bottom, 1)
                     
@@ -76,10 +77,11 @@ struct UpcomingFirstRace: View {
                 
                 Spacer()
     
-                Image(race.circuitID, bundle: .module)
+                Image(race.round, bundle: .module)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: 100, height: 100)
+                    .frame(width: 125, height: 150)
+                    .offset(x: -5)
                     .padding()
             }
             .padding()

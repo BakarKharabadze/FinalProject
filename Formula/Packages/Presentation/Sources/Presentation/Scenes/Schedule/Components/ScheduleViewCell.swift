@@ -7,6 +7,8 @@
 
 import UIKit
 
+import UIKit
+
 class ScheduleViewCell: UITableViewCell {
     
     private let containerView = UIView()
@@ -76,19 +78,17 @@ class ScheduleViewCell: UITableViewCell {
     
     private func setupRoundLabel() {
         roundLabel.font = UIFont.systemFont(ofSize: 12, weight: .medium)
-        roundLabel.textColor = .white
         textStackView.addArrangedSubview(roundLabel)
     }
     
     private func setupTitleLabel() {
         titleLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        titleLabel.textColor = .white
         textStackView.addArrangedSubview(titleLabel)
     }
     
     private func setupDateLabel() {
         dateLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        dateLabel.textColor = .lightGray
+        dateLabel.textColor = UIColor.lightGray
         textStackView.addArrangedSubview(dateLabel)
     }
     
@@ -111,15 +111,61 @@ class ScheduleViewCell: UITableViewCell {
         dateLabel.text = date
         flagImageView.image = UIImage(named: flagImage, in: .module, with: nil)
         
-        roundLabel.textColor = getRandomColor()
-        titleLabel.textColor = getRandomColor()
-        dateLabel.textColor = getRandomColor()
+        roundLabel.textColor = getColorForRace(title)
     }
     
-    private func getRandomColor() -> UIColor {
-        let colors: [UIColor] = [
-            .red, .green, .blue, .yellow, .orange, .purple, .brown, .cyan, .magenta, .gray, .white
-        ]
-        return colors.randomElement() ?? .white
+    private func getColorForRace(_ raceName: String) -> UIColor {
+        switch raceName {
+        case "Bahrain Grand Prix":
+            return UIColor(red: 0.0, green: 0.0, blue: 0.5, alpha: 1.0)  
+        case "Saudi Arabian Grand Prix":
+            return UIColor(red: 0.0, green: 0.5, blue: 0.0, alpha: 1.0)
+        case "Australian Grand Prix":
+            return UIColor(red: 0.0, green: 0.0, blue: 1.0, alpha: 1.0)
+        case "Japanese Grand Prix":
+            return .red
+        case "Chinese Grand Prix":
+            return .red
+        case "Miami Grand Prix":
+            return .blue
+        case "Emilia Romagna Grand Prix":
+            return .green
+        case "Monaco Grand Prix":
+            return .red
+        case "Canadian Grand Prix":
+            return .red
+        case "Spanish Grand Prix":
+            return .red
+        case "Austrian Grand Prix":
+            return .red
+        case "British Grand Prix":
+            return .blue
+        case "Hungarian Grand Prix":
+            return UIColor(red: 195/255, green: 33/255, blue: 72/255, alpha: 1.0)
+        case "Belgian Grand Prix":
+            return .black
+        case "Dutch Grand Prix":
+            return .orange
+        case "Italian Grand Prix":
+            return .green
+        case "Azerbaijan Grand Prix":
+            return .blue
+        case "Singapore Grand Prix":
+            return .red
+        case "United States Grand Prix":
+            return .blue
+        case "Mexico City Grand Prix":
+            return .green
+        case "São Paulo Grand Prix":
+            return .green
+        case "Las Vegas Grand Prix":
+            return .blue
+        case "Qatar Grand Prix":
+            return .red
+        case "Abu Dhabi Grand Prix":
+            return .black
+        default:
+            return .white
+        }
     }
 }

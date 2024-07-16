@@ -111,8 +111,6 @@ class DriversTableViewCell: UITableViewCell {
     
     private func setupPointsLabel() {
         pointsLabel.font = .systemFont(ofSize: 18, weight: .bold)
-        pointsLabel.textColor = .blue
-        
         pointsStackView.addArrangedSubview(pointsLabel)
     }
     
@@ -137,12 +135,12 @@ class DriversTableViewCell: UITableViewCell {
         ])
     }
     
-    func configure(with driver: DriverEntity) {
+    func configure(with driver: DriverEntity, viewModel: DriversViewModel) {
         rankingLabel.text = driver.position
         nameLabel.text = driver.givenName + " " + driver.familyName
         teamLabel.text = driver.constructorName
         pointsLabel.text = "\(driver.points)"
+        pointsLabel.textColor = viewModel.getColorForTeam(driver.constructorName)
         driverImageView.image = UIImage(named: driver.driverImage, in: .module, with: nil)
     }
 }
-

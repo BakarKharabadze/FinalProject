@@ -8,37 +8,31 @@
 import Foundation
 import Domain
 
-import Foundation
-
 public protocol NewsDetailViewModelDelegate: AnyObject {
     func imageFetched(_ imageData: Data?)
 }
 
-public class NewsDetailViewModel {
-    public let news: NewsEntity
+public final class NewsDetailViewModel {
     public weak var delegate: NewsDetailViewModelDelegate?
+    public let news: NewsEntity
     
     public init(news: NewsEntity) {
         self.news = news
     }
     
-    public var imageUrl: URL? {
-        return URL(string: news.urlToImage ?? "")
-    }
-    
     public func fetchImage() {
-        guard let imageUrl = imageUrl else {
+        guard let urlToImage = news.urlToImage, let url = URL(string: urlToImage) else {
             delegate?.imageFetched(nil)
             return
         }
         
-        URLSession.shared.dataTask(with: imageUrl) { [weak self] data, response, error in
-            guard let self = self else { return }
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data, error == nil else {
                 self.delegate?.imageFetched(nil)
                 return
             }
             self.delegate?.imageFetched(data)
-        }.resume()
+        }
+        task.resume()
     }
 }

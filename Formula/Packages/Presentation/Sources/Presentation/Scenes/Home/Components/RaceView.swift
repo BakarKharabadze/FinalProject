@@ -6,30 +6,33 @@
 //
 
 import SwiftUI
+import Domain
 
 struct RaceView: View {
+    let race: RaceEntity
     
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
                 HStack {
-                    Image("AustraliaFlag", bundle: .module)
+                    Image(race.countryFlag, bundle: .module)
                         .resizable()
                         .frame(width: 25, height: 15)
-                    Text("00-00 January")
+                    Text(race.date)
                         .font(.system(size: 12))
                         .foregroundColor(.white)
                 }
                 .padding(.leading, -15)
                 .padding(.top, -10)
                 
-                Text("Australia")
+                Text(race.grandPrixName)
                     .foregroundColor(.white)
                     .font(.title)
+                    .lineLimit(nil)  // Enable unlimited lines
                     .padding(.top, -3)
                     .padding(.leading, -16)
                 
-                Text("Formula 1 Rolex australian grand prix 2024")
+                Text("Formula 1 Rolex Australian Grand Prix 2024")
                     .font(.system(size: 10))
                     .padding(.top, -9)
                     .padding(.leading, -15)
@@ -39,11 +42,12 @@ struct RaceView: View {
             
             Spacer()
             
-            Image("Australia", bundle: .module)
+            Image(race.date, bundle: .module)
                 .resizable()
                 .scaledToFill()
-                .frame(width: 110, height: 250)
+                .frame(width: 150, height: 150)
                 .padding()
+                .offset(x: 35)
         }
         .padding()
         .background(
@@ -52,11 +56,5 @@ struct RaceView: View {
         )
         .frame(width: 340, height: 150)
         .cornerRadius(10)
-        .shadow(radius: 5)
     }
 }
-
-#Preview {
-    RaceView()
-}
-

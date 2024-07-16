@@ -1,11 +1,12 @@
 //
 //  NewsDetailViewController.swift
-//  
+//
 //
 //  Created by Bakar Kharabadze on 7/9/24.
 //
 
 import UIKit
+import SafariServices
 
 public class NewsDetailViewController: UIViewController {
 
@@ -13,6 +14,7 @@ public class NewsDetailViewController: UIViewController {
     private var titleLabel = UILabel()
     private var titleImage = UIImageView()
     private var titleDescription = UILabel()
+    private var readMoreButton = UIButton(type: .system)
     
     private var viewModel: NewsDetailViewModel!
     
@@ -64,6 +66,7 @@ public class NewsDetailViewController: UIViewController {
     private func setupTitleLabel() {
         titleLabel.text = viewModel.news.title
         titleLabel.textColor = .white
+        titleLabel.font = .systemFont(ofSize: 20, weight: .bold)
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 0
         
@@ -73,6 +76,7 @@ public class NewsDetailViewController: UIViewController {
     private func setupTitleImage() {
         titleImage.contentMode = .scaleAspectFill
         titleImage.layer.cornerRadius = 10
+        titleImage.clipsToBounds = true
         
         titleImage.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -84,18 +88,39 @@ public class NewsDetailViewController: UIViewController {
     }
     
     private func setupTitleDescription() {
-        titleDescription.text = viewModel.news.content
+        let fullContent = viewModel.news.content
+        let modifiedContent = fullContent.replacingOccurrences(of: "\\[.*?\\]", with: "", options: .regularExpression)
+        
+        let attributedString = NSMutableAttributedString(string: modifiedContent)
+        
+        let readMoreText = " Read More"
+        let readMoreAttributedString = NSAttributedString(string: readMoreText, attributes: [
+            .foregroundColor: UIColor(red: 0.0, green: 0.5, blue: 1.0, alpha: 1.0),
+            .font: UIFont.systemFont(ofSize: 16, weight: .bold)
+        ])
+        
+        attributedString.append(readMoreAttributedString)
+        
+        titleDescription.attributedText = attributedString
         titleDescription.textColor = .white
         titleDescription.textAlignment = .left
         titleDescription.numberOfLines = 0
+        titleDescription.isUserInteractionEnabled = true
+        titleDescription.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(readMoreButtonTapped)))
         
         mainStackView.addArrangedSubview(titleDescription)
+    }
+    
+    @objc private func readMoreButtonTapped() {
+        guard let url = URL(string: viewModel.news.url) else { return }
+        let safariVC = SFSafariViewController(url: url)
+        present(safariVC, animated: true, completion: nil)
     }
     
     private func setupCustomSpacing() {
         mainStackView.setCustomSpacing(20, after: titleLabel)
         mainStackView.setCustomSpacing(20, after: titleImage)
-        mainStackView.setCustomSpacing(20, after: titleDescription)
+        mainStackView.setCustomSpacing(0, after: titleDescription)
     }
 }
 

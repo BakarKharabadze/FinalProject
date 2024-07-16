@@ -47,7 +47,6 @@ public final class TeamsViewController: UIViewController {
         title = "Teams"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
     }
-
 }
 
 extension TeamsViewController: UITableViewDataSource {
@@ -58,8 +57,7 @@ extension TeamsViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TeamsTableViewCell", for: indexPath) as! TeamsTableViewCell
         let team = viewModel.teams[indexPath.row]
-        cell.configure(with: team)
+        cell.configure(with: team, viewModel: viewModel)
         return cell
     }
 }
-

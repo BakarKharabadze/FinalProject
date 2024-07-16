@@ -10,220 +10,207 @@ import SwiftUI
 import Domain
 
 public final class HomeViewController: UIViewController {
-    
-    private let mainStackView = UIStackView()
-    private let logo = UIImageView()
-    private let raceNameLabel = UILabel()
-    private let standingLabel = UILabel()
-    private let newsLabel = UILabel()
-    private let scrollView = UIScrollView()
+
+    private let tableView = UITableView()
     public var viewModel: HomeViewModel!
-        
+
     public class func create(with viewModel: HomeViewModel, newsViewControllersFactory: NewsDetailViewControllerFactory) -> HomeViewController {
         let vc = HomeViewController(viewModel: viewModel)
         vc.viewModel.router = DefaultHomeViewRouter(view: vc, newsViewControllerFactory: newsViewControllersFactory)
         return vc
     }
-    
+
     init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    private let raceViewHostingController = UIHostingController(rootView: RaceView())
-    private let newsTableView = UITableView()
-    
-    private let driverImages = ["max", "max", "max"]
-    
+
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "CustomBackground")
-        //navigationController?.setNavigationBarHidden(true, animated: false)
         setupUI()
         viewModel.delegate = self
         viewModel.viewDidLoad()
-        newsTableView.delegate = self
+        tableView.delegate = self
+        tableView.dataSource = self
     }
-    
+
     private func setupUI() {
-        setupScrollView()
-        setupMainStackView()
-        setupLogo()
-        setupRaceNameLabel()
-        setupRaceView()
-        setupStandingLabel()
-        setupCustomSpacing()
-        setupNewsTableView()
-        setupNewsLabel()
+        setupTableView()
+        setupTableHeaderView()
     }
-    
-    private func setupScrollView() {
-        view.addSubview(scrollView)
-        
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
+
+    private func setupTableView() {
+        view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+
+        tableView.backgroundColor = UIColor(named: "CustomBackground")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "RaceViewCell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TopDriversCell")
+        tableView.register(NewsCell.self, forCellReuseIdentifier: "NewsCell")
+        tableView.separatorStyle = .none
     }
     
-    private func setupMainStackView() {
-        view.addSubview(mainStackView)
+    private func setupTableHeaderView() {
+        let logoImageView = UIImageView(image: UIImage(named: "Formula1Logo"))
+        logoImageView.contentMode = .scaleAspectFit
+        logoImageView.translatesAutoresizingMaskIntoConstraints = false
         
-        mainStackView.translatesAutoresizingMaskIntoConstraints = false
-        mainStackView.axis = .vertical
-        mainStackView.alignment = .leading
-        mainStackView.distribution = .fill
-        mainStackView.spacing = 10
+        let headerView = UIView()
+        headerView.addSubview(logoImageView)
         
         NSLayoutConstraint.activate([
-            mainStackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            mainStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20),
-            mainStackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -20)
+            logoImageView.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
+            logoImageView.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+            logoImageView.widthAnchor.constraint(equalToConstant: 100),
+            logoImageView.heightAnchor.constraint(equalToConstant: 100),
+            headerView.heightAnchor.constraint(equalToConstant: 40)
         ])
+        
+        tableView.tableHeaderView = headerView
+        headerView.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 60)
     }
-    
-    private func setupCustomSpacing() {
-        mainStackView.setCustomSpacing(20, after: raceViewHostingController.view)
+
+    private func configureTitleCell(_ title: String) -> UITableViewCell {
+        let cell = UITableViewCell()
+        cell.textLabel?.text = title
+        cell.textLabel?.font = .systemFont(ofSize: 18)
+        cell.textLabel?.textColor = .white
+        cell.backgroundColor = .clear
+        cell.contentView.backgroundColor = .clear
+        cell.selectionStyle = .none
+        return cell
     }
-    
-    private func setupLogo() {
-        logo.image = UIImage(named: "Formula1Logo")
+
+    private func configureRaceViewCell(_ tableView: UITableView, indexPath: IndexPath, race: RaceEntity) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "RaceViewCell", for: indexPath)
+        cell.contentView.backgroundColor = .clear
+        cell.backgroundColor = .clear
+        cell.selectionStyle = .none
         
-        logo.translatesAutoresizingMaskIntoConstraints = false
-        logo.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        logo.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        
-        logo.contentMode = .scaleAspectFit
-        
-        mainStackView.addArrangedSubview(logo)
-        
-        NSLayoutConstraint.activate([
-            logo.topAnchor.constraint(equalTo: mainStackView.topAnchor, constant: -15),
-            logo.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
-    }
-    
-    private func setupRaceNameLabel() {
-        raceNameLabel.text = "Race"
-        raceNameLabel.font = .systemFont(ofSize: 18)
-        raceNameLabel.textAlignment = .left
-        raceNameLabel.textColor = .white
-        
-        mainStackView.addArrangedSubview(raceNameLabel)
-    }
-    
-    private func setupRaceView() {
+        let raceViewHostingController = UIHostingController(rootView: RaceView(race: race))
         addChild(raceViewHostingController)
+        cell.contentView.addSubview(raceViewHostingController.view)
         raceViewHostingController.view.backgroundColor = .clear
-        mainStackView.addArrangedSubview(raceViewHostingController.view)
-        raceViewHostingController.didMove(toParent: self)
-        
         raceViewHostingController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            raceViewHostingController.view.heightAnchor.constraint(equalToConstant: 150)
+            raceViewHostingController.view.topAnchor.constraint(equalTo: cell.contentView.topAnchor),
+            raceViewHostingController.view.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
+            raceViewHostingController.view.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor),
+            raceViewHostingController.view.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor)
         ])
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleRaceViewTap))
-        raceViewHostingController.view.addGestureRecognizer(tapGesture)
-        raceViewHostingController.view.isUserInteractionEnabled = true
+        raceViewHostingController.didMove(toParent: self)
+        return cell
     }
-    
-    @objc private func handleRaceViewTap() {
-        //        let raceDetailVC = RaceDetailViewController()
-        //        raceDetailVC.modalPresentationStyle = .automatic
-        //        present(raceDetailVC, animated: true, completion: nil)
-    }
-    
-    private func setupStandingLabel() {
-        standingLabel.text = "Standing"
-        standingLabel.font = .systemFont(ofSize: 18)
-        standingLabel.textAlignment = .left
-        standingLabel.textColor = .white
-        
-        mainStackView.addArrangedSubview(standingLabel)
-    }
-    
-    private func setupTopDriversView(with drivers: [DriverEntity]) {
-        let topDriversHostingController = UIHostingController(rootView: TopDriversCoverFlowView(drivers: drivers))
-        topDriversHostingController.view.backgroundColor = .clear
+
+    private func configureTopDriversCell(_ tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TopDriversCell", for: indexPath)
+        cell.contentView.backgroundColor = .clear
+        cell.backgroundColor = .clear
+        cell.selectionStyle = .none
+        let topDriversHostingController = UIHostingController(rootView: TopDriversCoverFlowView(drivers: viewModel.drivers))
         addChild(topDriversHostingController)
-        mainStackView.insertArrangedSubview(topDriversHostingController.view, at: 4)
-        topDriversHostingController.didMove(toParent: self)
-        
+        cell.contentView.addSubview(topDriversHostingController.view)
+        topDriversHostingController.view.backgroundColor = .clear
         topDriversHostingController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            topDriversHostingController.view.heightAnchor.constraint(equalToConstant: 150),
-            topDriversHostingController.view.widthAnchor.constraint(equalTo: mainStackView.widthAnchor)
+            topDriversHostingController.view.topAnchor.constraint(equalTo: cell.contentView.topAnchor),
+            topDriversHostingController.view.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
+            topDriversHostingController.view.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor),
+            topDriversHostingController.view.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor)
         ])
-    }
-    
-    private func setupNewsLabel() {
-        newsLabel.text = "News"
-        newsLabel.font = .systemFont(ofSize: 18)
-        newsLabel.textAlignment = .left
-        newsLabel.textColor = .white
-        
-        mainStackView.addArrangedSubview(newsLabel)
-    }
-    
-    private func setupNewsTableView() {
-        newsTableView.register(NewsCell.self, forCellReuseIdentifier: "NewsCell")
-        newsTableView.dataSource = self
-        newsTableView.rowHeight = 220
-        newsTableView.separatorStyle = .none
-        
-        view.addSubview(newsTableView)
-        newsTableView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            newsTableView.topAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: 5),
-            newsTableView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20),
-            newsTableView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -20),
-            newsTableView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -20)
-        ])
-    }
-    
-}
-
-extension HomeViewController: UITableViewDelegate {
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedNews = viewModel.news[indexPath.row]
-        viewModel.newsViewTapped(news: selectedNews)
-    }
-}
-
-extension HomeViewController: UITableViewDataSource {
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.news.count
-    }
-    
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell", for: indexPath) as? NewsCell else {
-            return UITableViewCell()
-        }
-        let newsEntity = viewModel.news[indexPath.row]
-        cell.configure(with: newsEntity)
+        topDriversHostingController.didMove(toParent: self)
         return cell
     }
 }
 
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+    public func numberOfSections(in tableView: UITableView) -> Int {
+        return 3
+    }
+
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return 2
+        case 1:
+            return 2
+        case 2:
+            return viewModel.news.count + 1
+        default:
+            return 0
+        }
+    }
+
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch indexPath.section {
+        case 0:
+            if indexPath.row == 0 {
+                return configureTitleCell("Race")
+            } else {
+                if let race = viewModel.upcomingRace {
+                    return configureRaceViewCell(tableView, indexPath: indexPath, race: race)
+                } else {
+                    return UITableViewCell()
+                }
+            }
+        case 1:
+            if indexPath.row == 0 {
+                return configureTitleCell("Standing")
+            } else {
+                return configureTopDriversCell(tableView, indexPath: indexPath)
+            }
+        case 2:
+            if indexPath.row == 0 {
+                return configureTitleCell("News")
+            } else {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell", for: indexPath) as? NewsCell else {
+                    return UITableViewCell()
+                }
+                cell.selectionStyle = .none
+                let newsEntity = viewModel.news[indexPath.row - 1]
+                cell.configure(with: newsEntity)
+                return cell
+            }
+        default:
+            return UITableViewCell()
+        }
+    }
+
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 2 && indexPath.row > 0 {
+            let selectedNews = viewModel.news[indexPath.row - 1]
+            viewModel.newsViewTapped(news: selectedNews)
+        }
+    }
+}
+
 extension HomeViewController: HomeViewModelDelegate {
-    public func newsFetched(_ news: [Domain.NewsEntity]) {
+    public func raceFetched(_ race: RaceEntity) {
         DispatchQueue.main.async {
-            self.newsTableView.reloadData()
+            self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
         }
     }
     
+    public func newsFetched(_ news: [NewsEntity]) {
+        DispatchQueue.main.async {
+            self.tableView.reloadSections(IndexSet(integer: 2), with: .automatic)
+        }
+    }
+
     public func driversFetched(_ drivers: [DriverEntity]) {
         DispatchQueue.main.async {
-            self.setupTopDriversView(with: drivers)
+            self.tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
         }
     }
 }
