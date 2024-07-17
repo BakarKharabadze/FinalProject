@@ -20,7 +20,7 @@ public final class TeamsViewModel {
     public func getColorForTeam(_ team: String) -> UIColor {
         switch team {
         case "Red Bull":
-            return UIColor(red: 0.0, green: 0.0, blue: 0.5, alpha: 1.0)
+            return UIColor(red: 0.0, green: 0.0, blue: 1.0, alpha: 2.0)
         case "Ferrari":
             return UIColor.red
         case "Mercedes":

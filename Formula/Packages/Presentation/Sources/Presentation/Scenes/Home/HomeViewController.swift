@@ -32,6 +32,7 @@ public final class HomeViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "CustomBackground")
+        navigationController?.navigationBar.barTintColor = UIColor(named: "CustomBackground")
         setupUI()
         viewModel.delegate = self
         viewModel.viewDidLoad()
@@ -39,9 +40,19 @@ public final class HomeViewController: UIViewController {
         tableView.dataSource = self
     }
 
+    public override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 150, height: 40))
+        imageView.contentMode = .scaleAspectFit
+        let image = UIImage(named: "Formula1Logo")
+        imageView.image = image
+
+        navigationItem.titleView = imageView
+    }
+
     private func setupUI() {
         setupTableView()
-        setupTableHeaderView()
     }
 
     private func setupTableView() {
@@ -59,26 +70,6 @@ public final class HomeViewController: UIViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TopDriversCell")
         tableView.register(NewsCell.self, forCellReuseIdentifier: "NewsCell")
         tableView.separatorStyle = .none
-    }
-    
-    private func setupTableHeaderView() {
-        let logoImageView = UIImageView(image: UIImage(named: "Formula1Logo"))
-        logoImageView.contentMode = .scaleAspectFit
-        logoImageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        let headerView = UIView()
-        headerView.addSubview(logoImageView)
-        
-        NSLayoutConstraint.activate([
-            logoImageView.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
-            logoImageView.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-            logoImageView.widthAnchor.constraint(equalToConstant: 100),
-            logoImageView.heightAnchor.constraint(equalToConstant: 100),
-            headerView.heightAnchor.constraint(equalToConstant: 40)
-        ])
-        
-        tableView.tableHeaderView = headerView
-        headerView.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 60)
     }
 
     private func configureTitleCell(_ title: String) -> UITableViewCell {
@@ -166,7 +157,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             }
         case 1:
             if indexPath.row == 0 {
-                return configureTitleCell("Standing")
+                return configureTitleCell("Top Drivers")
+                
             } else {
                 return configureTopDriversCell(tableView, indexPath: indexPath)
             }

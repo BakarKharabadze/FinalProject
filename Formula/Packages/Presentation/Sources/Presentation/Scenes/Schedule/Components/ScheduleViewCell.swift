@@ -83,6 +83,7 @@ class ScheduleViewCell: UITableViewCell {
     
     private func setupTitleLabel() {
         titleLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        titleLabel.textColor = .white
         textStackView.addArrangedSubview(titleLabel)
     }
     
@@ -106,7 +107,7 @@ class ScheduleViewCell: UITableViewCell {
     }
     
     func configure(round: String, title: String, date: String, flagImage: String) {
-        roundLabel.text = round
+        roundLabel.text = "Round \(round)"
         titleLabel.text = title
         dateLabel.text = date
         flagImageView.image = UIImage(named: flagImage, in: .module, with: nil)
@@ -117,11 +118,11 @@ class ScheduleViewCell: UITableViewCell {
     private func getColorForRace(_ raceName: String) -> UIColor {
         switch raceName {
         case "Bahrain Grand Prix":
-            return UIColor(red: 0.0, green: 0.0, blue: 0.5, alpha: 1.0)  
+            return UIColor(red: 0.0, green: 0.0, blue: 1.0, alpha: 2.0)
         case "Saudi Arabian Grand Prix":
-            return UIColor(red: 0.0, green: 0.5, blue: 0.0, alpha: 1.0)
+            return UIColor(red: 0.0, green: 1.0, blue: 0.0, alpha: 2.0)
         case "Australian Grand Prix":
-            return UIColor(red: 0.0, green: 0.0, blue: 1.0, alpha: 1.0)
+            return UIColor(red: 0.0, green: 0.0, blue: 1.0, alpha: 1.5)
         case "Japanese Grand Prix":
             return .red
         case "Chinese Grand Prix":
@@ -143,7 +144,7 @@ class ScheduleViewCell: UITableViewCell {
         case "Hungarian Grand Prix":
             return UIColor(red: 195/255, green: 33/255, blue: 72/255, alpha: 1.0)
         case "Belgian Grand Prix":
-            return .black
+            return .yellow
         case "Dutch Grand Prix":
             return .orange
         case "Italian Grand Prix":
