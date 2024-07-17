@@ -110,7 +110,7 @@ public final class StandingViewController: UIViewController {
         driversView.addSubview(driversImage)
         
         NSLayoutConstraint.activate([
-            driversImage.trailingAnchor.constraint(equalTo: driversView.trailingAnchor, constant: -10),
+            driversImage.trailingAnchor.constraint(equalTo: driversView.trailingAnchor, constant: -30),
             driversImage.bottomAnchor.constraint(equalTo: driversView.bottomAnchor, constant: 30)
         ])
     }
@@ -151,8 +151,8 @@ public final class StandingViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             teamsImage.bottomAnchor.constraint(equalTo: teamsView.bottomAnchor),
-            teamsImage.leadingAnchor.constraint(equalTo: teamsView.leadingAnchor, constant: 20),
-            teamsImage.trailingAnchor.constraint(equalTo: teamsView.trailingAnchor, constant: -20)
+            teamsImage.leadingAnchor.constraint(equalTo: teamsView.leadingAnchor, constant: 80),
+            teamsImage.trailingAnchor.constraint(equalTo: teamsView.trailingAnchor, constant: 10)
         ])
     }
     

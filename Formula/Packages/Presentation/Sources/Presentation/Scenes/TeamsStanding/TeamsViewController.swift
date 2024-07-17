@@ -21,6 +21,7 @@ public final class TeamsViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "CustomBackground")
+        navigationController?.navigationBar.barTintColor = UIColor(named: "CustomBackground")
         setupTableView()
         setupTitleLabel()
     }

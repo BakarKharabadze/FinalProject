@@ -80,7 +80,7 @@ struct UpcomingFirstRace: View {
                 Image(race.round, bundle: .module)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: 125, height: 150)
+                    .frame(width: 110, height: 130)
                     .offset(x: -5)
                     .padding()
             }
