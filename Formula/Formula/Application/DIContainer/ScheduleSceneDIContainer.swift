@@ -16,6 +16,7 @@ final class ScheduleSceneDIContainer {
     //MARK: - Dependencies
     struct Dependencies {
         let formulaApiDataTransferService: DataTransfer
+        let raceDetailViewControllerFactory: RaceDetailViewControllerFactory
     }
     
     //MARK: - Properties
@@ -54,7 +55,7 @@ extension ScheduleSceneDIContainer {
 //MARK: - ScheduleSceneDIContainer Factory
 extension ScheduleSceneDIContainer: ScheduleViewControllerFactory {
     func makeScheduleViewController() -> UIViewController {
-        ScheduleViewController.create(with: makeScheduleViewModel())
+        ScheduleViewController.create(with: makeScheduleViewModel(), raceDetailViewControllerFactory: dependencies.raceDetailViewControllerFactory)
     }
 
     func makeScheduleViewModel() -> ScheduleViewModel {
