@@ -20,8 +20,8 @@ class DefaultScheduleViewRouter: ScheduleViewRouter {
     
     func perform(to route: ScheduleViewRoute) {
         switch route {
-        case .showRaceDetail(let viewModel):
-            let vc = raceDetailViewControllerFactory.makeRaceDetailViewController(with: viewModel)
+        case .showRaceDetail(let race):
+            let vc = raceDetailViewControllerFactory.makeRaceDetailViewController(with: race)
             view?.navigationController?.pushViewController(vc, animated: false)
         }
     }

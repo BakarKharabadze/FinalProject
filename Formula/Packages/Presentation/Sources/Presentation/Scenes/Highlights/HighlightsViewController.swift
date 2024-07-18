@@ -14,7 +14,6 @@ public final class HighlightsViewController: UIViewController {
     private let mainStackView = UIStackView()
     private let logoImageView = UIImageView()
     private let highlightsTableView = UITableView()
-    private var webView: WKWebView?
     
     public var viewModel: HighlightsViewModel!
     
@@ -101,9 +100,9 @@ public final class HighlightsViewController: UIViewController {
         let videoURLString = "https://www.youtube.com/watch?v=\(videoId)"
         guard let videoURL = URL(string: videoURLString) else { return }
         
-        if UIApplication.shared.canOpenURL(videoURL) {
-            UIApplication.shared.open(videoURL, options: [:], completionHandler: nil)
-        }
+        let webViewController = WebViewController(url: videoURL)
+        let navController = UINavigationController(rootViewController: webViewController)
+        present(navController, animated: true, completion: nil)
     }
 }
 

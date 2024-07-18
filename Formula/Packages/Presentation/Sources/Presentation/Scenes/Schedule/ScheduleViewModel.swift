@@ -15,7 +15,7 @@ public protocol ScheduleViewModelDelegate: AnyObject {
 }
 
 public enum ScheduleViewRoute {
-    case showRaceDetail(viewModel: RaceDetailViewModel)
+    case showRaceDetail(with: RaceEntity)
 }
 
 public protocol ScheduleViewRouter {
@@ -56,18 +56,18 @@ public final class ScheduleViewModel {
     }
     
     public func fetchRaceResult() {
-            getRaceResultUseCase.execute { [weak self] result in
-                switch result {
-                case .success(let raceResults):
-                    self?.raceResults = raceResults
-                    DispatchQueue.main.async {
-                        self?.delegate?.raceResultFetched(raceResults)
-                    }
-                case .failure(let error):
-                    print("Failed to fetch race results: \(error.localizedDescription)")
+        getRaceResultUseCase.execute { [weak self] result in
+            switch result {
+            case .success(let raceResults):
+                self?.raceResults = raceResults
+                DispatchQueue.main.async {
+                    self?.delegate?.raceResultFetched(raceResults)
                 }
+            case .failure(let error):
+                print("Failed to fetch race results: \(error.localizedDescription)")
             }
         }
+    }
     
     private func filterRaces(races: [RaceEntity]) {
         let currentDate = Date()
@@ -90,8 +90,6 @@ public final class ScheduleViewModel {
     }
     
     func raceViewTapped(race: RaceEntity) {
-        let raceDetailViewModel = RaceDetailViewModel(race: race)
-        router?.perform(to: .showRaceDetail(viewModel: raceDetailViewModel))
+        router?.perform(to: .showRaceDetail(with: race))
     }
 }
-
