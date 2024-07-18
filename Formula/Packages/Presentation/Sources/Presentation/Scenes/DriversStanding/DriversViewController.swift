@@ -17,6 +17,7 @@ public final class DriversViewController: UIViewController {
     public class func create(with viewModel: DriversViewModel) -> DriversViewController {
         let vc = DriversViewController()
         vc.viewModel = viewModel
+        vc.viewModel.router = vc  // Assign router to the view controller
         return vc
     }
     
@@ -36,7 +37,7 @@ public final class DriversViewController: UIViewController {
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
-        tableView.delegate = self
+        tableView.delegate = self  // Set delegate to self
         tableView.backgroundColor = UIColor(named: "CustomBackground")
         tableView.register(DriversTableViewCell.self, forCellReuseIdentifier: "DriversTableViewCell")
         
@@ -54,7 +55,7 @@ public final class DriversViewController: UIViewController {
     }
 }
 
-extension DriversViewController: UITableViewDataSource, UITableViewDelegate {
+extension DriversViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.drivers.count
     }
@@ -64,6 +65,23 @@ extension DriversViewController: UITableViewDataSource, UITableViewDelegate {
         let driver = viewModel.drivers[indexPath.row]
         cell.configure(with: driver, viewModel: viewModel)
         return cell
+    }
+}
+
+extension DriversViewController: UITableViewDelegate {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let driver = viewModel.drivers[indexPath.row]
+        viewModel.driverViewTapped(driver: driver)
+    }
+}
+
+extension DriversViewController: DriversViewRouter {
+    public func perform(to route: DriversViewRoute) {
+        switch route {
+        case .showDriverDetails(let viewModel):
+            let driverDetailsVC = DriverDetailsViewController.create(with: viewModel)
+            navigationController?.pushViewController(driverDetailsVC, animated: true)
+        }
     }
 }
 

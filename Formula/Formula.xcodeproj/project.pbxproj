@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB774C492C496C48001DA7F9 /* DriverDetailsSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB774C482C496C48001DA7F9 /* DriverDetailsSceneDIContainer.swift */; };
+		FB774C4D2C496E42001DA7F9 /* TeamDetailsSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB774C4C2C496E42001DA7F9 /* TeamDetailsSceneDIContainer.swift */; };
 		FB786DD32C441F64001FDE8E /* RaceDetailsSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB786DD22C441F64001FDE8E /* RaceDetailsSceneDIContainer.swift */; };
 		FB7D1EEA2C3D35480067E04B /* AppDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7D1EE92C3D35480067E04B /* AppDIContainer.swift */; };
 		FB7D1EEC2C3D358E0067E04B /* AppConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7D1EEB2C3D358E0067E04B /* AppConfigurations.swift */; };
@@ -45,6 +47,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FB774C482C496C48001DA7F9 /* DriverDetailsSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverDetailsSceneDIContainer.swift; sourceTree = "<group>"; };
+		FB774C4C2C496E42001DA7F9 /* TeamDetailsSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamDetailsSceneDIContainer.swift; sourceTree = "<group>"; };
 		FB786DD22C441F64001FDE8E /* RaceDetailsSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceDetailsSceneDIContainer.swift; sourceTree = "<group>"; };
 		FB7D1EE92C3D35480067E04B /* AppDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDIContainer.swift; sourceTree = "<group>"; };
 		FB7D1EEB2C3D358E0067E04B /* AppConfigurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigurations.swift; sourceTree = "<group>"; };
@@ -131,6 +135,8 @@
 				FBFFC0262C4003150093C155 /* StandingSceneDIContainer.swift */,
 				FBB45C0B2C4182660061BC59 /* TeamsSceneDIContainer.swift */,
 				FBB45C0D2C41ACE30061BC59 /* HighlighsSceneDIContainer.swift */,
+				FB774C482C496C48001DA7F9 /* DriverDetailsSceneDIContainer.swift */,
+				FB774C4C2C496E42001DA7F9 /* TeamDetailsSceneDIContainer.swift */,
 			);
 			path = DIContainer;
 			sourceTree = "<group>";
@@ -337,6 +343,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBFD91542C3EAC360008947F /* ScheduleSceneDIContainer.swift in Sources */,
+				FB774C4D2C496E42001DA7F9 /* TeamDetailsSceneDIContainer.swift in Sources */,
+				FB774C492C496C48001DA7F9 /* DriverDetailsSceneDIContainer.swift in Sources */,
 				FBB45C0A2C406D670061BC59 /* DriversSceneDIContainer.swift in Sources */,
 				FBB45C0C2C4182660061BC59 /* TeamsSceneDIContainer.swift in Sources */,
 				FBCCC7CD2C33311400B0D1E9 /* AppDelegate.swift in Sources */,
@@ -523,6 +531,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				FORMULA_API_BASE_URL = "http://ergast.com";
+				FORMULA_SPORTS_API_BASE_URL = "https://api-formula-1.p.rapidapi.com";
+				FORMULA_SPORTS_API_KEY = 77bd8595afmsh06e7aeb75dc0a5ep109682jsn19ace5726043;
 				GENERATE_INFOPLIST_FILE = YES;
 				GOOGLE_API_BASE_URL = "https://www.googleapis.com";
 				GOOGLE_API_KEY = "AIzaSyBIIfbiqHk725UMvOyR1HYJNtdycXd2z-c";
@@ -557,6 +567,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				FORMULA_API_BASE_URL = "http://ergast.com";
+				FORMULA_SPORTS_API_BASE_URL = "https://api-formula-1.p.rapidapi.com";
+				FORMULA_SPORTS_API_KEY = 77bd8595afmsh06e7aeb75dc0a5ep109682jsn19ace5726043;
 				GENERATE_INFOPLIST_FILE = YES;
 				GOOGLE_API_BASE_URL = "https://www.googleapis.com";
 				GOOGLE_API_KEY = "AIzaSyBIIfbiqHk725UMvOyR1HYJNtdycXd2z-c";
