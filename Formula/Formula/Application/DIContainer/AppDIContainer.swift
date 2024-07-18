@@ -39,6 +39,14 @@ class AppDIContainer {
         return DefaultDataTransferService(with: apiDataNetwork)
     }()
     
+    lazy var formulaSportsApiDataTransferService: DataTransfer = {
+        let config = ApiDataNetworkConfig(baseURL: URL(string: appConfigurations.formulaSportsApiBaseURL)!,
+                                          headers: ["x-rapidapi-key": appConfigurations.formulaSportsApiKey])
+        let apiDataNetwork = DefaultNetworkService(session: URLSession.shared,
+                                                   config: config)
+        return DefaultDataTransferService(with: apiDataNetwork)
+    }()
+    
     func makeHomeSceneDIContainer() -> HomeSceneDIContainer {
         let dependencies = HomeSceneDIContainer.Dependencies(formulaApiDataTransferService: formulaApiDataTransferService, newsApiDataTransferService: newsApiDataTransferService, newsViewControllerFactory: makeNewsDetailSceneDIContainer())
         return HomeSceneDIContainer(dependencies: dependencies)
@@ -50,8 +58,13 @@ class AppDIContainer {
     }
     
     func makeScheduleSceneDIContainer() -> ScheduleSceneDIContainer {
-        let dependencies = ScheduleSceneDIContainer.Dependencies(formulaApiDataTransferService: formulaApiDataTransferService)
+        let dependencies = ScheduleSceneDIContainer.Dependencies(formulaApiDataTransferService: formulaApiDataTransferService, raceDetailViewControllerFactory: makeRaceDetailSceneDIContainer())
         return ScheduleSceneDIContainer(dependencies: dependencies)
+    }
+    
+    func makeRaceDetailSceneDIContainer() -> RaceDetailsSceneDIContainer {
+        let dependencies = RaceDetailsSceneDIContainer.Dependencies(formulaSportsApiDataTrnsferService: formulaSportsApiDataTransferService)
+        return RaceDetailsSceneDIContainer(dependencies: dependencies)
     }
     
     func makeStandingSceneDIContainer() -> StandingSceneDIContainer {
