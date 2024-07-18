@@ -9,38 +9,25 @@ import Foundation
 import Domain
 import UIKit
 
+public enum TeamsViewRoute {
+    case showTeamDetails(viewModel: TeamDetailsViewModel)
+}
+
+public protocol TeamsViewRouter {
+    func perform(to route: TeamsViewRoute)
+}
+
 public final class TeamsViewModel {
     
+    public var router: TeamsViewRouter?
     var teams: [TeamsEntity]
     
     public init(teams: [TeamsEntity]) {
         self.teams = teams
     }
     
-    public func getColorForTeam(_ team: String) -> UIColor {
-        switch team {
-        case "Red Bull":
-            return UIColor(red: 0.0, green: 0.0, blue: 1.0, alpha: 2.0)
-        case "Ferrari":
-            return UIColor.red
-        case "Mercedes":
-            return UIColor.green
-        case "McLaren":
-            return UIColor.orange
-        case "Aston Martin":
-            return UIColor.green
-        case "Alpine":
-            return UIColor.blue
-        case "AlphaTauri":
-            return UIColor.white
-        case "Alfa Romeo":
-            return UIColor.red
-        case "Williams":
-            return UIColor.blue
-        case "Haas":
-            return UIColor.white
-        default:
-            return UIColor.white
-        }
+    func teamViewTapped(team: TeamsEntity) {
+        let teamDetailsViewModel = TeamDetailsViewModel(team: team)
+        router?.perform(to: .showTeamDetails(viewModel: teamDetailsViewModel))
     }
 }
