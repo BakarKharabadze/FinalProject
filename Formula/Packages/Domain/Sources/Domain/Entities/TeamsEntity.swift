@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct TeamsEntity {
+public struct TeamsEntity: Equatable {
     public let position: String
     public let constructorName: String
     public let points: String

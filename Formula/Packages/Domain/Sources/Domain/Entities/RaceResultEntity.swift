@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct RaceResultEntity: Identifiable {
+public struct RaceResultEntity: Identifiable, Equatable {
     public var id: String { round }
     public let round: String
     public let grandPrixName: String

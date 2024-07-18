@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct DriverEntity: Identifiable {
+public struct DriverEntity: Identifiable, Equatable {
     public var id: String { driverId }
     public let driverId: String
     public let position: String
