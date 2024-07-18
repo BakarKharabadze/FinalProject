@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct DriverDetailsEntity {
+public struct DriverDetailsEntity: Equatable {
     public let name: String
     public let driverNumber: String
     public let teamName: String

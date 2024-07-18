@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct RaceEntity {
+public struct RaceEntity: Equatable {
     public let round: String
     public let grandPrixName: String
     public let date: String
