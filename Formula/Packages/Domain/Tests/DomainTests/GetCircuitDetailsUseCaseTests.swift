@@ -9,6 +9,7 @@ import XCTest
 import Common
 @testable import Domain
 
+// Test Case
 class GetCircuitDetailsUseCaseTests: XCTestCase {
     
     var useCase: DefaultGetCircuitDetailsUseCase!
@@ -95,6 +96,7 @@ class GetCircuitDetailsUseCaseTests: XCTestCase {
     }
 }
 
+// Mock Repository
 class MockFormulaSportsRepository: FormulaSportsRepository {
     
     var result: Result<[CircuitDetailsEntity], Error>?

@@ -9,6 +9,7 @@ import Common
 import XCTest
 @testable import Domain
 
+// Test Case
 class GetRacesUseCaseTests: XCTestCase {
     
     var useCase: DefaultGetRacesUseCase!
@@ -84,6 +85,7 @@ class GetRacesUseCaseTests: XCTestCase {
     }
 }
 
+// Mock Repository
 class MockRaceRepository: RaceRepository {
     
     var result: Result<[RaceEntity], Error>?

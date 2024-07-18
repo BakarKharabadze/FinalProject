@@ -9,6 +9,7 @@ import XCTest
 import Common
 @testable import Domain
 
+// Test Case
 class GetVideosUseCaseTests: XCTestCase {
     
     var useCase: DefaultGetVideosUseCase!
@@ -80,6 +81,7 @@ class GetVideosUseCaseTests: XCTestCase {
     }
 }
 
+// Mock Repository
 class MockVideosRepository: VideosRepository {
     
     var result: Result<[VideosEntity], Error>?

@@ -9,6 +9,7 @@ import XCTest
 import Common
 @testable import Domain
 
+// Test case
 class GetTeamsUseCaseTests: XCTestCase {
     
     var useCase: DefaultGetTeamsUseCase!
@@ -82,6 +83,7 @@ class GetTeamsUseCaseTests: XCTestCase {
     }
 }
 
+// Mock Repository
 class MockTeamsRepository: TeamsRepository {
     
     var result: Result<[TeamsEntity], Error>?
