@@ -106,67 +106,12 @@ class ScheduleViewCell: UITableViewCell {
         ])
     }
     
-    func configure(round: String, title: String, date: String, flagImage: String) {
+    func configure(round: String, title: String, date: String, flagImage: String, isUpcoming: Bool) {
         roundLabel.text = "Round \(round)"
         titleLabel.text = title
         dateLabel.text = date
         flagImageView.image = UIImage(named: flagImage, in: .module, with: nil)
         
-        roundLabel.textColor = getColorForRace(title)
-    }
-    
-    private func getColorForRace(_ raceName: String) -> UIColor {
-        switch raceName {
-        case "Bahrain Grand Prix":
-            return UIColor(red: 0.0, green: 0.0, blue: 1.0, alpha: 2.0)
-        case "Saudi Arabian Grand Prix":
-            return UIColor(red: 0.0, green: 1.0, blue: 0.0, alpha: 2.0)
-        case "Australian Grand Prix":
-            return UIColor(red: 0.0, green: 0.0, blue: 1.0, alpha: 1.5)
-        case "Japanese Grand Prix":
-            return .red
-        case "Chinese Grand Prix":
-            return .red
-        case "Miami Grand Prix":
-            return .blue
-        case "Emilia Romagna Grand Prix":
-            return .green
-        case "Monaco Grand Prix":
-            return .red
-        case "Canadian Grand Prix":
-            return .red
-        case "Spanish Grand Prix":
-            return .red
-        case "Austrian Grand Prix":
-            return .red
-        case "British Grand Prix":
-            return .blue
-        case "Hungarian Grand Prix":
-            return UIColor(red: 195/255, green: 33/255, blue: 72/255, alpha: 1.0)
-        case "Belgian Grand Prix":
-            return .yellow
-        case "Dutch Grand Prix":
-            return .orange
-        case "Italian Grand Prix":
-            return .green
-        case "Azerbaijan Grand Prix":
-            return .blue
-        case "Singapore Grand Prix":
-            return .red
-        case "United States Grand Prix":
-            return .blue
-        case "Mexico City Grand Prix":
-            return .green
-        case "São Paulo Grand Prix":
-            return .green
-        case "Las Vegas Grand Prix":
-            return .blue
-        case "Qatar Grand Prix":
-            return .red
-        case "Abu Dhabi Grand Prix":
-            return .black
-        default:
-            return .white
-        }
+        roundLabel.textColor = isUpcoming ? .green : .red
     }
 }

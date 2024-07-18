@@ -5,8 +5,8 @@
 //  Created by Bakar Kharabadze on 7/14/24.
 //
 
-import Foundation
+import Domain
 
 public protocol RaceDetailViewControllerFactory {
-    func makeRaceDetailViewController(with viewModel: RaceDetailViewModel) -> RaceDetailViewController
+    func makeRaceDetailViewController(with race: RaceEntity) -> RaceDetailViewController
 }

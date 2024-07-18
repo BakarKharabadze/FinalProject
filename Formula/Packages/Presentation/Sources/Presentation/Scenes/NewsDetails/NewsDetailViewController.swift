@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import SafariServices
+import WebKit
 
 public class NewsDetailViewController: UIViewController {
 
@@ -113,8 +113,9 @@ public class NewsDetailViewController: UIViewController {
     
     @objc private func readMoreButtonTapped() {
         guard let url = URL(string: viewModel.news.url) else { return }
-        let safariVC = SFSafariViewController(url: url)
-        present(safariVC, animated: true, completion: nil)
+        let webViewController = WebViewController(url: url)
+        let navController = UINavigationController(rootViewController: webViewController)
+        present(navController, animated: true, completion: nil)
     }
     
     private func setupCustomSpacing() {
@@ -135,3 +136,4 @@ extension NewsDetailViewController: NewsDetailViewModelDelegate {
         }
     }
 }
+
