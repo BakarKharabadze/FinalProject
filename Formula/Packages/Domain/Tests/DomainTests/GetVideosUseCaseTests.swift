@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  GetVideosUseCaseTests.swift
+//
 //
 //  Created by Bakar Kharabadze on 7/19/24.
 //
@@ -9,15 +9,15 @@ import XCTest
 import Common
 @testable import Domain
 
-class GetCircuitDetailsUseCaseTests: XCTestCase {
+class GetVideosUseCaseTests: XCTestCase {
     
-    var useCase: DefaultGetCircuitDetailsUseCase!
-    var repository: MockFormulaSportsRepository!
+    var useCase: DefaultGetVideosUseCase!
+    var repository: MockVideosRepository!
     
     override func setUp() {
         super.setUp()
-        repository = MockFormulaSportsRepository()
-        useCase = DefaultGetCircuitDetailsUseCase(repository: repository)
+        repository = MockVideosRepository()
+        useCase = DefaultGetVideosUseCase(repository: repository)
     }
     
     override func tearDown() {
@@ -28,31 +28,16 @@ class GetCircuitDetailsUseCaseTests: XCTestCase {
     
     func testExecuteSuccess() {
         // Given
-        let expectedDetails = [CircuitDetailsEntity(
-            countryName: "",
-            grandPrixName: "",
-            date: "",
-            circuitLenght: "",
-            laps: "",
-            turns: "",
-            topSpeed: "",
-            practiceOneDate: "",
-            practiceOneTime: "",
-            practiceTwoDate: "",
-            practiceTwoTime: "",
-            practiceThreeDate: "",
-            practiceThreeTime: "",
-            qualificationDate: "",
-            qualificationTime: "",
-            raceDate: "",
-            raceTime: ""
-        )]
-        repository.result = .success(expectedDetails)
+        let expectedVideos = [VideosEntity(
+            fetchedVideosTitle: "",
+            fetchedVideosImgUrl: "",
+            fetchedVideosId: "")]
+        repository.result = .success(expectedVideos)
         
         // When
         let expectation = self.expectation(description: "Completion handler called")
-        var result: Result<[CircuitDetailsEntity], Error>?
-        _ = useCase.execute(for: "Circuit1") { response in
+        var result: Result<[VideosEntity], Error>?
+        _ = useCase.execute(channelId: "channelId", maxResults: 10, order: "date", apiKey: "apiKey") { response in
             result = response
             expectation.fulfill()
         }
@@ -61,8 +46,8 @@ class GetCircuitDetailsUseCaseTests: XCTestCase {
         
         // Then
         switch result {
-        case .success(let details)?:
-            XCTAssertEqual(details, expectedDetails)
+        case .success(let videos)?:
+            XCTAssertEqual(videos, expectedVideos)
         case .failure, .none:
             XCTFail("Expected success, but got failure or nil")
         }
@@ -75,8 +60,8 @@ class GetCircuitDetailsUseCaseTests: XCTestCase {
         
         // When
         let expectation = self.expectation(description: "Completion handler called")
-        var result: Result<[CircuitDetailsEntity], Error>?
-        _ = useCase.execute(for: "Circuit1") { response in
+        var result: Result<[VideosEntity], Error>?
+        _ = useCase.execute(channelId: "channelId", maxResults: 10, order: "date", apiKey: "apiKey") { response in
             result = response
             expectation.fulfill()
         }
@@ -95,14 +80,15 @@ class GetCircuitDetailsUseCaseTests: XCTestCase {
     }
 }
 
-class MockFormulaSportsRepository: FormulaSportsRepository {
+class MockVideosRepository: VideosRepository {
     
-    var result: Result<[CircuitDetailsEntity], Error>?
+    var result: Result<[VideosEntity], Error>?
     
-    func getCircuitDetails(for circuitName: String, completion: @escaping (Result<[CircuitDetailsEntity], Error>) -> Void) -> Cancellable? {
+    func getVideos(channelId: String, maxResults: Int, order: String, apiKey: String, completion: @escaping (Result<[VideosEntity], Error>) -> Void) -> Cancellable? {
         if let result = result {
             completion(result)
         }
         return nil 
     }
 }
+

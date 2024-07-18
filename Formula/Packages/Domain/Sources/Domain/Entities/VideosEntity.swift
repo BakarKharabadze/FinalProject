@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct VideosEntity {
+public struct VideosEntity: Equatable {
     public let fetchedVideosTitle: String
     public let fetchedVideosImgUrl: String
     public let fetchedVideosId: String
