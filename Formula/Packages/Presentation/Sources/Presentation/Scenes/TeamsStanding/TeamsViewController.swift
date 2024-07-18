@@ -15,6 +15,7 @@ public final class TeamsViewController: UIViewController {
     public class func create(with viewModel: TeamsViewModel) -> TeamsViewController {
         let vc = TeamsViewController()
         vc.viewModel = viewModel
+        vc.viewModel.router = vc  // Assign router to the view controller
         return vc
     }
     
@@ -29,6 +30,7 @@ public final class TeamsViewController: UIViewController {
     private func setupTableView() {
         tableView.register(TeamsTableViewCell.self, forCellReuseIdentifier: "TeamsTableViewCell")
         tableView.dataSource = self
+        tableView.delegate = self  // Set delegate to self
         tableView.backgroundColor = UIColor(named: "CustomBackground")
         
         view.addSubview(tableView)
@@ -50,7 +52,7 @@ public final class TeamsViewController: UIViewController {
     }
 }
 
-extension TeamsViewController: UITableViewDataSource {
+extension TeamsViewController: UITableViewDataSource, UITableViewDelegate {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.teams.count
     }
@@ -60,5 +62,20 @@ extension TeamsViewController: UITableViewDataSource {
         let team = viewModel.teams[indexPath.row]
         cell.configure(with: team, viewModel: viewModel)
         return cell
+    }
+    
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let team = viewModel.teams[indexPath.row]
+        viewModel.teamViewTapped(team: team)
+    }
+}
+
+extension TeamsViewController: TeamsViewRouter {
+    public func perform(to route: TeamsViewRoute) {
+        switch route {
+        case .showTeamDetails(let viewModel):
+            let teamDetailsVC = TeamDetailsViewController.create(with: viewModel)
+            navigationController?.pushViewController(teamDetailsVC, animated: true)
+        }
     }
 }

@@ -111,6 +111,7 @@ class TeamsTableViewCell: UITableViewCell {
     
     private func setupTeamPointsLabel() {
         teamPointsLabel.font = .systemFont(ofSize: 18, weight: .bold)
+        teamPointsLabel.textColor = .yellow
         pointsStackView.addArrangedSubview(teamPointsLabel)
     }
     
@@ -140,7 +141,6 @@ class TeamsTableViewCell: UITableViewCell {
         teamNameLabel.text = team.constructorName
         liveryNameLabel.text = team.nationality
         teamPointsLabel.text = "\(team.points)"
-        teamPointsLabel.textColor = viewModel.getColorForTeam(team.constructorName)
         liveryImageView.image = UIImage(named: team.liveryImage, in: .module, with: nil)
     }
 }
