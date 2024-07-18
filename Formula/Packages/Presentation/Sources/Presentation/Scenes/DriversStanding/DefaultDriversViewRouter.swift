@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DefaultDriversViewRouter: StandingViewRouter {
+class DefaultDriversViewRouter: DriversViewRouter {
     
     private weak var viewController: DriversViewController?
     private let driverViewControllerFactory: DriversViewControllerFactory
@@ -17,6 +17,13 @@ class DefaultDriversViewRouter: StandingViewRouter {
         self.driverViewControllerFactory = driversViewControllerFactory
     }
     
-    func perform(to: StandingViewRoute) {
+    func perform(to route: DriversViewRoute) {
+        switch route {
+        case .showDriverDetails(let viewModel):
+            let driverDetailsVC = DriverDetailsViewController.create(with: viewModel)
+            viewController?.navigationController?.pushViewController(driverDetailsVC, animated: true)
+        }
     }
 }
+
+
