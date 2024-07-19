@@ -12,11 +12,11 @@ public class NewsDetailViewController: UIViewController {
 
     private var mainStackView = UIStackView()
     private var titleLabel = UILabel()
-    private var titleImage = UIImageView()
+    var titleImage = UIImageView()
     private var titleDescription = UILabel()
     private var readMoreButton = UIButton(type: .system)
     
-    private var viewModel: NewsDetailViewModel!
+    var viewModel: NewsDetailViewModel!
     
     public class func create(with viewModel: NewsDetailViewModel) -> NewsDetailViewController {
         let vc = NewsDetailViewController()
