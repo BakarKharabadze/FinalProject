@@ -9,31 +9,27 @@ import UIKit
 import WebKit
 
 class WebViewController: UIViewController {
-    
-    private var webView: WKWebView!
+    private let webView = WKWebView()
     private var url: URL
-    
+
     init(url: URL) {
         self.url = url
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupWebView()
-        loadURL()
-        setupNavigationBar()
+        loadUrl()
     }
-    
+
     private func setupWebView() {
-        webView = WKWebView()
-        webView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(webView)
-        
+        webView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             webView.topAnchor.constraint(equalTo: view.topAnchor),
             webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -41,17 +37,20 @@ class WebViewController: UIViewController {
             webView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
-    
-    private func loadURL() {
+
+    private func loadUrl() {
         let request = URLRequest(url: url)
         webView.load(request)
     }
-    
-    private func setupNavigationBar() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped))
-    }
-    
-    @objc private func doneButtonTapped() {
-        dismiss(animated: true, completion: nil)
+}
+
+class NoDoneButtonNavigationController: UINavigationController {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationBar.topItem?.rightBarButtonItem = nil
     }
 }
+
+
+
+

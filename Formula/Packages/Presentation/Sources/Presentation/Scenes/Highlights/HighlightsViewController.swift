@@ -96,19 +96,16 @@ public final class HighlightsViewController: UIViewController {
         ])
     }
     
-    private func openVideoOnYouTube(videoId: String) {
-        let videoURLString = "https://www.youtube.com/watch?v=\(videoId)"
-        guard let videoURL = URL(string: videoURLString) else { return }
-        
+    private func openVideoOnYouTube(videoURL: URL) {
         let webViewController = WebViewController(url: videoURL)
-        let navController = UINavigationController(rootViewController: webViewController)
-        present(navController, animated: true, completion: nil)
+        webViewController.modalPresentationStyle = .automatic
+        present(webViewController, animated: true, completion: nil)
     }
 }
 
 extension HighlightsViewController: UITableViewDataSource, UITableViewDelegate {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.videos.count
+        return viewModel.videos.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -122,7 +119,8 @@ extension HighlightsViewController: UITableViewDataSource, UITableViewDelegate {
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let highlight = viewModel.videos[indexPath.row]
-        openVideoOnYouTube(videoId: highlight.fetchedVideosId)
+        guard let videoURL = URL(string: highlight.videoURL) else { return }
+        openVideoOnYouTube(videoURL: videoURL)
     }
 }
 

@@ -43,7 +43,7 @@ public final class HomeViewModel {
     }
     
     public func viewDidLoad() {
-        fetchNews(query: "f1", from: "current", sortBy: "publishedAt", language: "en", apiKey: "57a97376638a49eeb91a6fd7dad7f1be")
+        fetchNews(query: "F1", from: "current", sortBy: "publishedAt", language: "en", apiKey: "57a97376638a49eeb91a6fd7dad7f1be")
         fetchDrivers()
         fetchUpcomingRace()
     }

@@ -58,8 +58,8 @@ public class NewsDetailViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5),
+            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5)
         ])
     }
     
@@ -80,7 +80,7 @@ public class NewsDetailViewController: UIViewController {
         
         titleImage.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            titleImage.widthAnchor.constraint(equalToConstant: 250),
+            titleImage.widthAnchor.constraint(equalToConstant: 270),
             titleImage.heightAnchor.constraint(equalToConstant: 200)
         ])
         
@@ -109,6 +109,11 @@ public class NewsDetailViewController: UIViewController {
         titleDescription.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(readMoreButtonTapped)))
         
         mainStackView.addArrangedSubview(titleDescription)
+        
+        NSLayoutConstraint.activate([
+            titleDescription.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor, constant: 15),
+            titleDescription.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor, constant: -5)
+        ])
     }
     
     @objc private func readMoreButtonTapped() {
