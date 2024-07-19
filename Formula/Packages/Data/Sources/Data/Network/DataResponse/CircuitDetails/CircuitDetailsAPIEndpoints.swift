@@ -14,7 +14,7 @@ struct CircuitDetailsAPIEndpoints {
     static func details(name: String) -> DataEndpoint<CircuitDetailsResponse> {
         
         return DataEndpoint(path: "circuits",
-                            queryParameters: ["search":name],
+                            queryParameters: ["search": name],
                             headerParamaters: ["X-RapidAPI-Host": "api-formula-1.p.rapidapi.com"])
     }
 }

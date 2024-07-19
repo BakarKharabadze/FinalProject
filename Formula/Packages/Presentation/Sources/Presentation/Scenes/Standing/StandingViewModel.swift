@@ -27,9 +27,9 @@ public final class StandingViewModel {
     public var router: StandingViewRouter?
     private let getDriversUseCase: GetDriversUseCase
     private let getTeamsUseCase: GetTeamsUseCase 
-    weak var delegate: StandingViewModelDelegate?
-    private var drivers: [DriverEntity] = []
-    private var teams: [TeamsEntity] = []
+    public weak var delegate: StandingViewModelDelegate?
+    var drivers: [DriverEntity] = []
+    var teams: [TeamsEntity] = []
     
     public init(getDriversUseCase: GetDriversUseCase, getTeamsUseCase: GetTeamsUseCase) {
         self.getDriversUseCase = getDriversUseCase
