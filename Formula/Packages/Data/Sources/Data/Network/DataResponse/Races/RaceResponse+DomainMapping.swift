@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  RaceResponse+DomainMapping.swift
+//
 //
 //  Created by Bakar Kharabadze on 7/10/24.
 //
@@ -10,7 +10,7 @@ import Domain
 
 extension RaceEntity {
     static func map(raceResponse: [F1Season.Race]) -> [RaceEntity] {
-        return raceResponse.map { race in
+        raceResponse.map { race in
             RaceEntity(
                 round: race.round,
                 grandPrixName: race.raceName,

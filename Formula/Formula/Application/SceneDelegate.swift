@@ -13,14 +13,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     let appDIContainer = AppDIContainer()
 
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         guard let scene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: scene)
-        let navigationController = TabBarController(homeSceneViewControllerFactory: appDIContainer.makeHomeSceneDIContainer(), scheduleSceneViewControllerFactory: appDIContainer.makeScheduleSceneDIContainer(), standingSceneViewControllerFactory: appDIContainer.makeStandingSceneDIContainer(), highlightSceneViewControllerFactory: appDIContainer.makeHighlightSceneDIContainer())
-        window?.rootViewController = navigationController
+        
+        let tabBarViewModel = TabBarViewModel(
+            homeSceneViewControllerFactory: appDIContainer.makeHomeSceneDIContainer(),
+            scheduleSceneViewControllerFactory: appDIContainer.makeScheduleSceneDIContainer(),
+            standingSceneViewControllerFactory: appDIContainer.makeStandingSceneDIContainer(),
+            highlightSceneViewControllerFactory: appDIContainer.makeHighlightSceneDIContainer()
+        )
+        
+        let tabBarController = TabBarController(viewModel: tabBarViewModel)
+        
+        window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
     }
 
@@ -51,7 +59,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
-
 }
-

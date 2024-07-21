@@ -9,8 +9,11 @@ import Foundation
 import Domain
 
 public final class DriverDetailsViewModel {
+    
+    //MARK: - Properties
     let driver: DriverEntity
     
+    //MARK: - Init
     public init(driver: DriverEntity) {
         self.driver = driver
     }

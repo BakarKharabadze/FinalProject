@@ -9,10 +9,13 @@ import SwiftUI
 import Domain
 
 struct TeamDetailsSwiftUIView: View {
+    
+    //MARK: - Properties
     var team: TeamDetailsEntity
 
+    //MARK: - Body
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading, spacing: 35) {
             horizontalLabel(labelText: "World Titles:", valueText: team.worldTitle)
             horizontalLabel(labelText: "Race Wins:", valueText: team.raceWins)
             horizontalLabel(labelText: "Pole Positions:", valueText: team.polePositions)
@@ -22,9 +25,8 @@ struct TeamDetailsSwiftUIView: View {
             horizontalLabel(labelText: "Director:", valueText: team.director)
             horizontalLabel(labelText: "Technical Manager:", valueText: team.technicalManeger)
         }
-        .frame(width: 300)
         .padding()
-        .background(Color("CustomBackground"))
+        .background(Color("CustomCellBackground"))
         .cornerRadius(10)
     }
     
@@ -38,7 +40,6 @@ struct TeamDetailsSwiftUIView: View {
                 .font(.system(size: 18))
                 .foregroundColor(.white)
                 .bold()
-                .padding()
         }
     }
 }
@@ -57,7 +58,7 @@ struct TeamDetailsSwiftUIView_Previews: PreviewProvider {
             technicalManeger: "Pierre Waché"
         )
         TeamDetailsSwiftUIView(team: sampleTeam)
-            .background(Color.black) 
+            .background(Color.black)
             .previewLayout(.sizeThatFits)
             .cornerRadius(10)
     }

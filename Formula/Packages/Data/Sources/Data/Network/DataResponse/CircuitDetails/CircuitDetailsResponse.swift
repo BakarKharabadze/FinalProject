@@ -10,7 +10,7 @@ import Foundation
 public struct CircuitDetailsResponse: Decodable {
     public let response: [CircuitDetail]
 
-    public struct CircuitDetail: Codable {
+    public struct CircuitDetail: Decodable {
         public let id: Int
         public let name: String
         public let image: String
@@ -25,17 +25,17 @@ public struct CircuitDetailsResponse: Decodable {
         public let opened: Int?
     }
 
-    public struct Competition: Codable {
+    public struct Competition: Decodable {
         public let id: Int
         public let name: String
     }
 
-    public struct CircuitLocation: Codable {
+    public struct CircuitLocation: Decodable {
         public let country: String
         public let city: String
     }
 
-    public struct LapRecord: Codable {
+    public struct LapRecord: Decodable {
         public let time: String?
         public let driver: String?
         public let year: String?

@@ -11,7 +11,7 @@ import Common
 @testable import Presentation
 
 // Test Case
-class ScheduleViewModelTests: XCTestCase {
+final class ScheduleViewModelTests: XCTestCase {
     
     var viewModel: ScheduleViewModel!
     var racesUseCase: MockGetRacesUseCase!
@@ -115,7 +115,7 @@ class ScheduleViewModelTests: XCTestCase {
 }
 
 // Mock GetRacesUseCase
-public class MockGetRacesUseCase: GetRacesUseCase {
+public final class MockGetRacesUseCase: GetRacesUseCase {
     var result: Result<[RaceEntity], Error>?
     
     public init() {}
@@ -129,7 +129,7 @@ public class MockGetRacesUseCase: GetRacesUseCase {
 }
 
 // Mock GetRaceResultUseCase
-public class MockGetRaceResultUseCase: GetRaceResultUseCase {
+public final class  MockGetRaceResultUseCase: GetRaceResultUseCase {
     var result: Result<[RaceResultEntity], Error>?
     
     public init() {}
@@ -143,7 +143,7 @@ public class MockGetRaceResultUseCase: GetRaceResultUseCase {
 }
 
 // Mock Router
-public class MockScheduleViewRouter: ScheduleViewRouter {
+public final class  MockScheduleViewRouter: ScheduleViewRouter {
     var performedRoute: ScheduleViewRoute?
     
     public func perform(to route: ScheduleViewRoute) {
@@ -152,7 +152,7 @@ public class MockScheduleViewRouter: ScheduleViewRouter {
 }
 
 // Mock Delegate
-public class MockScheduleViewModelDelegate: ScheduleViewModelDelegate {
+public final class MockScheduleViewModelDelegate: ScheduleViewModelDelegate {
     var fetchedRaces: [RaceEntity]?
     var fetchedRaceResults: [RaceResultEntity]?
     var racesExpectation: XCTestExpectation?

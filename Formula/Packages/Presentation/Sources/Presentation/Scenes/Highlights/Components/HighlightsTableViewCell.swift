@@ -8,11 +8,12 @@
 import UIKit
 import Domain
 
-class HighlightsTableViewCell: UITableViewCell {
+final class HighlightsTableViewCell: UITableViewCell {
     
+    // MARK: - Properties
     private let mainStackView = UIStackView()
     private let highlightImageView = UIImageView()
-    private let highlightOverlayView = UIView() 
+    private let highlightOverlayView = UIView()
     private let playIconImageView = UIImageView()
     private let titleLabel = UILabel()
     private let channelStackView = UIStackView()
@@ -21,6 +22,7 @@ class HighlightsTableViewCell: UITableViewCell {
     private let channelNameLabel = UILabel()
     private let subscribersLabel = UILabel()
     
+    // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
@@ -30,6 +32,7 @@ class HighlightsTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - UI Setup
     private func setupUI() {
         backgroundColor = UIColor(named: "CustomBackground")
         let selectedBackgroundView = UIView()
@@ -178,6 +181,7 @@ class HighlightsTableViewCell: UITableViewCell {
         channelInfoStackView.addArrangedSubview(subscribersLabel)
     }
     
+    // MARK: - Configuration
     func configure(with highlight: VideosEntity) {
         titleLabel.text = highlight.fetchedVideosTitle
         

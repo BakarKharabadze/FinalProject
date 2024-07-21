@@ -1,6 +1,6 @@
 //
 //  TeamResponse+DomainMapping.swift
-//  
+//
 //
 //  Created by Bakar Kharabadze on 7/12/24.
 //
@@ -10,7 +10,7 @@ import Domain
 
 extension TeamsEntity {
     static func map(teamResponse: [TeamsStandings.ConstructorStanding]) -> [TeamsEntity] {
-        return teamResponse.map { team in
+        teamResponse.map { team in
             TeamsEntity(position: team.position,
                         constructorName: team.constructor.name,
                         points: team.points,

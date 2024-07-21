@@ -11,7 +11,7 @@ import UIKit
 @testable import Presentation
 
 // Test Case
-class TeamsViewModelTests: XCTestCase {
+final class TeamsViewModelTests: XCTestCase {
     
     var viewModel: TeamsViewModel!
     var router: MockTeamsViewRouter!
@@ -64,7 +64,7 @@ class TeamsViewModelTests: XCTestCase {
 
 
 // Mock Router
-public class MockTeamsViewRouter: TeamsViewRouter {
+public final class MockTeamsViewRouter: TeamsViewRouter {
     
     var performedRoute: TeamsViewRoute?
     

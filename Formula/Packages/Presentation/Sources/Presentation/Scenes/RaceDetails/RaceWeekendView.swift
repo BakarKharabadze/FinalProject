@@ -5,7 +5,10 @@
 
 import SwiftUI
 
+// MARK: - RaceWeekendView
 struct RaceWeekendView: View {
+    
+    // MARK: - Body
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             Text("Race weekend")
@@ -53,6 +56,7 @@ struct RaceWeekendView: View {
     }
 }
 
+// MARK: - RaceSession
 struct RaceSession: Hashable {
     let date: String
     let month: String
@@ -61,6 +65,7 @@ struct RaceSession: Hashable {
     let endTime: String
 }
 
+// MARK: - Sample Data
 let raceSessions = [
     RaceSession(date: "22", month: "Mar", title: "Practice 1", startTime: "06:30", endTime: "07:30"),
     RaceSession(date: "22", month: "Mar", title: "Practice 2", startTime: "10:00", endTime: "11:30"),
@@ -69,9 +74,11 @@ let raceSessions = [
     RaceSession(date: "24", month: "Mar", title: "Race", startTime: "10:00", endTime: "12:00")
 ]
 
+// MARK: - Previews
 struct RaceWeekendView_Previews: PreviewProvider {
     static var previews: some View {
         RaceWeekendView()
             .previewLayout(.sizeThatFits)
     }
 }
+

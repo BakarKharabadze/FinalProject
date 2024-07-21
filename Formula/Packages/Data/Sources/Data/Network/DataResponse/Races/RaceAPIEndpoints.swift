@@ -12,6 +12,6 @@ import Network
 struct RaceAPIEndpoints {
     
     static func races() -> DataEndpoint<F1Season> {
-           return DataEndpoint(path: "api/f1/current.json")
-       }
+        DataEndpoint(path: "api/f1/current.json")
+    }
 }

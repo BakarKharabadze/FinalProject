@@ -11,7 +11,7 @@ import Common
 
 
 // Test Case
-class GetDriversUseCaseTests: XCTestCase {
+final class GetDriversUseCaseTests: XCTestCase {
     
     var useCase: DefaultGetDriversUseCase!
     var repository: MockDriversRepository!
@@ -88,7 +88,7 @@ class GetDriversUseCaseTests: XCTestCase {
 }
 
 // Mock Repository
-public class MockDriversRepository: DriversRepository {
+public final class  MockDriversRepository: DriversRepository {
     
     var result: Result<[DriverEntity], Error>?
     

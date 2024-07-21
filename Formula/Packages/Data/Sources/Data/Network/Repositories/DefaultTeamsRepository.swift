@@ -11,13 +11,17 @@ import Network
 import Common
 
 public final class DefaultTeamsRepository {
+    
+    // MARK: - Properties
     private let dataTransferService: DataTransfer
     
+    // MARK: - Initialization
     public init(dataTransferService: DataTransfer) {
         self.dataTransferService = dataTransferService
     }
 }
 
+// MARK: - TeamsRepository
 extension DefaultTeamsRepository: TeamsRepository {
     public func getTeams(completion: @escaping (Result<[TeamsEntity], any Error>) -> Void) -> Cancellable? {
         let endpoint = TeamAPIEndpoints.teams()
@@ -26,7 +30,7 @@ extension DefaultTeamsRepository: TeamsRepository {
             switch response {
             case .success(let teams):
                 guard let firstStandingsList = teams.mrData.standingsTable.standingsLists.first?.constructorStandings else {
-                    print("Error")
+                    print("Completion failure")
                     return
                 }
                 let teamEntities = TeamsEntity.map(teamResponse: firstStandingsList)
@@ -35,5 +39,5 @@ extension DefaultTeamsRepository: TeamsRepository {
                 completion(.failure(error))
             }
         }
-    } 
+    }
 }

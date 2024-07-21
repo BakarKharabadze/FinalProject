@@ -10,7 +10,7 @@ import Domain
 @testable import Presentation
 
 // Test case
-class DriversViewModelTests: XCTestCase {
+final class DriversViewModelTests: XCTestCase {
     
     var viewModel: DriversViewModel!
     var router: MockDriversViewRouter!
@@ -72,7 +72,7 @@ class DriversViewModelTests: XCTestCase {
 }
 
 // Mock Router
-public class MockDriversViewRouter: DriversViewRouter {
+public final class MockDriversViewRouter: DriversViewRouter {
     var performedRoute: DriversViewRoute?
     
     public func perform(to route: DriversViewRoute) {

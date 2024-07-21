@@ -11,7 +11,7 @@ import Common
 @testable import Presentation
 
 // Test Case
-class StandingViewModelTests: XCTestCase {
+final class StandingViewModelTests: XCTestCase {
     
     var viewModel: StandingViewModel!
     var driversUseCase: MockGetDriversUseCase!
@@ -110,7 +110,7 @@ class StandingViewModelTests: XCTestCase {
 
 
 // Mock GetDriversUseCase
-public class MockGetDriversUseCase: GetDriversUseCase {
+public final class  MockGetDriversUseCase: GetDriversUseCase {
     var result: Result<[DriverEntity], Error>?
     
     public init() {}
@@ -124,7 +124,7 @@ public class MockGetDriversUseCase: GetDriversUseCase {
 }
 
 // Mock GetTeamsUseCase
-public class MockGetTeamsUseCase: GetTeamsUseCase {
+public final class  MockGetTeamsUseCase: GetTeamsUseCase {
     var result: Result<[TeamsEntity], Error>?
     
     public init() {}
@@ -138,7 +138,7 @@ public class MockGetTeamsUseCase: GetTeamsUseCase {
 }
 
 // Mock Router
-public class MockStandingViewRouter: StandingViewRouter {
+public final class  MockStandingViewRouter: StandingViewRouter {
     var performedRoute: StandingViewRoute?
     
     public func perform(to route: StandingViewRoute) {
@@ -147,7 +147,7 @@ public class MockStandingViewRouter: StandingViewRouter {
 }
 
 // Mock Delegate
-public class MockStandingViewModelDelegate: StandingViewModelDelegate {
+public final class  MockStandingViewModelDelegate: StandingViewModelDelegate {
     var fetchedDrivers: [DriverEntity]?
     var fetchedTeams: [TeamsEntity]?
     var driversExpectation: XCTestExpectation?

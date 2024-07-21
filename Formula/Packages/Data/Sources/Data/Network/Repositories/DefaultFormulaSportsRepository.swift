@@ -11,13 +11,17 @@ import Network
 import Common
 
 public final class DefaultFormulaSportsRepository {
+    
+    // MARK: - Properties
     private let dataTransferService: DataTransfer
     
+    // MARK: - Initialization
     public init(dataTransferService: DataTransfer) {
         self.dataTransferService = dataTransferService
     }
 }
 
+// MARK: - FormulaSportsRepository
 extension DefaultFormulaSportsRepository: FormulaSportsRepository {
     public func getCircuitDetails(for circuit: String, completion: @escaping (Result<[Domain.CircuitDetailsEntity], any Error>) -> Void) -> (any Common.Cancellable)? {
         let endpoint = CircuitDetailsAPIEndpoints.details(name: circuit)
@@ -25,12 +29,10 @@ extension DefaultFormulaSportsRepository: FormulaSportsRepository {
         return self.dataTransferService.request(with: endpoint) { (response: Result<CircuitDetailsResponse, Error>) in
             switch response {
             case .success(let details):
-               // result(.success(CircuitDetailsEntity.map(circuitDetailsResponse: details)))
+               // completion(.success(CircuitDetailsEntity.map(circuitDetailsResponse: details)))
                 completion(.success([]))
-                return
             case .failure(let error):
                 completion(.failure(error))
-                return
             }
         }
     }

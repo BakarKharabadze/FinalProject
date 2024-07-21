@@ -11,12 +11,13 @@ import Domain
 
 public final class HighlightsViewController: UIViewController {
     
+    // MARK: - Properties
     private let mainStackView = UIStackView()
     private let logoImageView = UIImageView()
     private let highlightsTableView = UITableView()
-    
     public var viewModel: HighlightsViewModel!
     
+    // MARK: - Initialization
     public class func create(with viewModel: HighlightsViewModel) -> HighlightsViewController {
         let vc = HighlightsViewController(viewModel: viewModel)
         vc.viewModel = viewModel
@@ -32,6 +33,7 @@ public final class HighlightsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Life Cycle
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "CustomBackground")
@@ -41,6 +43,7 @@ public final class HighlightsViewController: UIViewController {
         viewModel.viewDidLoad()
     }
     
+    // MARK: - Setup Functions
     private func setupUI() {
         setupMainStackView()
         setupLogoImageView()
@@ -57,7 +60,7 @@ public final class HighlightsViewController: UIViewController {
         mainStackView.spacing = 10
         
         NSLayoutConstraint.activate([
-            mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -20), // შეცვლილი
+            mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -20),
             mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
@@ -96,6 +99,7 @@ public final class HighlightsViewController: UIViewController {
         ])
     }
     
+    // MARK: - Video Handling
     private func openVideoOnYouTube(videoURL: URL) {
         let webViewController = WebViewController(url: videoURL)
         webViewController.modalPresentationStyle = .automatic
@@ -103,9 +107,10 @@ public final class HighlightsViewController: UIViewController {
     }
 }
 
+// MARK: - UITableViewDataSource, UITableViewDelegate
 extension HighlightsViewController: UITableViewDataSource, UITableViewDelegate {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.videos.count
+        viewModel.videos.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -124,6 +129,7 @@ extension HighlightsViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
+// MARK: - HighlightsViewModelDelegate
 extension HighlightsViewController: HighlightsViewModelDelegate {
     public func videosFetched(_ videos: [VideosEntity]) {
         DispatchQueue.main.async {

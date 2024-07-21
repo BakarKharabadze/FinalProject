@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - Welcome
-struct RaceLastResults: Codable {
+struct RaceLastResults: Decodable {
     let mrData: MRData
     
     enum CodingKeys: String, CodingKey {
@@ -17,7 +17,7 @@ struct RaceLastResults: Codable {
     
     
     // MARK: - MRData
-    struct MRData: Codable {
+    struct MRData: Decodable {
         let xmlns: String
         let series: String
         let url: String
@@ -31,7 +31,7 @@ struct RaceLastResults: Codable {
     }
     
     // MARK: - RaceTable
-    struct RaceTable: Codable {
+    struct RaceTable: Decodable {
         let season, round: String
         let races: [Race]
         
@@ -42,7 +42,7 @@ struct RaceLastResults: Codable {
     }
     
     // MARK: - Race
-    struct Race: Codable {
+    struct Race: Decodable {
         let season, round: String
         let url: String
         let raceName: String
@@ -59,7 +59,7 @@ struct RaceLastResults: Codable {
     }
     
     // MARK: - Circuit
-    struct Circuit: Codable {
+    struct Circuit: Decodable {
         let circuitID: String
         let url: String
         let circuitName: String
@@ -73,12 +73,12 @@ struct RaceLastResults: Codable {
     }
     
     // MARK: - Location
-    struct Location: Codable {
+    struct Location: Decodable {
         let lat, long, locality, country: String
     }
     
     // MARK: - Result
-    struct Result: Codable {
+    struct Result: Decodable {
         let number, position, positionText, points: String
         let driver: Driver
         let constructor: Constructor
@@ -97,7 +97,7 @@ struct RaceLastResults: Codable {
     }
     
     // MARK: - Constructor
-    struct Constructor: Codable {
+    struct Constructor: Decodable {
         let constructorID: String
         let url: String
         let name, nationality: String
@@ -109,7 +109,7 @@ struct RaceLastResults: Codable {
     }
     
     // MARK: - Driver
-    struct Driver: Codable {
+    struct Driver: Decodable {
         let driverID, permanentNumber, code: String
         let url: String
         let givenName, familyName, dateOfBirth, nationality: String
@@ -121,7 +121,7 @@ struct RaceLastResults: Codable {
     }
     
     // MARK: - FastestLap
-    struct FastestLap: Codable {
+    struct FastestLap: Decodable {
         let rank, lap: String
         let time: FastestLapTime
         let averageSpeed: AverageSpeed
@@ -134,23 +134,22 @@ struct RaceLastResults: Codable {
     }
     
     // MARK: - AverageSpeed
-    struct AverageSpeed: Codable {
+    struct AverageSpeed: Decodable {
         let units: Units
         let speed: String
     }
     
-    enum Units: String, Codable {
+    enum Units: String, Decodable {
         case kph = "kph"
     }
     
     // MARK: - FastestLapTime
-    struct FastestLapTime: Codable {
+    struct FastestLapTime: Decodable {
         let time: String
     }
     
     // MARK: - ResultTime
-    struct ResultTime: Codable {
+    struct ResultTime: Decodable {
         let millis, time: String
     }
-    
 }

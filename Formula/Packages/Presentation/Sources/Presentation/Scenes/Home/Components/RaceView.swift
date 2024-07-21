@@ -9,8 +9,11 @@ import SwiftUI
 import Domain
 
 struct RaceView: View {
+    
+    //MARK: - Properties
     let race: RaceEntity
     
+    //MARK: - Body
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
@@ -39,7 +42,7 @@ struct RaceView: View {
                     .foregroundColor(.white)
             }
             .scaledToFill()
-            .padding(.trailing, -85)
+            .padding(.trailing, -55)
             .padding(.top, 15)
             
             Image(race.date, bundle: .module)
@@ -47,7 +50,7 @@ struct RaceView: View {
                 .scaledToFill()
                 .frame(width: 150, height: 150)
                 .padding()
-                .offset(x: 45)
+                .offset(x: 30)
         }
         .padding()
         .background(

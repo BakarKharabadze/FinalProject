@@ -10,15 +10,18 @@ import Domain
 import Network
 import Common
 
-public final class DefaultRacesRepository  {
+public final class DefaultRacesRepository {
     
+    // MARK: - Properties
     private let dataTransferService: DataTransfer
     
+    // MARK: - Initialization
     public init(dataTransferService: DataTransfer) {
         self.dataTransferService = dataTransferService
     }
 }
 
+// MARK: - RaceRepository
 extension DefaultRacesRepository: RaceRepository {
     public func getRaces(result: @escaping (Result<[RaceEntity], Error>) -> Void) -> Cancellable? {
         let endpoint = RaceAPIEndpoints.races()
@@ -33,7 +36,7 @@ extension DefaultRacesRepository: RaceRepository {
                         date: race.date ?? "",
                         image: race.circuit?.url ?? "",
                         startsIn: race.time ?? "",
-                        countryFlag: race.raceName, 
+                        countryFlag: race.raceName,
                         circuitID: race.circuit?.circuitID ?? ""
                     )
                 }

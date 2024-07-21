@@ -8,8 +8,10 @@
 import UIKit
 import Domain
 
-class DriversTableViewCell: UITableViewCell {
+// MARK: - DriversTableViewCell
+final class DriversTableViewCell: UITableViewCell {
     
+    // MARK: - Properties
     private let containerView = UIView()
     private let mainStackView = UIStackView()
     private let textStackView = UIStackView()
@@ -21,6 +23,7 @@ class DriversTableViewCell: UITableViewCell {
     private let pointsSuffixLabel = UILabel()
     private let driverImageView = UIImageView()
     
+    // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
@@ -30,6 +33,7 @@ class DriversTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - UI Setup
     private func setupUI() {
         contentView.backgroundColor = UIColor(named: "CustomBackground")
         
@@ -136,6 +140,7 @@ class DriversTableViewCell: UITableViewCell {
         ])
     }
     
+    // MARK: - Configuration
     func configure(with driver: DriverEntity, viewModel: DriversViewModel) {
         rankingLabel.text = driver.position
         nameLabel.text = driver.givenName + " " + driver.familyName

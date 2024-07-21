@@ -10,7 +10,7 @@ import XCTest
 @testable import Domain
 
 // Test Case
-class GetTeamDetailsUseCaseTests: XCTestCase {
+final class GetTeamDetailsUseCaseTests: XCTestCase {
     
     var useCase: DefaultGetTeamDetailsUseCase!
     var repository: MockTeamDetailsRepository!
@@ -88,7 +88,7 @@ class GetTeamDetailsUseCaseTests: XCTestCase {
 }
 
 // Mock Repository
-class MockTeamDetailsRepository: TeamDetailsRepository {
+public final class  MockTeamDetailsRepository: TeamDetailsRepository {
     
     var result: Result<[TeamDetailsEntity], Error>?
     

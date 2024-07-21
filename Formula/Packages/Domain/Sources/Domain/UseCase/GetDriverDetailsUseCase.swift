@@ -12,7 +12,7 @@ public protocol GetDriverDetailsUseCase {
     func execute(completion: @escaping (Result<[DriverDetailsEntity], Error>) -> Void) -> Cancellable?
 }
 
-public class DefaultGetDriversDetailsUseCase: GetDriverDetailsUseCase {
+public final class DefaultGetDriversDetailsUseCase: GetDriverDetailsUseCase {
    
     private let repository: DriverDetailsRepository
     

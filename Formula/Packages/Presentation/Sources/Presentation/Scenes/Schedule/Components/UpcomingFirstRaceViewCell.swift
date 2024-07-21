@@ -9,9 +9,13 @@ import SwiftUI
 import UIKit
 import Domain
 
-class UpcomingFirstRaceViewCell: UITableViewCell {
+// MARK: - UpcomingFirstRaceViewCell
+final class UpcomingFirstRaceViewCell: UITableViewCell {
+    
+    // MARK: - Properties
     private var hostingController: UIHostingController<UpcomingFirstRace>?
-
+    
+    // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
@@ -22,6 +26,7 @@ class UpcomingFirstRaceViewCell: UITableViewCell {
         setupUI()
     }
     
+    // MARK: - UI Setup
     private func setupUI() {
         backgroundColor = .clear
         guard let hostingView = hostingController?.view else { return }
@@ -36,6 +41,7 @@ class UpcomingFirstRaceViewCell: UITableViewCell {
         ])
     }
     
+    // MARK: - Configuration
     func configure(with race: RaceEntity) {
         let upcomingFirstRaceView = UpcomingFirstRace(race: race)
         if let hostingController = hostingController {
@@ -56,4 +62,3 @@ class UpcomingFirstRaceViewCell: UITableViewCell {
         }
     }
 }
-

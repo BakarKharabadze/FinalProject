@@ -7,10 +7,10 @@
 
 import UIKit
 
-import UIKit
-
-class ScheduleViewCell: UITableViewCell {
+// MARK: - ScheduleViewCell
+final class ScheduleViewCell: UITableViewCell {
     
+    // MARK: - Properties
     private let containerView = UIView()
     private let mainStackView = UIStackView()
     private let textStackView = UIStackView()
@@ -19,15 +19,19 @@ class ScheduleViewCell: UITableViewCell {
     private let dateLabel = UILabel()
     private let flagImageView = UIImageView()
     
+    // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+
+        setupUI()
     }
     
+    // MARK: - UI Setup
     private func setupUI() {
         contentView.backgroundColor = UIColor(named: "CustomBackground")
         
@@ -97,7 +101,6 @@ class ScheduleViewCell: UITableViewCell {
         flagImageView.contentMode = .scaleAspectFit
         flagImageView.layer.cornerRadius = 4
         flagImageView.clipsToBounds = true
-        
         mainStackView.addArrangedSubview(flagImageView)
         
         NSLayoutConstraint.activate([
@@ -106,12 +109,12 @@ class ScheduleViewCell: UITableViewCell {
         ])
     }
     
+    // MARK: - Configuration
     func configure(round: String, title: String, date: String, flagImage: String, isUpcoming: Bool) {
         roundLabel.text = "Round \(round)"
         titleLabel.text = title
         dateLabel.text = date
         flagImageView.image = UIImage(named: flagImage, in: .module, with: nil)
-        
         roundLabel.textColor = isUpcoming ? .green : .red
     }
 }

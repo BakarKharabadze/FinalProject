@@ -10,6 +10,7 @@ import Domain
 
 public final class StandingViewController: UIViewController {
     
+    // MARK: - Properties
     private let mainStackView = UIStackView()
     private let titleLabel = UILabel()
     private let driversView = UIView()
@@ -20,13 +21,15 @@ public final class StandingViewController: UIViewController {
     private let teamsImage = UIImageView()
     var viewModel: StandingViewModel!
     
+    // MARK: - Initialization
     public class func create(with viewModel: StandingViewModel, driversViewControllerFactory: DriversViewControllerFactory, teamsViewControllerFactory: TeamsViewControllerFactory) -> StandingViewController {
         let vc = StandingViewController()
         vc.viewModel = viewModel
-        vc.viewModel.router = DefaultStandingViewRouter(view: vc, driversViewControllerFactory: driversViewControllerFactory, teamsViewControllerFactory: teamsViewControllerFactory )
+        vc.viewModel.router = DefaultStandingViewRouter(view: vc, driversViewControllerFactory: driversViewControllerFactory, teamsViewControllerFactory: teamsViewControllerFactory)
         return vc
     }
     
+    // MARK: - Life Cycle
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "CustomBackground")
@@ -35,6 +38,7 @@ public final class StandingViewController: UIViewController {
         viewModel.viewDidLoad()
     }
     
+    // MARK: - UI Setup
     private func setupUI() {
         setupMainStackView()
         setupTitleLabel()
@@ -69,7 +73,7 @@ public final class StandingViewController: UIViewController {
     
     private func setupTitleLabel() {
         titleLabel.text = "Standings"
-        titleLabel.font = .systemFont(ofSize: 24, weight: .bold)
+        titleLabel.font = .systemFont(ofSize: 30, weight: .bold)
         titleLabel.textColor = .white
         
         mainStackView.addArrangedSubview(titleLabel)
@@ -91,7 +95,7 @@ public final class StandingViewController: UIViewController {
     private func setupDriversTitle() {
         driversTitle.text = "Drivers"
         driversTitle.textColor = .white
-        driversTitle.font = .systemFont(ofSize: 20)
+        driversTitle.font = .systemFont(ofSize: 26, weight: .bold)
         
         driversTitle.translatesAutoresizingMaskIntoConstraints = false
         driversView.addSubview(driversTitle)
@@ -131,7 +135,7 @@ public final class StandingViewController: UIViewController {
     private func setupTeamsTitle() {
         teamsTitle.text = "Teams"
         teamsTitle.textColor = .white
-        teamsTitle.font = .systemFont(ofSize: 20)
+        teamsTitle.font = .systemFont(ofSize: 26, weight: .bold)
         
         teamsTitle.translatesAutoresizingMaskIntoConstraints = false
         teamsView.addSubview(teamsTitle)
@@ -164,6 +168,7 @@ public final class StandingViewController: UIViewController {
         teamsView.addGestureRecognizer(teamsTapGesture)
     }
     
+    // MARK: - Actions
     @objc private func driversViewTapped() {
         viewModel.driversViewTapped()
     }
@@ -173,6 +178,7 @@ public final class StandingViewController: UIViewController {
     }
 }
 
+// MARK: - StandingViewModelDelegate
 extension StandingViewController: StandingViewModelDelegate {
     public func teamsFetched(_ teams: [Domain.TeamsEntity]) {
         

@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  DriverResponse.swift
 //  
 //
 //  Created by Bakar Kharabadze on 7/11/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct DriverStandings: Codable {
+public struct DriverStandings: Decodable {
     let mrData: MRData
     
     enum CodingKeys: String, CodingKey {
@@ -16,7 +16,7 @@ public struct DriverStandings: Codable {
     
     
     // MARK: - MRData
-    struct MRData: Codable {
+    struct MRData: Decodable {
         let xmlns: String
         let series: String
         let url: String
@@ -30,7 +30,7 @@ public struct DriverStandings: Codable {
     }
     
     // MARK: - StandingsTable
-    struct StandingsTable: Codable {
+    struct StandingsTable: Decodable {
         let season: String
         let standingsLists: [StandingsList]
         
@@ -41,7 +41,7 @@ public struct DriverStandings: Codable {
     }
     
     // MARK: - StandingsList
-    struct StandingsList: Codable {
+    struct StandingsList: Decodable {
         let season, round: String
         let driverStandings: [DriverStanding]
         
@@ -52,7 +52,7 @@ public struct DriverStandings: Codable {
     }
     
     // MARK: - DriverStanding
-    struct DriverStanding: Codable {
+    struct DriverStanding: Decodable {
         let position, positionText, points, wins: String
         let driver: Driver
         let constructors: [Constructor]
@@ -65,7 +65,7 @@ public struct DriverStandings: Codable {
     }
     
     // MARK: - Constructor
-    struct Constructor: Codable {
+    struct Constructor: Decodable {
         let constructorID: String
         let url: String
         let name, nationality: String
@@ -77,7 +77,7 @@ public struct DriverStandings: Codable {
     }
     
     // MARK: - Driver
-    struct Driver: Codable {
+    struct Driver: Decodable {
         let driverID, permanentNumber, code: String
         let url: String
         let givenName, familyName, dateOfBirth, nationality: String

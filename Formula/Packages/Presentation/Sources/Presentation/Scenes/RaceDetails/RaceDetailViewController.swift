@@ -5,12 +5,13 @@
 //  Created by Bakar Kharabadze on 7/14/24.
 //
 
-
 import UIKit
 import SwiftUI
 
+// MARK: - RaceDetailViewController
 final public class RaceDetailViewController: UIViewController {
     
+    // MARK: - Properties
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     private let mainStackView = UIStackView()
@@ -32,12 +33,14 @@ final public class RaceDetailViewController: UIViewController {
     
     private var viewModel: RaceDetailViewModel!
     
+    // MARK: - Initialization
     public class func create(with viewModel: RaceDetailViewModel) -> RaceDetailViewController {
         let vc = RaceDetailViewController()
         vc.viewModel = viewModel
         return vc
     }
     
+    // MARK: - Life Cycle
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "CustomBackground")
@@ -47,6 +50,7 @@ final public class RaceDetailViewController: UIViewController {
         viewModel.viewDidLoad()
     }
     
+    // MARK: - UI Setup
     private func setupUI() {
         setupScrollView()
         setupContentView()
@@ -58,7 +62,6 @@ final public class RaceDetailViewController: UIViewController {
         setupDistanceLabel()
         setupCircuitMapImageView()
         setupRaceWeekendContainer()
-        
         setupCustomSpacing()
     }
     
@@ -260,5 +263,3 @@ final public class RaceDetailViewController: UIViewController {
         ])
     }
 }
-
-

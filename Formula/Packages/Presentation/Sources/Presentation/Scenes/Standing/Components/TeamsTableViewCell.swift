@@ -8,8 +8,10 @@
 import UIKit
 import Domain
 
-class TeamsTableViewCell: UITableViewCell {
+// MARK: - TeamsTableViewCell
+final class TeamsTableViewCell: UITableViewCell {
     
+    // MARK: - Properties
     private let containerView = UIView()
     private let mainStackView = UIStackView()
     private let textStackView = UIStackView()
@@ -21,6 +23,7 @@ class TeamsTableViewCell: UITableViewCell {
     private let pointsSuffixLabel = UILabel()
     private let liveryImageView = UIImageView()
     
+    // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
@@ -30,6 +33,7 @@ class TeamsTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - UI Setup
     private func setupUI() {
         contentView.backgroundColor = UIColor(named: "CustomBackground")
         
@@ -136,6 +140,7 @@ class TeamsTableViewCell: UITableViewCell {
         ])
     }
     
+    // MARK: - Configuration
     func configure(with team: TeamsEntity, viewModel: TeamsViewModel) {
         rankingLabel.text = team.position
         teamNameLabel.text = team.constructorName

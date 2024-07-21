@@ -7,16 +7,19 @@
 
 import UIKit
 
-class DefaultDriversViewRouter: DriversViewRouter {
+final class DefaultDriversViewRouter: DriversViewRouter {
     
+    // MARK: - Properties
     private weak var viewController: DriversViewController?
     private let driverViewControllerFactory: DriversViewControllerFactory
     
+    // MARK: - Initialization
     init(view: DriversViewController, driversViewControllerFactory: DriversViewControllerFactory) {
         self.viewController = view
         self.driverViewControllerFactory = driversViewControllerFactory
     }
     
+    // MARK: - Navigation
     func perform(to route: DriversViewRoute) {
         switch route {
         case .showDriverDetails(let viewModel):
@@ -25,5 +28,3 @@ class DefaultDriversViewRouter: DriversViewRouter {
         }
     }
 }
-
-

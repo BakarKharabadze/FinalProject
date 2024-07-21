@@ -7,10 +7,8 @@
 
 import Foundation
 
-import Foundation
-
 // MARK: - YouTubeSearchResponse
-public struct ChannelVideosModel: Codable {
+public struct ChannelVideosModel: Decodable {
     public let kind: String
     public let etag: String
     public let nextPageToken: String?
@@ -18,23 +16,23 @@ public struct ChannelVideosModel: Codable {
     public let pageInfo: PageInfo
     public let items: [Item]
 
-    public struct PageInfo: Codable {
+    public struct PageInfo: Decodable {
         public let totalResults: Int
         public let resultsPerPage: Int
     }
 
-    public struct Item: Codable {
+    public struct Item: Decodable {
         public let kind: String
         public let etag: String
         public let id: Id
         public let snippet: Snippet
 
-        public struct Id: Codable {
+        public struct Id: Decodable {
             public let kind: String
             public let videoId: String?
         }
 
-        public struct Snippet: Codable {
+        public struct Snippet: Decodable {
             public let publishedAt: String
             public let channelId: String
             public let title: String
@@ -44,12 +42,12 @@ public struct ChannelVideosModel: Codable {
             public let liveBroadcastContent: String
             public let publishTime: String
 
-            public struct Thumbnails: Codable {
+            public struct Thumbnails: Decodable {
                 public let defaultThumbnail: Thumbnail
                 public let medium: Thumbnail
                 public let high: Thumbnail
 
-                public struct Thumbnail: Codable {
+                public struct Thumbnail: Decodable {
                     public let url: String
                     public let width: Int
                     public let height: Int

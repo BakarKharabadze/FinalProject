@@ -10,17 +10,19 @@ import Domain
 
 public final class DriversViewController: UIViewController {
     
+    // MARK: - Properties
     private let tableView = UITableView()
-    
     private var viewModel: DriversViewModel!
     
+    // MARK: - Initialization
     public class func create(with viewModel: DriversViewModel) -> DriversViewController {
         let vc = DriversViewController()
         vc.viewModel = viewModel
-        vc.viewModel.router = vc  // Assign router to the view controller
+        vc.viewModel.router = vc
         return vc
     }
     
+    // MARK: - Life Cycle
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "CustomBackground")
@@ -28,6 +30,7 @@ public final class DriversViewController: UIViewController {
         setupUI()
     }
     
+    // MARK: - UI Setup
     private func setupUI() {
         setupTableView()
         setupTitleLabel()
@@ -37,7 +40,7 @@ public final class DriversViewController: UIViewController {
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
-        tableView.delegate = self  // Set delegate to self
+        tableView.delegate = self
         tableView.backgroundColor = UIColor(named: "CustomBackground")
         tableView.register(DriversTableViewCell.self, forCellReuseIdentifier: "DriversTableViewCell")
         
@@ -51,10 +54,15 @@ public final class DriversViewController: UIViewController {
     
     private func setupTitleLabel() {
         title = "Drivers"
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        let font = UIFont.boldSystemFont(ofSize: 20)
+        navigationController?.navigationBar.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.white,
+            NSAttributedString.Key.font: font
+        ]
     }
 }
 
+// MARK: - UITableViewDataSource
 extension DriversViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.drivers.count
@@ -68,6 +76,7 @@ extension DriversViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - UITableViewDelegate
 extension DriversViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let driver = viewModel.drivers[indexPath.row]
@@ -75,6 +84,7 @@ extension DriversViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - DriversViewRouter
 extension DriversViewController: DriversViewRouter {
     public func perform(to route: DriversViewRoute) {
         switch route {
@@ -85,9 +95,10 @@ extension DriversViewController: DriversViewRouter {
     }
 }
 
+// MARK: - StandingViewModelDelegate
 extension DriversViewController: StandingViewModelDelegate {
     public func teamsFetched(_ teams: [TeamsEntity]) {
-        
+       
     }
     
     public func driversFetched(_ drivers: [DriverEntity]) {
