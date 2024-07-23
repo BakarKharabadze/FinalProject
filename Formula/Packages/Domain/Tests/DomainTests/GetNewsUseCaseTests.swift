@@ -10,7 +10,7 @@ import Common
 @testable import Domain
 
 // Test Case
-class GetNewsUseCaseTests: XCTestCase {
+final class GetNewsUseCaseTests: XCTestCase {
     
     var useCase: DefaultGetNewsUseCase!
     var repository: MockNewsRepository!
@@ -85,7 +85,7 @@ class GetNewsUseCaseTests: XCTestCase {
 }
 
 // Mock Repository
-public class MockNewsRepository: NewsRepository {
+public final class  MockNewsRepository: NewsRepository {
     
     var result: Result<[NewsEntity], Error>?
     

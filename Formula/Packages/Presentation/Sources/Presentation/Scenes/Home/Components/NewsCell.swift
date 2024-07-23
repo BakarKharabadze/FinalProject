@@ -8,12 +8,14 @@
 import UIKit
 import Domain
 
-class NewsCell: UITableViewCell {
+final class NewsCell: UITableViewCell {
     
+    // MARK: - Properties
     private let mainStackView = UIStackView()
     private let newsImageView = UIImageView()
     private let titleLabel = UILabel()
     
+    // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.backgroundColor = UIColor(named: "CustomBackground")
@@ -24,6 +26,7 @@ class NewsCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - UI Setup
     private func setupUI() {
         mainStackView.backgroundColor = UIColor(named: "CustomCellBackground")
         mainStackView.layer.cornerRadius = 10
@@ -71,6 +74,7 @@ class NewsCell: UITableViewCell {
         mainStackView.addArrangedSubview(titleLabel)
     }
     
+    // MARK: - Configuration
     func configure(with newsEntity: NewsEntity) {
         titleLabel.text = newsEntity.title
         
@@ -87,4 +91,3 @@ class NewsCell: UITableViewCell {
         }
     }
 }
-

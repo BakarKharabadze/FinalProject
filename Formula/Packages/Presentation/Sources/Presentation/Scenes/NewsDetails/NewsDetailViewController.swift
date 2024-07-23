@@ -8,16 +8,19 @@
 import UIKit
 import WebKit
 
+// MARK: - NewsDetailViewController
 public class NewsDetailViewController: UIViewController {
 
+    // MARK: - Properties
     private var mainStackView = UIStackView()
     private var titleLabel = UILabel()
-    private var titleImage = UIImageView()
+    var titleImage = UIImageView()
     private var titleDescription = UILabel()
     private var readMoreButton = UIButton(type: .system)
     
-    private var viewModel: NewsDetailViewModel!
+    var viewModel: NewsDetailViewModel!
     
+    // MARK: - Initialization
     public class func create(with viewModel: NewsDetailViewModel) -> NewsDetailViewController {
         let vc = NewsDetailViewController()
         vc.viewModel = viewModel
@@ -33,6 +36,7 @@ public class NewsDetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Life Cycle
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "CustomBackground")
@@ -40,6 +44,7 @@ public class NewsDetailViewController: UIViewController {
         viewModel.fetchImage()
     }
     
+    // MARK: - UI Setup
     private func setupUI() {
         setupMainStackView()
         setupTitleLabel()
@@ -116,20 +121,22 @@ public class NewsDetailViewController: UIViewController {
         ])
     }
     
+    private func setupCustomSpacing() {
+        mainStackView.setCustomSpacing(20, after: titleLabel)
+        mainStackView.setCustomSpacing(20, after: titleImage)
+        mainStackView.setCustomSpacing(0, after: titleDescription)
+    }
+    
+    // MARK: - Actions
     @objc private func readMoreButtonTapped() {
         guard let url = URL(string: viewModel.news.url) else { return }
         let webViewController = WebViewController(url: url)
         let navController = UINavigationController(rootViewController: webViewController)
         present(navController, animated: true, completion: nil)
     }
-    
-    private func setupCustomSpacing() {
-        mainStackView.setCustomSpacing(20, after: titleLabel)
-        mainStackView.setCustomSpacing(20, after: titleImage)
-        mainStackView.setCustomSpacing(0, after: titleDescription)
-    }
 }
 
+// MARK: - NewsDetailViewModelDelegate
 extension NewsDetailViewController: NewsDetailViewModelDelegate {
     public func imageFetched(_ imageData: Data?) {
         DispatchQueue.main.async {
@@ -141,4 +148,3 @@ extension NewsDetailViewController: NewsDetailViewModelDelegate {
         }
     }
 }
-

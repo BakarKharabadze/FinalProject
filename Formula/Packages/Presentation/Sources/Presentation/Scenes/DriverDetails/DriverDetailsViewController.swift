@@ -4,26 +4,31 @@
 //
 //  Created by Bakar Kharabadze on 7/18/24.
 //
+
 import UIKit
 import SwiftUI
 
 public final class DriverDetailsViewController: UIViewController {
     
+    // MARK: - Properties
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     private let mainStackView = UIStackView()
     private let driverNameLabel = UILabel()
     private let driverNumberLabel = UILabel()
     private let teamNameLabel = UILabel()
+    private let driverImageView = UIImageView()
     
     private var viewModel: DriverDetailsViewModel!
     
+    // MARK: - Initialization
     public class func create(with viewModel: DriverDetailsViewModel) -> DriverDetailsViewController {
         let vc = DriverDetailsViewController()
         vc.viewModel = viewModel
         return vc
     }
     
+    // MARK: - Life Cycle
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "CustomBackground")
@@ -33,11 +38,12 @@ public final class DriverDetailsViewController: UIViewController {
         setupSwiftUIHosting()
     }
     
+    // MARK: - UI Setup
     private func setupUI() {
         setupScrollView()
         setupContentView()
         setupMainStackView()
-        setupDriverNameLabel()
+        setupDriverNameStackView()
         setupDriverNumberLabel()
         setupTeamNameLabel()
     }
@@ -80,17 +86,34 @@ public final class DriverDetailsViewController: UIViewController {
         NSLayoutConstraint.activate([
             mainStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             mainStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            mainStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 50),
-            mainStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            mainStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 50)
         ])
     }
     
-    private func setupDriverNameLabel() {
+    private func setupDriverNameStackView() {
+        let driverNameStackView = UIStackView()
+        driverNameStackView.axis = .horizontal
+        driverNameStackView.alignment = .center
+        driverNameStackView.distribution = .fill
+        driverNameStackView.spacing = 10
+        
         driverNameLabel.font = .systemFont(ofSize: 30, weight: .bold)
         driverNameLabel.textColor = .white
         driverNameLabel.text = "Max Verstappen"
         
-        mainStackView.addArrangedSubview(driverNameLabel)
+        driverImageView.image = UIImage(systemName: "person.crop.circle")
+        driverImageView.tintColor = .white
+        driverImageView.contentMode = .scaleAspectFit
+        driverImageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            driverImageView.widthAnchor.constraint(equalToConstant: 80),
+            driverImageView.heightAnchor.constraint(equalToConstant: 80)
+        ])
+        
+        driverNameStackView.addArrangedSubview(driverNameLabel)
+        driverNameStackView.addArrangedSubview(driverImageView)
+        
+        mainStackView.addArrangedSubview(driverNameStackView)
     }
     
     private func setupDriverNumberLabel() {
@@ -109,6 +132,7 @@ public final class DriverDetailsViewController: UIViewController {
         mainStackView.addArrangedSubview(teamNameLabel)
     }
     
+    // MARK: - SwiftUI Hosting
     private func setupSwiftUIHosting() {
         let swiftUIView = DriverDetailsSwiftUIView()
         let hostingController = UIHostingController(rootView: swiftUIView)

@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - Welcome
-public struct TeamsStandings: Codable {
+public struct TeamsStandings: Decodable {
     public let mrData: MRData
     
     public enum CodingKeys: String, CodingKey {
@@ -16,7 +16,7 @@ public struct TeamsStandings: Codable {
     }
     
     // MARK: - MRData
-    public struct MRData: Codable {
+    public struct MRData: Decodable {
         public let xmlns: String
         public let series: String
         public let url: String
@@ -30,7 +30,7 @@ public struct TeamsStandings: Codable {
     }
     
     // MARK: - StandingsTable
-    public struct StandingsTable: Codable {
+    public struct StandingsTable: Decodable {
         public let season: String
         public let standingsLists: [StandingsList]
         
@@ -41,7 +41,7 @@ public struct TeamsStandings: Codable {
     }
     
     // MARK: - StandingsList
-    public struct StandingsList: Codable {
+    public struct StandingsList: Decodable {
         public let season, round: String
         public let constructorStandings: [ConstructorStanding]
         
@@ -52,7 +52,7 @@ public struct TeamsStandings: Codable {
     }
     
     // MARK: - ConstructorStanding
-    public struct ConstructorStanding: Codable {
+    public struct ConstructorStanding: Decodable {
         public let position, positionText, points, wins: String
         public let constructor: Constructor
         
@@ -63,7 +63,7 @@ public struct TeamsStandings: Codable {
     }
     
     // MARK: - Constructor
-    public struct Constructor: Codable {
+    public struct Constructor: Decodable {
         public let constructorID: String
         public let url: String
         public let name, nationality: String

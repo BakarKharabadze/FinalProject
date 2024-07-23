@@ -8,25 +8,30 @@
 import UIKit
 import WebKit
 
-class WebViewController: UIViewController {
+final class WebViewController: UIViewController {
+    
+    //MARK: - Properties
     private let webView = WKWebView()
     private var url: URL
-
+    
+    //MARK: - Init
     init(url: URL) {
         self.url = url
         super.init(nibName: nil, bundle: nil)
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
+    //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupWebView()
         loadUrl()
     }
-
+    
+    //MARK: - Private Methods
     private func setupWebView() {
         view.addSubview(webView)
         webView.translatesAutoresizingMaskIntoConstraints = false
@@ -37,7 +42,7 @@ class WebViewController: UIViewController {
             webView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
-
+    
     private func loadUrl() {
         let request = URLRequest(url: url)
         webView.load(request)

@@ -10,15 +10,18 @@ import Domain
 import Network
 import Common
 
-public final class DefaultRaceResultRepository  {
+public final class DefaultRaceResultRepository {
     
+    // MARK: - Properties
     private let dataTransferService: DataTransfer
     
+    // MARK: - Initialization
     public init(dataTransferService: DataTransfer) {
         self.dataTransferService = dataTransferService
     }
 }
 
+// MARK: - RaceResultRepository
 extension DefaultRaceResultRepository: RaceResultRepository {
     public func getRaceResult(result completion: @escaping (Result<[RaceResultEntity], any Error>) -> Void) -> Cancellable? {
         let endpoint = RaceLastResultsAPIEndpoints.race()
@@ -26,14 +29,11 @@ extension DefaultRaceResultRepository: RaceResultRepository {
         return self.dataTransferService.request(with: endpoint) { (response: Result<RaceLastResults, Error>) in
             switch response {
             case .success(let raceResults):
-                guard let race = raceResults.mrData.raceTable.races.first else {
-                    print("Error")
-                    return
-                }
-                if let raceResultEntity = RaceResultEntity.map(race: race) {
+                if let race = raceResults.mrData.raceTable.races.first,
+                   let raceResultEntity = RaceResultEntity.map(race: race) {
                     completion(.success([raceResultEntity]))
                 } else {
-                    print("Error")
+                    print("Completion failure")
                 }
             case .failure(let error):
                 completion(.failure(error))
@@ -41,4 +41,3 @@ extension DefaultRaceResultRepository: RaceResultRepository {
         }
     }
 }
-

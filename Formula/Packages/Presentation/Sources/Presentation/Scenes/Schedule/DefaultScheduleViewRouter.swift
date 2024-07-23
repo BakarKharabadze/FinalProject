@@ -7,22 +7,25 @@
 
 import UIKit
 
-class DefaultScheduleViewRouter: ScheduleViewRouter {
+// MARK: - DefaultScheduleViewRouter
+final class DefaultScheduleViewRouter: ScheduleViewRouter {
     
+    // MARK: - Properties
     weak var view: ScheduleViewController?
-    let raceDetailViewControllerFactory: RaceDetailViewControllerFactory
+    private let raceDetailViewControllerFactory: RaceDetailViewControllerFactory
     
-    init(view: ScheduleViewController,
-         raceDetailViewControllerFactory: RaceDetailViewControllerFactory) {
+    // MARK: - Initialization
+    init(view: ScheduleViewController, raceDetailViewControllerFactory: RaceDetailViewControllerFactory) {
         self.view = view
         self.raceDetailViewControllerFactory = raceDetailViewControllerFactory
     }
     
+    // MARK: - Methods
     func perform(to route: ScheduleViewRoute) {
         switch route {
         case .showRaceDetail(let race):
             let vc = raceDetailViewControllerFactory.makeRaceDetailViewController(with: race)
-            view?.navigationController?.pushViewController(vc, animated: false)
+            view?.navigationController?.pushViewController(vc, animated: true)
         }
     }
 }

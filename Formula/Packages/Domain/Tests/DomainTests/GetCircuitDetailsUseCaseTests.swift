@@ -10,7 +10,7 @@ import Common
 @testable import Domain
 
 // Test Case
-class GetCircuitDetailsUseCaseTests: XCTestCase {
+final class GetCircuitDetailsUseCaseTests: XCTestCase {
     
     var useCase: DefaultGetCircuitDetailsUseCase!
     var repository: MockFormulaSportsRepository!
@@ -35,18 +35,7 @@ class GetCircuitDetailsUseCaseTests: XCTestCase {
             date: "",
             circuitLenght: "",
             laps: "",
-            turns: "",
-            topSpeed: "",
-            practiceOneDate: "",
-            practiceOneTime: "",
-            practiceTwoDate: "",
-            practiceTwoTime: "",
-            practiceThreeDate: "",
-            practiceThreeTime: "",
-            qualificationDate: "",
-            qualificationTime: "",
-            raceDate: "",
-            raceTime: ""
+            raceDistance: ""
         )]
         repository.result = .success(expectedDetails)
         
@@ -97,11 +86,11 @@ class GetCircuitDetailsUseCaseTests: XCTestCase {
 }
 
 // Mock Repository
-class MockFormulaSportsRepository: FormulaSportsRepository {
+public final class MockFormulaSportsRepository: FormulaSportsRepository {
     
     var result: Result<[CircuitDetailsEntity], Error>?
     
-    func getCircuitDetails(for circuitName: String, completion: @escaping (Result<[CircuitDetailsEntity], Error>) -> Void) -> Cancellable? {
+    public func getCircuitDetails(for circuitName: String, completion: @escaping (Result<[CircuitDetailsEntity], Error>) -> Void) -> Cancellable? {
         if let result = result {
             completion(result)
         }

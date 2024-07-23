@@ -24,5 +24,4 @@ public final class DefaultGetNewsUseCase: GetNewsUseCase {
     public func execute(query: String, from: String, sortBy: String, language: String, apiKey: String, completion: @escaping (Result<[NewsEntity], any Error>) -> Void) -> Cancellable? {
         repository.getNews(query: query, from: from, sortBy: sortBy, language: language, apiKey: apiKey, with: completion)
         }
-    
 }

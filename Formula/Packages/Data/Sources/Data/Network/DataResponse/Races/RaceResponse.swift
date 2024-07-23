@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  RaceResponse.swift
+//
 //
 //  Created by Bakar Kharabadze on 7/10/24.
 //
@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - F1Season
-public struct F1Season: Codable {
+public struct F1Season: Decodable {
     public let mrData: MRData
     
     public enum CodingKeys: String, CodingKey {
@@ -16,7 +16,7 @@ public struct F1Season: Codable {
     }
     
     // MARK: - MRData
-    public struct MRData: Codable {
+    public struct MRData: Decodable {
         public let series: String
         public let url: String
         public let limit, offset, total: String
@@ -29,7 +29,7 @@ public struct F1Season: Codable {
     }
     
     // MARK: - RaceTable
-    public struct RaceTable: Codable {
+    public struct RaceTable: Decodable {
         public let season: String
         public let races: [Race]
         
@@ -40,7 +40,7 @@ public struct F1Season: Codable {
     }
     
     // MARK: - Race
-    public struct Race: Codable {
+    public struct Race: Decodable {
         public let season: String
         public let round: String
         public let url: String
@@ -51,17 +51,18 @@ public struct F1Season: Codable {
         public let sprint: Practice?
         
         public enum CodingKeys: String, CodingKey {
-            case season, round, url, raceName, circuit, date, time
+            case season, round, url, raceName, date, time
             case firstPractice = "FirstPractice"
             case secondPractice = "SecondPractice"
             case thirdPractice = "ThirdPractice"
             case qualifying = "Qualifying"
             case sprint = "Sprint"
+            case circuit = "Circuit"
         }
     }
     
     // MARK: - Circuit
-    public struct Circuit: Codable {
+    public struct Circuit: Decodable {
         public let circuitID: String
         public let url: String
         public let circuitName: String
@@ -69,12 +70,13 @@ public struct F1Season: Codable {
         
         public enum CodingKeys: String, CodingKey {
             case circuitID = "circuitId"
-            case url, circuitName, location
+            case location = "Location"
+            case url, circuitName
         }
     }
     
     // MARK: - Location
-    public struct Location: Codable {
+    public struct Location: Decodable {
         public let lat, long: String
         public let locality, country: String
         
@@ -86,7 +88,7 @@ public struct F1Season: Codable {
     }
     
     // MARK: - Practice
-    public struct Practice: Codable {
+    public struct Practice: Decodable {
         public let date, time: String?
     }
 }

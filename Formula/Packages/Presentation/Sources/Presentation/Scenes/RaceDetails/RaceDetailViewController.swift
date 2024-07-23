@@ -5,12 +5,14 @@
 //  Created by Bakar Kharabadze on 7/14/24.
 //
 
-
 import UIKit
 import SwiftUI
+import Domain
 
+// MARK: - RaceDetailViewController
 final public class RaceDetailViewController: UIViewController {
     
+    // MARK: - Properties
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     private let mainStackView = UIStackView()
@@ -18,13 +20,11 @@ final public class RaceDetailViewController: UIViewController {
     private let grandPrixNameLabel = UILabel()
     private let dateLabel = UILabel()
     private let circuitLenghtLabel = UILabel()
-    private let distanceLabel = UILabel()
+    private let circuitLentght = UILabel()
+    private let distanceTitleLabel = UILabel()
+    private let circuitDistanceLabel = UILabel()
     private let lapsLabel = UILabel()
     private let lapsQuantity = UILabel()
-    private let turnsLabel = UILabel()
-    private let turnsQuantity = UILabel()
-    private let topSpeedLabel = UILabel()
-    private let topSpeed = UILabel()
     private let raceWeekendContainer = UIView()
     private let circuitMapImageView = UIImageView()
     private let horizontalStackView = UIStackView()
@@ -32,21 +32,25 @@ final public class RaceDetailViewController: UIViewController {
     
     private var viewModel: RaceDetailViewModel!
     
+    // MARK: - Initialization
     public class func create(with viewModel: RaceDetailViewModel) -> RaceDetailViewController {
         let vc = RaceDetailViewController()
         vc.viewModel = viewModel
         return vc
     }
     
+    // MARK: - Life Cycle
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "CustomBackground")
         navigationController?.navigationBar.barTintColor = UIColor(named: "CustomBackground")
         navigationController?.setNavigationBarHidden(false, animated: false)
         setupUI()
+        viewModel.delegate = self
         viewModel.viewDidLoad()
     }
     
+    // MARK: - UI Setup
     private func setupUI() {
         setupScrollView()
         setupContentView()
@@ -54,11 +58,12 @@ final public class RaceDetailViewController: UIViewController {
         setupCountryNameLabel()
         setupGrandPrixNameLabel()
         setupDateLabel()
+        setupDistanceTitleLabel()
+        setupCircuitDistanceLabel()
         setupCircuitLenghtLabel()
         setupDistanceLabel()
         setupCircuitMapImageView()
         setupRaceWeekendContainer()
-        
         setupCustomSpacing()
     }
     
@@ -100,44 +105,56 @@ final public class RaceDetailViewController: UIViewController {
         NSLayoutConstraint.activate([
             mainStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             mainStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            mainStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 50),
+            mainStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 30),
             mainStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
     
     private func setupCustomSpacing() {
-        mainStackView.setCustomSpacing(70, after: dateLabel)
+        mainStackView.setCustomSpacing(20, after: dateLabel)
         mainStackView.setCustomSpacing(3, after: circuitLenghtLabel)
-        mainStackView.setCustomSpacing(25, after: distanceLabel)
-        mainStackView.setCustomSpacing(25, after: horizontalStackView)
+        mainStackView.setCustomSpacing(3, after: distanceTitleLabel)
+        mainStackView.setCustomSpacing(10, after: circuitLentght)
+        mainStackView.setCustomSpacing(20, after: horizontalStackView)
     }
     
     private func setupCountryNameLabel() {
-        countryNameLabel.text = "Australia"
         countryNameLabel.textColor = .white
-        countryNameLabel.font = .systemFont(ofSize: 30, weight: .bold)
+        countryNameLabel.font = .systemFont(ofSize: 26, weight: .bold)
         
         mainStackView.addArrangedSubview(countryNameLabel)
     }
     
     private func setupGrandPrixNameLabel() {
-        grandPrixNameLabel.text = "Australia Grand Prix"
-        grandPrixNameLabel.font = .systemFont(ofSize: 20)
+        grandPrixNameLabel.font = .systemFont(ofSize: 24)
         grandPrixNameLabel.textColor = .yellow
         
         mainStackView.addArrangedSubview(grandPrixNameLabel)
     }
     
     private func setupDateLabel() {
-        dateLabel.text = "23-24 March"
-        dateLabel.font = .systemFont(ofSize: 16)
+        dateLabel.font = .systemFont(ofSize: 20)
         dateLabel.textColor = .lightGray
         
         mainStackView.addArrangedSubview(dateLabel)
     }
     
+    private func setupDistanceTitleLabel() {
+        distanceTitleLabel.text = "Circuit Distance"
+        distanceTitleLabel.font = .systemFont(ofSize: 16)
+        distanceTitleLabel.textColor = .gray
+        
+        mainStackView.addArrangedSubview(distanceTitleLabel)
+    }
+    
+    private func setupCircuitDistanceLabel() {
+        circuitDistanceLabel.font = .systemFont(ofSize: 30, weight: .bold)
+        circuitDistanceLabel.textColor = .white
+        
+        mainStackView.addArrangedSubview(circuitDistanceLabel)
+    }
+    
     private func setupCircuitLenghtLabel() {
-        circuitLenghtLabel.text = "Circuit lenght"
         circuitLenghtLabel.font = .systemFont(ofSize: 16)
         circuitLenghtLabel.textColor = .gray
         
@@ -145,28 +162,28 @@ final public class RaceDetailViewController: UIViewController {
     }
     
     private func setupDistanceLabel() {
-        distanceLabel.text = "5.303 km"
-        distanceLabel.font = .systemFont(ofSize: 30, weight: .bold)
-        distanceLabel.textColor = .white
+        circuitLentght.font = .systemFont(ofSize: 30, weight: .bold)
+        circuitLentght.textColor = .white
         
-        mainStackView.addArrangedSubview(distanceLabel)
+        mainStackView.addArrangedSubview(circuitLentght)
     }
     
     private func setupCircuitMapImageView() {
         circuitMapImageView.contentMode = .scaleAspectFit
         circuitMapImageView.image = UIImage(systemName: "heart.fill")
         circuitMapImageView.tintColor = .systemBlue
+        circuitMapImageView.translatesAutoresizingMaskIntoConstraints = false
         
         infoStackView.axis = .vertical
         infoStackView.alignment = .leading
-        infoStackView.spacing = 10
+        infoStackView.spacing = 20
         
         horizontalStackView.axis = .horizontal
         horizontalStackView.alignment = .top
-        horizontalStackView.distribution = .equalSpacing
+        horizontalStackView.distribution = .fill
         horizontalStackView.spacing = 20
         
-        [setupLapsLabel, setupLapsQuantity, setupTurnsLabel, setupTurnsQuantity, setupTopSpeedLabel, setupTopSpeed].forEach { method in
+        [setupLapsLabel, setupLapsQuantity].forEach { method in
             method()
             if let lastView = infoStackView.arrangedSubviews.last {
                 infoStackView.setCustomSpacing(3, after: lastView)
@@ -182,7 +199,7 @@ final public class RaceDetailViewController: UIViewController {
             circuitMapImageView.widthAnchor.constraint(equalToConstant: 200),
             circuitMapImageView.heightAnchor.constraint(equalToConstant: 200),
             horizontalStackView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor),
-            horizontalStackView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor)
+            horizontalStackView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor)    
         ])
     }
     
@@ -195,43 +212,10 @@ final public class RaceDetailViewController: UIViewController {
     }
     
     private func setupLapsQuantity() {
-        lapsQuantity.text = "58"
         lapsQuantity.font = .systemFont(ofSize: 30, weight: .bold)
         lapsQuantity.textColor = .white
         
         infoStackView.addArrangedSubview(lapsQuantity)
-    }
-    
-    private func setupTurnsLabel() {
-        turnsLabel.text = "Turns"
-        turnsLabel.font = .systemFont(ofSize: 16)
-        turnsLabel.textColor = .gray
-        
-        infoStackView.addArrangedSubview(turnsLabel)
-    }
-    
-    private func setupTurnsQuantity() {
-        turnsQuantity.text = "14"
-        turnsQuantity.font = .systemFont(ofSize: 30, weight: .bold)
-        turnsQuantity.textColor = .white
-        
-        infoStackView.addArrangedSubview(turnsQuantity)
-    }
-    
-    private func setupTopSpeedLabel() {
-        topSpeedLabel.text = "Top speed"
-        topSpeedLabel.font = .systemFont(ofSize: 16)
-        topSpeedLabel.textColor = .gray
-        
-        infoStackView.addArrangedSubview(topSpeedLabel)
-    }
-    
-    private func setupTopSpeed() {
-        topSpeed.text = "326 KMPH"
-        topSpeed.font = .systemFont(ofSize: 30, weight: .bold)
-        topSpeed.textColor = .white
-        
-        infoStackView.addArrangedSubview(topSpeed)
     }
     
     private func setupRaceWeekendContainer() {
@@ -239,7 +223,7 @@ final public class RaceDetailViewController: UIViewController {
         raceWeekendContainer.layer.masksToBounds = true
         mainStackView.addArrangedSubview(raceWeekendContainer)
         
-        let hostingController = UIHostingController(rootView: RaceWeekendView())
+        let hostingController = UIHostingController(rootView: RaceWeekendView(race: viewModel.race))
         hostingController.view.backgroundColor = .clear
         
         addChild(hostingController)
@@ -261,4 +245,15 @@ final public class RaceDetailViewController: UIViewController {
     }
 }
 
-
+extension RaceDetailViewController: RaceDetailViewModelDelegate {
+    public func circuitFetched(_ circuit: [Domain.CircuitDetailsEntity]) {
+        countryNameLabel.text = circuit.first?.countryName
+        grandPrixNameLabel.text = circuit.first?.grandPrixName
+        dateLabel.text = "Opened in \(circuit.first?.date ?? "") year"
+        circuitLenghtLabel.text = "Circuit Lenghts"
+        circuitLentght.text = circuit.first?.circuitLenght
+        circuitDistanceLabel.text = circuit.first?.raceDistance
+        lapsQuantity.text = circuit.first?.laps
+        circuitMapImageView.image = UIImage(named: viewModel.race.round, in: Bundle.module, with: nil)
+    }
+}

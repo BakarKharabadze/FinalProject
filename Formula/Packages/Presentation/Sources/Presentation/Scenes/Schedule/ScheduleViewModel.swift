@@ -9,20 +9,26 @@ import Foundation
 import Domain
 import Common
 
+// MARK: - Protocols
 public protocol ScheduleViewModelDelegate: AnyObject {
     func racesFetched(_ races: [RaceEntity])
     func raceResultFetched(_ raceResults: [RaceResultEntity])
 }
 
+//MARK: - ScheduleViewRoute
 public enum ScheduleViewRoute {
     case showRaceDetail(with: RaceEntity)
 }
 
+//MARK: - ScheduleViewRouter
 public protocol ScheduleViewRouter {
     func perform(to route: ScheduleViewRoute)
 }
 
+// MARK: - ViewModel
 public final class ScheduleViewModel {
+    
+    // MARK: - Properties
     public var router: ScheduleViewRouter?
     private let getRacesUseCase: GetRacesUseCase
     private let getRaceResultUseCase: GetRaceResultUseCase
@@ -31,17 +37,20 @@ public final class ScheduleViewModel {
     public var raceResults: [RaceResultEntity] = []
     weak var delegate: ScheduleViewModelDelegate?
     
+    // MARK: - Initialization
     public init(getRacesUseCase: GetRacesUseCase, getRaceResultUseCase: GetRaceResultUseCase) {
         self.getRacesUseCase = getRacesUseCase
         self.getRaceResultUseCase = getRaceResultUseCase
     }
     
-    public func viewDidLoad() {
+    // MARK: - Methods
+    func viewDidLoad() {
         fetchRaces()
         fetchRaceResult()
     }
     
-    public func fetchRaces() {
+    // MARK: - Private Methods
+    private func fetchRaces() {
         getRacesUseCase.execute { [weak self] result in
             switch result {
             case .success(let races):
@@ -55,7 +64,7 @@ public final class ScheduleViewModel {
         }
     }
     
-    public func fetchRaceResult() {
+    private func fetchRaceResult() {
         getRaceResultUseCase.execute { [weak self] result in
             switch result {
             case .success(let raceResults):
@@ -67,6 +76,10 @@ public final class ScheduleViewModel {
                 print("Failed to fetch race results: \(error.localizedDescription)")
             }
         }
+    }
+    
+    func raceViewTapped(race: RaceEntity) {
+        router?.perform(to: .showRaceDetail(with: race))
     }
     
     private func filterRaces(races: [RaceEntity]) {
@@ -87,9 +100,5 @@ public final class ScheduleViewModel {
             }
             return false
         }
-    }
-    
-    func raceViewTapped(race: RaceEntity) {
-        router?.perform(to: .showRaceDetail(with: race))
     }
 }

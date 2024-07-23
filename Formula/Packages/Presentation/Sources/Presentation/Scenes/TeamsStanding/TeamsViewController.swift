@@ -9,16 +9,19 @@ import UIKit
 
 public final class TeamsViewController: UIViewController {
     
+    // MARK: - Properties
     private let tableView = UITableView()
     private var viewModel: TeamsViewModel!
 
+    // MARK: - Initialization
     public class func create(with viewModel: TeamsViewModel) -> TeamsViewController {
         let vc = TeamsViewController()
         vc.viewModel = viewModel
-        vc.viewModel.router = vc  // Assign router to the view controller
+        vc.viewModel.router = vc
         return vc
     }
     
+    // MARK: - Life Cycle
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "CustomBackground")
@@ -27,10 +30,11 @@ public final class TeamsViewController: UIViewController {
         setupTitleLabel()
     }
     
+    // MARK: - Setup Functions
     private func setupTableView() {
         tableView.register(TeamsTableViewCell.self, forCellReuseIdentifier: "TeamsTableViewCell")
         tableView.dataSource = self
-        tableView.delegate = self  // Set delegate to self
+        tableView.delegate = self
         tableView.backgroundColor = UIColor(named: "CustomBackground")
         
         view.addSubview(tableView)
@@ -48,13 +52,19 @@ public final class TeamsViewController: UIViewController {
     
     private func setupTitleLabel() {
         title = "Teams"
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        let font = UIFont.boldSystemFont(ofSize: 20)
+        navigationController?.navigationBar.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.white,
+            NSAttributedString.Key.font: font
+        ]
     }
+
 }
 
+// MARK: - UITableViewDataSource, UITableViewDelegate
 extension TeamsViewController: UITableViewDataSource, UITableViewDelegate {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.teams.count
+        viewModel.teams.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -70,6 +80,7 @@ extension TeamsViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
+// MARK: - TeamsViewRouter
 extension TeamsViewController: TeamsViewRouter {
     public func perform(to route: TeamsViewRoute) {
         switch route {

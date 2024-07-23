@@ -11,9 +11,11 @@ import Domain
 
 public final class HomeViewController: UIViewController {
 
+    // MARK: - Properties
     private let tableView = UITableView()
     public var viewModel: HomeViewModel!
 
+    // MARK: - Initialization
     public class func create(with viewModel: HomeViewModel, newsViewControllersFactory: NewsDetailViewControllerFactory) -> HomeViewController {
         let vc = HomeViewController(viewModel: viewModel)
         vc.viewModel.router = DefaultHomeViewRouter(view: vc, newsViewControllerFactory: newsViewControllersFactory)
@@ -29,6 +31,7 @@ public final class HomeViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Life Cycle
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "CustomBackground")
@@ -42,15 +45,10 @@ public final class HomeViewController: UIViewController {
 
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 150, height: 40))
-        imageView.contentMode = .scaleAspectFit
-        let image = UIImage(named: "Formula1Logo")
-        imageView.image = image
-
-        navigationItem.titleView = imageView
+        setupNavigationBarLogo()
     }
 
+    // MARK: - UI Setup
     private func setupUI() {
         setupTableView()
     }
@@ -64,7 +62,6 @@ public final class HomeViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-
         tableView.backgroundColor = UIColor(named: "CustomBackground")
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "RaceViewCell")
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TopDriversCell")
@@ -72,6 +69,14 @@ public final class HomeViewController: UIViewController {
         tableView.separatorStyle = .none
     }
 
+    private func setupNavigationBarLogo() {
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 150, height: 40))
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(named: "Formula1Logo")
+        navigationItem.titleView = imageView
+    }
+
+    // MARK: - Cell Configuration
     private func configureTitleCell(_ title: String) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.textLabel?.text = title
@@ -107,7 +112,7 @@ public final class HomeViewController: UIViewController {
     private func configureTopDriversCell(_ tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TopDriversCell", for: indexPath)
         cell.contentView.backgroundColor = .clear
-        cell.backgroundColor = .clear
+        cell.backgroundColor = .clear        
         cell.selectionStyle = .none
         let topDriversHostingController = UIHostingController(rootView: TopDriversCoverFlowView(drivers: viewModel.drivers))
         addChild(topDriversHostingController)
@@ -123,11 +128,14 @@ public final class HomeViewController: UIViewController {
         topDriversHostingController.didMove(toParent: self)
         return cell
     }
+
+
 }
 
+// MARK: - UITableViewDataSource, UITableViewDelegate
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     public func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        3
     }
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -142,12 +150,23 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             return 0
         }
     }
+    
+    private func configureBoldTitleCell(_ title: String) -> UITableViewCell {
+        let cell = UITableViewCell()
+        cell.textLabel?.text = title
+        cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        cell.textLabel?.textColor = .white
+        cell.backgroundColor = .clear
+        cell.selectionStyle = .none
+        return cell
+    }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         switch indexPath.section {
         case 0:
             if indexPath.row == 0 {
-                return configureTitleCell("Race")
+                return configureBoldTitleCell("Next Race")
             } else {
                 if let race = viewModel.upcomingRace {
                     return configureRaceViewCell(tableView, indexPath: indexPath, race: race)
@@ -157,14 +176,14 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             }
         case 1:
             if indexPath.row == 0 {
-                return configureTitleCell("Top Drivers")
+                return configureBoldTitleCell("Top Drivers")
                 
             } else {
                 return configureTopDriversCell(tableView, indexPath: indexPath)
             }
         case 2:
             if indexPath.row == 0 {
-                return configureTitleCell("News")
+                return configureBoldTitleCell("News")
             } else {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell", for: indexPath) as? NewsCell else {
                     return UITableViewCell()
@@ -187,6 +206,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+// MARK: - HomeViewModelDelegate
 extension HomeViewController: HomeViewModelDelegate {
     public func raceFetched(_ race: RaceEntity) {
         DispatchQueue.main.async {

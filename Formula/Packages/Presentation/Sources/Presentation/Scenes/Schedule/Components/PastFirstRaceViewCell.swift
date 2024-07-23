@@ -9,9 +9,13 @@ import UIKit
 import SwiftUI
 import Domain
 
-class PastFirstRaceViewCell: UITableViewCell {
+// MARK: - PastFirstRaceViewCell
+final class PastFirstRaceViewCell: UITableViewCell {
+    
+    // MARK: - Properties
     private var hostingController: UIHostingController<PastFirstRace>?
 
+    // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
@@ -22,6 +26,7 @@ class PastFirstRaceViewCell: UITableViewCell {
         setupUI()
     }
     
+    // MARK: - UI Setup
     private func setupUI() {
         backgroundColor = .clear
         guard let hostingView = hostingController?.view else { return }
@@ -36,6 +41,7 @@ class PastFirstRaceViewCell: UITableViewCell {
         ])
     }
     
+    // MARK: - Configuration
     func configure(with race: RaceResultEntity) {
         let pastFirstRaceView = PastFirstRace(raceResult: race)
         if let hostingController = hostingController {

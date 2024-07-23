@@ -1,6 +1,6 @@
 //
 //  DefaultDriversRepository.swift
-//  
+//
 //
 //  Created by Bakar Kharabadze on 7/11/24.
 //
@@ -11,13 +11,17 @@ import Network
 import Common
 
 public final class DefaultDriversRepository {
+    
+    // MARK: - Properties
     private let dataTransferService: DataTransfer
     
+    // MARK: - Initialization
     public init(dataTransferService: DataTransfer) {
         self.dataTransferService = dataTransferService
     }
 }
 
+// MARK: - DriversRepository
 extension DefaultDriversRepository: DriversRepository {
     public func getDrivers(completion: @escaping (Result<[DriverEntity], any Error>) -> Void) -> Cancellable? {
         let endpoint = DriverAPIEndpoints.drivers()
@@ -26,7 +30,7 @@ extension DefaultDriversRepository: DriversRepository {
             switch response {
             case .success(let driverStandings):
                 guard let firstStandingsList = driverStandings.mrData.standingsTable.standingsLists.first else {
-                    print("Error")
+                    print("completion failure")
                     return
                 }
                 

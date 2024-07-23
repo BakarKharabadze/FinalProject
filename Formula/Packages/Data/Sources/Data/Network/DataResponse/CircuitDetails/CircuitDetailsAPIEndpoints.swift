@@ -11,10 +11,9 @@ import Network
 
 struct CircuitDetailsAPIEndpoints {
     
-    static func details(name: String) -> DataEndpoint<CircuitDetailsResponse> {
-        
-        return DataEndpoint(path: "circuits",
-                            queryParameters: ["search":name],
-                            headerParamaters: ["X-RapidAPI-Host": "api-formula-1.p.rapidapi.com"])
+    static func details(circuitId: String) -> DataEndpoint<CircuitResponse> {
+        DataEndpoint(path: "circuits",
+                     queryParameters: ["search": circuitId],
+                     headerParamaters: ["X-RapidAPI-Host": "api-formula-1.p.rapidapi.com"])
     }
 }

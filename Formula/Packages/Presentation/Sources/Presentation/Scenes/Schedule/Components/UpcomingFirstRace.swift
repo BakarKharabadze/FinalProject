@@ -8,9 +8,13 @@
 import SwiftUI
 import Domain
 
+// MARK: - UpcomingFirstRace
 struct UpcomingFirstRace: View {
+    
+    // MARK: - Properties
     let race: RaceEntity
 
+    // MARK: - Body
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 15)
@@ -20,23 +24,7 @@ struct UpcomingFirstRace: View {
             
             HStack {
                 VStack(alignment: .leading) {
-                    Text("Round \(race.round)")
-                        .foregroundColor(.yellow)
-                        .padding(.bottom, 2)
-                    
-                    Text(race.grandPrixName)
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .padding(.bottom, 1)
-                    
-                    Text(race.date)
-                        .foregroundColor(.white)
-                        .padding(.bottom, 20)
-                    
-                    Text("Starts in")
-                        .foregroundColor(.white)
-                        .padding(.bottom, 2)
+                    RaceDetails(race: race)
                     
                     let remainingTime = calculateRemainingTime(from: race.date)
                     
@@ -58,20 +46,8 @@ struct UpcomingFirstRace: View {
                     }
                     .padding(.bottom, 2)
                     
-                    HStack(spacing: 24) {
-                        Text("Days")
-                            .font(.system(size: 12))
-                            .foregroundColor(.white)
-                        
-                        Text("Hours")
-                            .font(.system(size: 12))
-                            .foregroundColor(.white)
-                        
-                        Text("Minutes")
-                            .font(.system(size: 12))
-                            .foregroundColor(.white)
-                            .padding(.leading, -10)
-                    }
+                    RemainingTime(race: race)
+                    
                 }
                 .padding()
                 
@@ -88,6 +64,7 @@ struct UpcomingFirstRace: View {
         }
     }
     
+    // MARK: - Private Methods
     private func calculateRemainingTime(from dateString: String) -> (days: String, hours: String, minutes: String) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -106,3 +83,47 @@ struct UpcomingFirstRace: View {
     }
 }
 
+struct RaceDetails: View {
+    let race: RaceEntity
+    
+    var body: some View {
+        Text("Round \(race.round)")
+            .foregroundColor(.yellow)
+            .padding(.bottom, 2)
+        
+        Text(race.grandPrixName)
+            .font(.title)
+            .fontWeight(.bold)
+            .foregroundColor(.white)
+            .padding(.bottom, 1)
+        
+        Text(race.date)
+            .foregroundColor(.gray)
+            .padding(.bottom, 20)
+        
+        Text("Starts in")
+            .foregroundColor(.white)
+            .padding(.bottom, 2)
+    }
+}
+
+struct RemainingTime: View {
+    let race: RaceEntity
+    
+    var body: some View {
+        HStack(spacing: 24) {
+            Text("Days")
+                .font(.system(size: 12))
+                .foregroundColor(.white)
+            
+            Text("Hours")
+                .font(.system(size: 12))
+                .foregroundColor(.white)
+            
+            Text("Minutes")
+                .font(.system(size: 12))
+                .foregroundColor(.white)
+                .padding(.leading, -10)
+        }
+    }
+}

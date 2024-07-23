@@ -12,6 +12,6 @@ import Network
 struct TeamAPIEndpoints {
     
     static func teams() -> DataEndpoint<TeamsStandings> {
-           return DataEndpoint(path: "api/f1/current/constructorStandings.json")
-       }
+        DataEndpoint(path: "api/f1/current/constructorStandings.json")
+    }
 }

@@ -9,8 +9,10 @@ import UIKit
 import SwiftUI
 import Domain
 
+// MARK: - ScheduleViewController
 public final class ScheduleViewController: UIViewController {
     
+    // MARK: - Properties
     private let upcomingButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("UPCOMING", for: .normal)
@@ -36,11 +38,11 @@ public final class ScheduleViewController: UIViewController {
     }()
     
     private let containerView = UIView()
-    
     private let upcomingTableView = UITableView()
     private let pastTableView = UITableView()
     public var viewModel: ScheduleViewModel!
     
+    // MARK: - Initialization
     public class func create(with viewModel: ScheduleViewModel, raceDetailViewControllerFactory: RaceDetailViewControllerFactory) -> ScheduleViewController {
         let vc = ScheduleViewController()
         vc.viewModel = viewModel
@@ -49,6 +51,7 @@ public final class ScheduleViewController: UIViewController {
         return vc
     }
     
+    // MARK: - Life Cycle
     public override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: false)
@@ -57,6 +60,7 @@ public final class ScheduleViewController: UIViewController {
         viewModel.delegate = self
     }
     
+    // MARK: - UI Setup
     private func setupUI() {
         view.backgroundColor = UIColor(named: "CustomBackground")
         setupButtons()
@@ -145,6 +149,7 @@ public final class ScheduleViewController: UIViewController {
         tableView.isHidden = true
     }
     
+    // MARK: - Actions
     @objc private func showUpcoming() {
         updateButtonColors(selectedButton: upcomingButton, deselectedButton: pastButton)
         updateUnderlinePosition(button: upcomingButton)
@@ -183,6 +188,7 @@ public final class ScheduleViewController: UIViewController {
     }
 }
 
+// MARK: - UITableViewDataSource, UITableViewDelegate
 extension ScheduleViewController: UITableViewDataSource, UITableViewDelegate {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == upcomingTableView {
@@ -197,6 +203,7 @@ extension ScheduleViewController: UITableViewDataSource, UITableViewDelegate {
         if tableView == upcomingTableView {
             if indexPath.row == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "UpcomingFirstRaceViewCell", for: indexPath) as! UpcomingFirstRaceViewCell
+                cell.selectionStyle = .none
                 if let firstRace = viewModel.upcomingRaces.first {
                     cell.configure(with: firstRace)
                 }
@@ -204,13 +211,14 @@ extension ScheduleViewController: UITableViewDataSource, UITableViewDelegate {
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "ScheduleViewCell", for: indexPath) as! ScheduleViewCell
                 let race = viewModel.upcomingRaces[indexPath.row - 1]
-                let flagImageName = race.countryFlag
+                let flagImageName = race.grandPrixName
                 cell.configure(round: race.round, title: race.grandPrixName, date: race.date, flagImage: flagImageName, isUpcoming: true)
                 return cell
             }
         } else if tableView == pastTableView {
             if indexPath.row == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "PastFirstRaceViewCell", for: indexPath) as! PastFirstRaceViewCell
+                cell.selectionStyle = .none
                 if let firstRace = viewModel.raceResults.first {
                     cell.configure(with: firstRace)
                 }
@@ -218,7 +226,7 @@ extension ScheduleViewController: UITableViewDataSource, UITableViewDelegate {
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "ScheduleViewCell", for: indexPath) as! ScheduleViewCell
                 let race = viewModel.pastRaces[indexPath.row - 1]
-                let flagImageName = race.countryFlag
+                let flagImageName = race.grandPrixName
                 cell.configure(round: race.round, title: race.grandPrixName, date: race.date, flagImage: flagImageName, isUpcoming: false)
                 return cell
             }
@@ -227,17 +235,24 @@ extension ScheduleViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        if tableView == upcomingTableView && indexPath.row > 0 {
-            let race = viewModel.upcomingRaces[indexPath.row - 1]
-            viewModel.raceViewTapped(race: race)
-        } else if tableView == pastTableView && indexPath.row > 0 {
-            let race = viewModel.pastRaces[indexPath.row - 1]
-            viewModel.raceViewTapped(race: race)
+            tableView.deselectRow(at: indexPath, animated: true)
+            if tableView == upcomingTableView && indexPath.row > 0 {
+                let race = viewModel.upcomingRaces[indexPath.row - 1]
+                viewModel.raceViewTapped(race: race)
+            } else if tableView == pastTableView && indexPath.row > 0 {
+                let race = viewModel.pastRaces[indexPath.row - 1]
+                viewModel.raceViewTapped(race: race)
+            } else if tableView == upcomingTableView && indexPath.row == 0 {
+                let race = viewModel.upcomingRaces[indexPath.row]
+                viewModel.raceViewTapped(race: race)
+            } else if tableView == pastTableView && indexPath.row == 0 {
+                let race = viewModel.pastRaces[indexPath.row]
+                viewModel.raceViewTapped(race: race)
+            }
         }
-    }
 }
 
+// MARK: - ScheduleViewModelDelegate
 extension ScheduleViewController: ScheduleViewModelDelegate {
     public func raceResultFetched(_ raceResults: [Domain.RaceResultEntity]) {
         self.pastTableView.reloadData()

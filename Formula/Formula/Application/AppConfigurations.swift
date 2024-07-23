@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import Presentation
 
-class AppConfigurations {
+final class AppConfigurations {
     lazy var googleApiKey = Bundle.main.object(forInfoDictionaryKey: "GoogleApiKey") as! String
     lazy var googleApiBaseURL = Bundle.main.object(forInfoDictionaryKey: "GoogleApiBaseURL") as! String
     
@@ -18,4 +19,10 @@ class AppConfigurations {
     
     lazy var formulaSportsApiKey = Bundle.main.object(forInfoDictionaryKey: "FormulaSportsApiKey") as! String
     lazy var formulaSportsApiBaseURL = Bundle.main.object(forInfoDictionaryKey: "FormulaSportsApiBaseURL") as! String
+    
+    init() {
+        VarsityFont.registerFonts()
+    }
 }
+
+

@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct DriverDetailsSwiftUIView: View {
+    
+    // MARK: - Body
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading, spacing: 35) {
             horizontalLabel(labelText: "Races:", valueText: "196")
             horizontalLabel(labelText: "World Titles:", valueText: "3")
             horizontalLabel(labelText: "Race Wins:", valueText: "61")
@@ -18,12 +20,12 @@ struct DriverDetailsSwiftUIView: View {
             horizontalLabel(labelText: "Birthday:", valueText: "1997-09-30")
             horizontalLabel(labelText: "Birth Place:", valueText: "Hasselt, Belgium")
         }
-        .frame(width: 300)
         .padding()
-        .background(Color("CustomBackground"))
+        .background(Color("CustomCellBackground"))
         .cornerRadius(10)
     }
     
+    //MARK: - Methods
     private func horizontalLabel(labelText: String, valueText: String) -> some View {
         HStack {
             Text(labelText)
@@ -34,11 +36,11 @@ struct DriverDetailsSwiftUIView: View {
                 .font(.system(size: 18))
                 .foregroundColor(.white)
                 .bold()
-                .padding()
         }
     }
 }
 
+//MARK: - Preview
 struct DriverDetailsSwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
         DriverDetailsSwiftUIView()

@@ -10,7 +10,7 @@ import Common
 @testable import Domain
 
 // Test Case
-class GetDriverDetailsUseCaseTests: XCTestCase {
+final class GetDriverDetailsUseCaseTests: XCTestCase {
     
     var useCase: DefaultGetDriversDetailsUseCase!
     var repository: MockDriverDetailsRepository!
@@ -90,7 +90,7 @@ class GetDriverDetailsUseCaseTests: XCTestCase {
 }
 
 // Mock Repository
-public class MockDriverDetailsRepository: DriverDetailsRepository {
+public final class MockDriverDetailsRepository: DriverDetailsRepository {
     
     
     var result: Result<[DriverDetailsEntity], Error>?

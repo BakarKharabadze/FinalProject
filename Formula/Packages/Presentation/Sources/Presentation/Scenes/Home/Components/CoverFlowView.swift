@@ -1,6 +1,6 @@
 //
 //  SwiftUIView.swift
-//  
+//
 //
 //  Created by Bakar Kharabadze on 7/4/24.
 //
@@ -9,6 +9,7 @@ import SwiftUI
 import Domain
 
 struct CoverFlowView<Content: View, Item: RandomAccessCollection>: View where Item.Element: Identifiable {
+    //MARK: - Properties
     var itemWidth: CGFloat
     var enableReflection: Bool = false
     var spacing: CGFloat = 0
@@ -16,6 +17,7 @@ struct CoverFlowView<Content: View, Item: RandomAccessCollection>: View where It
     var items: Item
     var content: (Item.Element) -> Content
     
+    //MARK: - Body
     var body: some View {
         GeometryReader {
             let size = $0.size
@@ -23,14 +25,14 @@ struct CoverFlowView<Content: View, Item: RandomAccessCollection>: View where It
             ScrollView(.horizontal) {
                 LazyHStack(spacing: 0) {
                     ForEach(items) { item in
-                            content(item)
-                                .frame(width: itemWidth)
-                                .reflection(enableReflection)
-                                .visualEffect { content, geometryProxy in
-                                    content
-                                        .rotation3DEffect(.init(degrees: rotation(geometryProxy)), axis: (x: 0, y: 1, z: 0), anchor: .center)
-                                }
-                                .padding(.trailing, item.id == items.last?.id ? 0 : spacing)
+                        content(item)
+                            .frame(width: itemWidth)
+                            .reflection(enableReflection)
+                            .visualEffect { content, geometryProxy in
+                                content
+                                    .rotation3DEffect(.init(degrees: rotation(geometryProxy)), axis: (x: 0, y: 1, z: 0), anchor: .center)
+                            }
+                            .padding(.trailing, item.id == items.last?.id ? 0 : spacing)
                     }
                     
                 }
@@ -43,7 +45,8 @@ struct CoverFlowView<Content: View, Item: RandomAccessCollection>: View where It
         }
     }
     
-    func rotation(_ proxy: GeometryProxy) -> Double {
+    //MARK: - Methods
+    private func rotation(_ proxy: GeometryProxy) -> Double {
         let scrollviewWidth = proxy.bounds(of: .scrollView(axis: .horizontal))?.width ?? 0
         let midX = proxy.frame(in: .scrollView(axis: .horizontal)).midX
         let progress = midX / scrollviewWidth
@@ -53,15 +56,9 @@ struct CoverFlowView<Content: View, Item: RandomAccessCollection>: View where It
         
         return cappedRotation - degree
     }
-    
-    
 }
 
-struct CoverFlowItem: Identifiable {
-    let id: UUID = .init()
-    var color: Color
-}
-
+    //MARK: - ReflectionModifier
 fileprivate extension View {
     @ViewBuilder
     func reflection(_ added: Bool) -> some View {
@@ -90,8 +87,8 @@ fileprivate extension View {
                             }
                             .offset(y: size.height + 5)
                             .opacity(0.5)
+                    }
                 }
-            }
         }
     }
 }

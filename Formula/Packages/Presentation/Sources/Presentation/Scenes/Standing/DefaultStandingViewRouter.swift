@@ -7,17 +7,22 @@
 
 import UIKit
 
-class DefaultStandingViewRouter: StandingViewRouter {
-    weak var view: StandingViewController?
-    let driversViewControllerFactory: DriversViewControllerFactory
-    let teamsViewControllerFactory: TeamsViewControllerFactory
+// MARK: - DefaultStandingViewRouter
+final class DefaultStandingViewRouter: StandingViewRouter {
     
+    // MARK: - Properties
+    weak var view: StandingViewController?
+    private let driversViewControllerFactory: DriversViewControllerFactory
+    private let teamsViewControllerFactory: TeamsViewControllerFactory
+    
+    // MARK: - Initialization
     init(view: StandingViewController, driversViewControllerFactory: DriversViewControllerFactory, teamsViewControllerFactory: TeamsViewControllerFactory) {
         self.view = view
         self.driversViewControllerFactory = driversViewControllerFactory
         self.teamsViewControllerFactory = teamsViewControllerFactory
     }
     
+    // MARK: - StandingViewRouter
     func perform(to route: StandingViewRoute) {
         switch route {
         case .showDriversDetail(let viewModel):

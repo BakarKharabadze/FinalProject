@@ -10,7 +10,7 @@ import Common
 @testable import Domain
 
 // Test Case
-class GetVideosUseCaseTests: XCTestCase {
+final class GetVideosUseCaseTests: XCTestCase {
     
     var useCase: DefaultGetVideosUseCase!
     var repository: MockVideosRepository!
@@ -82,11 +82,11 @@ class GetVideosUseCaseTests: XCTestCase {
 }
 
 // Mock Repository
-class MockVideosRepository: VideosRepository {
+public final class  MockVideosRepository: VideosRepository {
     
     var result: Result<[VideosEntity], Error>?
     
-    func getVideos(channelId: String, maxResults: Int, order: String, apiKey: String, completion: @escaping (Result<[VideosEntity], Error>) -> Void) -> Cancellable? {
+    public func getVideos(channelId: String, maxResults: Int, order: String, apiKey: String, completion: @escaping (Result<[VideosEntity], Error>) -> Void) -> Cancellable? {
         if let result = result {
             completion(result)
         }

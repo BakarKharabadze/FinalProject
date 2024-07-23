@@ -12,6 +12,6 @@ import Network
 public struct RaceLastResultsAPIEndpoints {
     
     static func race() -> DataEndpoint<RaceLastResults> {
-           return DataEndpoint(path: "api/f1/current/last/results.json")
-       }
+        DataEndpoint(path: "api/f1/current/last/results.json")
+    }
 }

@@ -5,20 +5,24 @@
 //  Created by Bakar Kharabadze on 7/9/24.
 //
 
-
 import UIKit
 
-class DefaultHomeViewRouter: HomeViewRouter {
+// MARK: - DefaultHomeViewRouter
+
+final class DefaultHomeViewRouter: HomeViewRouter {
     
+    // MARK: - Properties
     weak var view: HomeViewController?
-    let newsViewControllerFactory: NewsDetailViewControllerFactory
+    private let newsViewControllerFactory: NewsDetailViewControllerFactory
     
+    // MARK: - Initializers
     init(view: HomeViewController,
          newsViewControllerFactory: NewsDetailViewControllerFactory) {
         self.view = view
         self.newsViewControllerFactory = newsViewControllerFactory
     }
     
+    // MARK: - HomeViewRouter Methods
     func perform(to route: HomeViewRoute) {
         switch route {
         case .showNewsDetail:

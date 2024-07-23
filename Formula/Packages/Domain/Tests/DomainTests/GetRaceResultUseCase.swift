@@ -10,7 +10,7 @@ import XCTest
 @testable import Domain
 
 // Test Case
-class GetRaceResultUseCaseTests: XCTestCase {
+final class GetRaceResultUseCaseTests: XCTestCase {
     
     var useCase: DefaultGetRaceResultUseCase!
     var repository: MockRaceResultRepository!
@@ -88,11 +88,11 @@ class GetRaceResultUseCaseTests: XCTestCase {
 }
 
 // Mock Repository
-class MockRaceResultRepository: RaceResultRepository {
+public final class  MockRaceResultRepository: RaceResultRepository {
     
     var result: Result<[RaceResultEntity], Error>?
     
-    func getRaceResult(result: @escaping (Result<[RaceResultEntity], Error>) -> Void) -> Cancellable? {
+    public func getRaceResult(result: @escaping (Result<[RaceResultEntity], Error>) -> Void) -> Cancellable? {
         if let resultValue = self.result {
             result(resultValue)
         }
