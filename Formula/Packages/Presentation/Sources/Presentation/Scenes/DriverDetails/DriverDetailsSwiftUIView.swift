@@ -9,8 +9,9 @@ import SwiftUI
 import Domain
 
 struct DriverDetailsSwiftUIView: View {
-    var driverDetails: DriverDetailsEntity
     
+    //MARK: - Properties
+    var driverDetails: DriverDetailsEntity
     
     // MARK: - Body
     var body: some View {

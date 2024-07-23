@@ -34,7 +34,6 @@ public final class StandingViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "CustomBackground")
         setupUI()
-        viewModel.delegate = self
         viewModel.viewDidLoad()
     }
     
@@ -178,13 +177,3 @@ public final class StandingViewController: UIViewController {
     }
 }
 
-// MARK: - StandingViewModelDelegate
-extension StandingViewController: StandingViewModelDelegate {
-    public func teamsFetched(_ teams: [Domain.TeamsEntity]) {
-        
-    }
-    
-    public func driversFetched(_ drivers: [DriverEntity]) {
-        
-    }
-}

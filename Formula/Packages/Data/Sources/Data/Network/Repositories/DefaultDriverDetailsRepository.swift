@@ -33,7 +33,6 @@ extension DefaultDriverDetailsRepository: DriverDetailsRepository {
             case .success(let driverDetailsResponse):
                 let driverDetailsEntities = DriverDetailsEntity.map(driverDetailsResponse: driverDetailsResponse)
                 completion(.success(driverDetailsEntities))
-                
             case .failure(let error):
                 completion(.failure(error))
             }

@@ -154,6 +154,7 @@ public final class DriverDetailsViewController: UIViewController {
     }
 }
 
+//MARK: - DriverDetailsViewModelDelegate
 extension DriverDetailsViewController: DriverDetailsViewModelDelegate {
     public func driverDetailsFetched(_ driverDetails: [DriverDetailsEntity]) {
         guard let firstDriver = driverDetails.first else { return }

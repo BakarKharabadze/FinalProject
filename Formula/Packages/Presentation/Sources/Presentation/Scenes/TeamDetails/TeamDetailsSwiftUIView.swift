@@ -30,6 +30,7 @@ struct TeamDetailsSwiftUIView: View {
         .cornerRadius(10)
     }
     
+    //MARK: - Methods
     private func horizontalLabel(labelText: String, valueText: String) -> some View {
         HStack {
             Text(labelText)

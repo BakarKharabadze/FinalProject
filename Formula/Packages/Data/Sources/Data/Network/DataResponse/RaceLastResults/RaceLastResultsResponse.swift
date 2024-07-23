@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: - Welcome
+// MARK: - RaceLastResults
 struct RaceLastResults: Decodable {
     let mrData: MRData
     

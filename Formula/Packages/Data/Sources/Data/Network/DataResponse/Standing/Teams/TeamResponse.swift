@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: - Welcome
+// MARK: - TeamsStandings
 public struct TeamsStandings: Decodable {
     public let mrData: MRData
     

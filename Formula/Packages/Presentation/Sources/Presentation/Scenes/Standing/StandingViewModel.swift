@@ -9,7 +9,7 @@ import Foundation
 import Domain
 import Common
 
-// MARK: - Protocols
+// MARK: - StandingViewModelDelegate
 public protocol StandingViewModelDelegate: AnyObject {
     func driversFetched(_ drivers: [DriverEntity])
     func teamsFetched(_ teams: [TeamsEntity])
@@ -26,7 +26,7 @@ public protocol StandingViewRouter {
     func perform(to route: StandingViewRoute)
 }
 
-// MARK: - ViewModel
+// MARK: - StandingViewModel
 public final class StandingViewModel {
     
     // MARK: - Properties

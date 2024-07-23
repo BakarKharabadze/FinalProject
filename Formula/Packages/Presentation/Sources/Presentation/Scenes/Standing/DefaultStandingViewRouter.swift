@@ -7,7 +7,6 @@
 
 import UIKit
 
-// MARK: - DefaultStandingViewRouter
 final class DefaultStandingViewRouter: StandingViewRouter {
     
     // MARK: - Properties

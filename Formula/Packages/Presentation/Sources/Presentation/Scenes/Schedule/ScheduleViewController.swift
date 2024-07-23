@@ -9,7 +9,6 @@ import UIKit
 import SwiftUI
 import Domain
 
-// MARK: - ScheduleViewController
 public final class ScheduleViewController: UIViewController {
     
     // MARK: - Properties

@@ -8,7 +8,6 @@
 import SwiftUI
 import Domain
 
-// MARK: - UpcomingFirstRace
 struct UpcomingFirstRace: View {
     
     // MARK: - Properties
@@ -83,9 +82,11 @@ struct UpcomingFirstRace: View {
     }
 }
 
+//MARK: - RaceDetails
 struct RaceDetails: View {
     let race: RaceEntity
     
+    //MARK: - Body
     var body: some View {
         Text("Round \(race.round)")
             .foregroundColor(.yellow)
@@ -107,9 +108,11 @@ struct RaceDetails: View {
     }
 }
 
+//MARK: - RemainingTime
 struct RemainingTime: View {
     let race: RaceEntity
     
+    //MARK: - Body
     var body: some View {
         HStack(spacing: 24) {
             Text("Days")
