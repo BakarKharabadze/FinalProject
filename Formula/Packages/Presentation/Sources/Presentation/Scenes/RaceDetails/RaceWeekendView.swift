@@ -6,7 +6,6 @@
 import SwiftUI
 import Domain
 
-// MARK: - RaceWeekendView
 struct RaceWeekendView: View {
     var race: RaceEntity
     
@@ -36,6 +35,7 @@ struct RaceWeekendView: View {
         .padding()
     }
     
+    //MARK: - Methods
     private func raceSessionView(date: String, title: String, time: String) -> some View {
         HStack {
             VStack {
@@ -67,6 +67,7 @@ struct RaceWeekendView: View {
         }
     }
     
+    //MARK: - Date Formater
     private func formattedDate(_ date: String) -> (String, String) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"

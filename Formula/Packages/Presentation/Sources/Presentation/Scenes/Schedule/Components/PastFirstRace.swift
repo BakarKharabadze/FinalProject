@@ -8,7 +8,6 @@
 import SwiftUI
 import Domain
 
-// MARK: - PastFirstRace
 struct PastFirstRace: View {
     
     // MARK: - Properties

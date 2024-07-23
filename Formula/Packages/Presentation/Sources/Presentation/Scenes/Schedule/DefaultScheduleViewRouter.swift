@@ -7,7 +7,6 @@
 
 import UIKit
 
-// MARK: - DefaultScheduleViewRouter
 final class DefaultScheduleViewRouter: ScheduleViewRouter {
     
     // MARK: - Properties

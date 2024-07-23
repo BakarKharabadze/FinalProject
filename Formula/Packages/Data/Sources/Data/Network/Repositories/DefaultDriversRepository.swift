@@ -36,7 +36,6 @@ extension DefaultDriversRepository: DriversRepository {
                 
                 let driverEntities = DriverEntity.map(driverResponse: firstStandingsList.driverStandings)
                 completion(.success(driverEntities))
-                
             case .failure(let error):
                 completion(.failure(error))
             }

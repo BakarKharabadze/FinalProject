@@ -9,7 +9,7 @@ import Foundation
 import Domain
 import Common
 
-// MARK: - Protocols
+// MARK: - ScheduleViewModelDelegate
 public protocol ScheduleViewModelDelegate: AnyObject {
     func racesFetched(_ races: [RaceEntity])
     func raceResultFetched(_ raceResults: [RaceResultEntity])
@@ -25,7 +25,7 @@ public protocol ScheduleViewRouter {
     func perform(to route: ScheduleViewRoute)
 }
 
-// MARK: - ViewModel
+// MARK: - ScheduleViewModel
 public final class ScheduleViewModel {
     
     // MARK: - Properties

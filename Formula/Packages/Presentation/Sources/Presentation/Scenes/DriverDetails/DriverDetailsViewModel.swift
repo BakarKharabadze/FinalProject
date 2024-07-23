@@ -8,6 +8,7 @@
 import Foundation
 import Domain
 
+//MARK: -DriverDetailsViewModelDelegate
 public protocol DriverDetailsViewModelDelegate: AnyObject {
     func driverDetailsFetched(_ driverDetails: [DriverDetailsEntity])
 }
@@ -26,12 +27,13 @@ public final class DriverDetailsViewModel {
         self.getDriverDetailsUseCase = getDriverDetailsUseCase
     }
     
+    //MARK: - Methods
     public func viewDidLoad() {
         fetchDriverDetails()
     }
     
     private func fetchDriverDetails() {
-        getDriverDetailsUseCase.execute(for: driver.givenName + " " + driver.familyName, completion: { [weak self] result in
+       _ = getDriverDetailsUseCase.execute(for: driver.givenName + " " + driver.familyName, completion: { [weak self] result in
             switch result {
             case .success(let driverDetails):
                 DispatchQueue.main.async {

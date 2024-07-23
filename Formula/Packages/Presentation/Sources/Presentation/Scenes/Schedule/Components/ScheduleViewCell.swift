@@ -7,7 +7,6 @@
 
 import UIKit
 
-// MARK: - ScheduleViewCell
 final class ScheduleViewCell: UITableViewCell {
     
     // MARK: - Properties

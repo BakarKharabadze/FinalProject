@@ -25,6 +25,7 @@ public final class TeamDetailsViewModel {
         self.team = team
     }
     
+    //MARK: - Methods
     public func viewDidLoad() {
         fetchTeamDetails()
     }

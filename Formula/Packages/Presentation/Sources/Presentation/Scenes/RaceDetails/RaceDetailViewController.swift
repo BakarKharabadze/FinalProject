@@ -9,7 +9,6 @@ import UIKit
 import SwiftUI
 import Domain
 
-// MARK: - RaceDetailViewController
 final public class RaceDetailViewController: UIViewController {
     
     // MARK: - Properties

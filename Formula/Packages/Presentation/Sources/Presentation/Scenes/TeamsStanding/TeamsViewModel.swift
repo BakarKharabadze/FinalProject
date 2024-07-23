@@ -19,6 +19,7 @@ public protocol TeamsViewRouter {
     func perform(to route: TeamsViewRoute)
 }
 
+//MARK: - TeamsViewModel
 public final class TeamsViewModel {
     
     //MARK: - Properties

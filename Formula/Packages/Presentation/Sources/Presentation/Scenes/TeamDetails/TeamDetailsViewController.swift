@@ -136,6 +136,7 @@ public final class TeamDetailsViewController: UIViewController {
     }
 }
 
+//MARK: - TeamDetailsViewModelDelegate
 extension TeamDetailsViewController: TeamDetailsViewModelDelegate {
     public func teamDetailsFetched(_ teamDetails: [Domain.TeamDetailsEntity], logoData: Data?) {
         guard let firstTeam = teamDetails.first else { return }

@@ -9,7 +9,6 @@ import SwiftUI
 import UIKit
 import Domain
 
-// MARK: - UpcomingFirstRaceViewCell
 final class UpcomingFirstRaceViewCell: UITableViewCell {
     
     // MARK: - Properties

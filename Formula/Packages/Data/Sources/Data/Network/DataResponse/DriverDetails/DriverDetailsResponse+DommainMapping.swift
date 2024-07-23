@@ -10,7 +10,7 @@ import Domain
 
 extension DriverDetailsEntity {
     static func map(driverDetailsResponse: DriverDetailsResponse) -> [DriverDetailsEntity] {
-        return driverDetailsResponse.response.map { driver in
+        driverDetailsResponse.response.map { driver in
             DriverDetailsEntity(
                 name: driver.name,
                 driverNumber: "\(driver.number)",

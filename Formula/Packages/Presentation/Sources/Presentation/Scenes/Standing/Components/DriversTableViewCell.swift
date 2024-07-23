@@ -8,7 +8,6 @@
 import UIKit
 import Domain
 
-// MARK: - DriversTableViewCell
 final class DriversTableViewCell: UITableViewCell {
     
     // MARK: - Properties
