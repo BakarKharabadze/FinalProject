@@ -203,6 +203,7 @@ extension ScheduleViewController: UITableViewDataSource, UITableViewDelegate {
         if tableView == upcomingTableView {
             if indexPath.row == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "UpcomingFirstRaceViewCell", for: indexPath) as! UpcomingFirstRaceViewCell
+                cell.selectionStyle = .none
                 if let firstRace = viewModel.upcomingRaces.first {
                     cell.configure(with: firstRace)
                 }
@@ -210,13 +211,14 @@ extension ScheduleViewController: UITableViewDataSource, UITableViewDelegate {
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "ScheduleViewCell", for: indexPath) as! ScheduleViewCell
                 let race = viewModel.upcomingRaces[indexPath.row - 1]
-                let flagImageName = race.countryFlag
+                let flagImageName = race.grandPrixName
                 cell.configure(round: race.round, title: race.grandPrixName, date: race.date, flagImage: flagImageName, isUpcoming: true)
                 return cell
             }
         } else if tableView == pastTableView {
             if indexPath.row == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "PastFirstRaceViewCell", for: indexPath) as! PastFirstRaceViewCell
+                cell.selectionStyle = .none
                 if let firstRace = viewModel.raceResults.first {
                     cell.configure(with: firstRace)
                 }
@@ -224,7 +226,7 @@ extension ScheduleViewController: UITableViewDataSource, UITableViewDelegate {
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "ScheduleViewCell", for: indexPath) as! ScheduleViewCell
                 let race = viewModel.pastRaces[indexPath.row - 1]
-                let flagImageName = race.countryFlag
+                let flagImageName = race.grandPrixName
                 cell.configure(round: race.round, title: race.grandPrixName, date: race.date, flagImage: flagImageName, isUpcoming: false)
                 return cell
             }

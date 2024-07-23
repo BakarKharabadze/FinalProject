@@ -92,7 +92,7 @@ public final class  MockRaceResultRepository: RaceResultRepository {
     
     var result: Result<[RaceResultEntity], Error>?
     
-    func getRaceResult(result: @escaping (Result<[RaceResultEntity], Error>) -> Void) -> Cancellable? {
+    public func getRaceResult(result: @escaping (Result<[RaceResultEntity], Error>) -> Void) -> Cancellable? {
         if let resultValue = self.result {
             result(resultValue)
         }

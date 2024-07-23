@@ -32,11 +32,24 @@ final class GetRacesUseCaseTests: XCTestCase {
         let expectedRaces = [RaceEntity(
             round: "",
             grandPrixName: "",
+            circuitName: "",
             date: "",
+            time: "",
             image: "",
             startsIn: "",
             countryFlag: "",
-            circuitID: "")]
+            circuitID: "",
+            turns: "",
+            topSpeed: "",
+            practiceOneDate: "",
+            practiceOneTime: "",
+            practiceTwoDate: "",
+            practiceTwoTime: "",
+            practiceThreeDate: "",
+            practiceThreeTime: "",
+            qualificationDate: "",
+            qualificationTime: ""
+        )]
         repository.result = .success(expectedRaces)
         
         // When
@@ -90,7 +103,7 @@ public final class  MockRaceRepository: RaceRepository {
     
     var result: Result<[RaceEntity], Error>?
     
-    func getRaces(result: @escaping (Result<[RaceEntity], Error>) -> Void) -> Cancellable? {
+    public func getRaces(result: @escaping (Result<[RaceEntity], Error>) -> Void) -> Cancellable? {
         if let resultValue = self.result {
             result(resultValue)
         }

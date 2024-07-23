@@ -112,7 +112,7 @@ public final class HomeViewController: UIViewController {
     private func configureTopDriversCell(_ tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TopDriversCell", for: indexPath)
         cell.contentView.backgroundColor = .clear
-        cell.backgroundColor = .clear
+        cell.backgroundColor = .clear        
         cell.selectionStyle = .none
         let topDriversHostingController = UIHostingController(rootView: TopDriversCoverFlowView(drivers: viewModel.drivers))
         addChild(topDriversHostingController)

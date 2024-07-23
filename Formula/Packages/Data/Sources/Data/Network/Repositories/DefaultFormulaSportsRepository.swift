@@ -23,14 +23,14 @@ public final class DefaultFormulaSportsRepository {
 
 // MARK: - FormulaSportsRepository
 extension DefaultFormulaSportsRepository: FormulaSportsRepository {
-    public func getCircuitDetails(for circuit: String, completion: @escaping (Result<[Domain.CircuitDetailsEntity], any Error>) -> Void) -> (any Common.Cancellable)? {
-        let endpoint = CircuitDetailsAPIEndpoints.details(name: circuit)
+    public func getCircuitDetails(for circuitId: String, completion: @escaping (Result<[Domain.CircuitDetailsEntity], any Error>) -> Void) -> (any Common.Cancellable)? {
+        let endpoint = CircuitDetailsAPIEndpoints.details(circuitId: circuitId)
         
-        return self.dataTransferService.request(with: endpoint) { (response: Result<CircuitDetailsResponse, Error>) in
+        return self.dataTransferService.request(with: endpoint) { (response: Result<CircuitResponse, Error>) in
             switch response {
             case .success(let details):
-               // completion(.success(CircuitDetailsEntity.map(circuitDetailsResponse: details)))
-                completion(.success([]))
+                let circuitDetailsEntities = CircuitDetailsEntity.map(circuitDetailsResponse: details)
+                completion(.success(circuitDetailsEntities))
             case .failure(let error):
                 completion(.failure(error))
             }

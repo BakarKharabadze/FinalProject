@@ -51,12 +51,13 @@ public struct F1Season: Decodable {
         public let sprint: Practice?
         
         public enum CodingKeys: String, CodingKey {
-            case season, round, url, raceName, circuit, date, time
+            case season, round, url, raceName, date, time
             case firstPractice = "FirstPractice"
             case secondPractice = "SecondPractice"
             case thirdPractice = "ThirdPractice"
             case qualifying = "Qualifying"
             case sprint = "Sprint"
+            case circuit = "Circuit"
         }
     }
     
@@ -69,7 +70,8 @@ public struct F1Season: Decodable {
         
         public enum CodingKeys: String, CodingKey {
             case circuitID = "circuitId"
-            case url, circuitName, location
+            case location = "Location"
+            case url, circuitName
         }
     }
     

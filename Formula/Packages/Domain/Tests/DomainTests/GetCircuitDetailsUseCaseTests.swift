@@ -35,18 +35,7 @@ final class GetCircuitDetailsUseCaseTests: XCTestCase {
             date: "",
             circuitLenght: "",
             laps: "",
-            turns: "",
-            topSpeed: "",
-            practiceOneDate: "",
-            practiceOneTime: "",
-            practiceTwoDate: "",
-            practiceTwoTime: "",
-            practiceThreeDate: "",
-            practiceThreeTime: "",
-            qualificationDate: "",
-            qualificationTime: "",
-            raceDate: "",
-            raceTime: ""
+            raceDistance: ""
         )]
         repository.result = .success(expectedDetails)
         
