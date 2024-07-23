@@ -15,7 +15,8 @@ extension TeamsEntity {
                         constructorName: team.constructor.name,
                         points: team.points,
                         nationality: team.constructor.nationality,
-                        liveryImage: team.constructor.name)
+                        liveryImage: team.constructor.name,
+                        constructorID: team.constructor.constructorID)
         }
     }
 }
