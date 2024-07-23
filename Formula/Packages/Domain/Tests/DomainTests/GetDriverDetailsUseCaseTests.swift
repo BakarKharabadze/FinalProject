@@ -46,7 +46,7 @@ final class GetDriverDetailsUseCaseTests: XCTestCase {
         // When
         let expectation = self.expectation(description: "Completion handler called")
         var result: Result<[DriverDetailsEntity], Error>?
-        _ = useCase.execute { response in
+        _ = useCase.execute(for: "Max Verstappen") { response in
             result = response
             expectation.fulfill()
         }
@@ -70,7 +70,7 @@ final class GetDriverDetailsUseCaseTests: XCTestCase {
         // When
         let expectation = self.expectation(description: "Completion handler called")
         var result: Result<[DriverDetailsEntity], Error>?
-        _ = useCase.execute { response in
+        _ = useCase.execute(for: "Unknown Driver") { response in
             result = response
             expectation.fulfill()
         }
@@ -92,12 +92,11 @@ final class GetDriverDetailsUseCaseTests: XCTestCase {
 // Mock Repository
 public final class MockDriverDetailsRepository: DriverDetailsRepository {
     
-    
     var result: Result<[DriverDetailsEntity], Error>?
     
     public init() {}
 
-    public func getCircuitDetails(completion: @escaping (Result<[Domain.DriverDetailsEntity], any Error>) -> Void) -> (any Common.Cancellable)? {
+    public func getCircuitDetails(for name: String, completion: @escaping (Result<[Domain.DriverDetailsEntity], any Error>) -> Void) -> (any Common.Cancellable)? {
         if let result = result {
             completion(result)
         }
