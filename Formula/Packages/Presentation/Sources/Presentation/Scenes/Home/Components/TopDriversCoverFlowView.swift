@@ -1,3 +1,10 @@
+//
+//  TopDriversCoverFlowView.swift
+//
+//
+//  Created by Bakar Kharabadze on 7/4/24.
+//
+
 import SwiftUI
 import Domain
 
@@ -7,7 +14,6 @@ struct TopDriversCoverFlowView: View {
     @State private var spacing: CGFloat = 0
     @State private var rotation: CGFloat = 65
     @State private var enableReflection: Bool = false
-    @State private var currentPage: Int = 0
 
     let drivers: [DriverEntity]
     
@@ -29,7 +35,6 @@ struct TopDriversCoverFlowView: View {
                                 .font(.title2)
                                 .foregroundStyle(.white)
                                 .bold()
-                                .padding(.top, 10) // Adjust padding as needed
                             
                             Text(driver.constructorName)
                                 .font(.subheadline)
@@ -57,39 +62,12 @@ struct TopDriversCoverFlowView: View {
                     .frame(width: 340, height: 150)
                     .background(Color("CustomCellBackground"))
                     .cornerRadius(10)
-                    
-                    if let position = Int(driver.position), position <= 3 {
-                        Text(positionString(for: position))
-                            .font(.varsity(.regular, size: 20))
-                            .foregroundColor(.white)
-                            .position(x: 170, y: 30) // Adjust position as needed
-                    }
                 }
             }
             .frame(height: 180)
-            .onPageChanged { newPage in
-                currentPage = newPage
-            }
-
-            PageControl(numberOfPages: topDrivers.count, currentPage: $currentPage)
-                .padding(.top, -20)
-                
         }
         .onAppear {
             VarsityFont.registerFonts()
-        }
-    }
-    
-    private func positionString(for position: Int) -> String {
-        switch position {
-        case 1:
-            return "01"
-        case 2:
-            return "02"
-        case 3:
-            return "03"
-        default:
-            return ""
         }
     }
 }
@@ -100,6 +78,7 @@ private extension View {
     }
 }
 
+//MARK: - PageChangedModifier
 struct PageChangedModifier: ViewModifier {
     let action: (Int) -> Void
     @State private var previousOffset: CGFloat = 0

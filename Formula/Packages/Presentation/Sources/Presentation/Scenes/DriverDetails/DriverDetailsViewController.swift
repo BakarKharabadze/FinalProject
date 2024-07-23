@@ -45,7 +45,7 @@ public final class DriverDetailsViewController: UIViewController {
         setupScrollView()
         setupContentView()
         setupMainStackView()
-        setupDriverNameStackView()
+        setupDriverNameLabel()
         setupDriverNumberLabel()
         setupTeamNameLabel()
         setupDriverImage()
@@ -93,20 +93,12 @@ public final class DriverDetailsViewController: UIViewController {
         ])
     }
     
-    private func setupDriverNameStackView() {
-        let driverNameStackView = UIStackView()
-        driverNameStackView.axis = .vertical
-        driverNameStackView.alignment = .leading
-        driverNameStackView.distribution = .fill
-        driverNameStackView.spacing = 10
-        
+    private func setupDriverNameLabel() {
         driverNameLabel.font = .systemFont(ofSize: 24, weight: .bold)
         driverNameLabel.textColor = .white
         driverNameLabel.numberOfLines = 0
         
-        driverNameStackView.addArrangedSubview(driverNameLabel)
-        
-        mainStackView.addArrangedSubview(driverNameStackView)
+        mainStackView.addArrangedSubview(driverNameLabel)
     }
     
     private func setupDriverNumberLabel() {
@@ -136,7 +128,7 @@ public final class DriverDetailsViewController: UIViewController {
         NSLayoutConstraint.activate([
             driverImageView.widthAnchor.constraint(equalToConstant: 150),
             driverImageView.heightAnchor.constraint(equalToConstant: 150),
-            driverImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            driverImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
             driverImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100)
         ])
     }
@@ -149,6 +141,8 @@ public final class DriverDetailsViewController: UIViewController {
         addChild(hostingController)
         contentView.addSubview(hostingController.view)
         hostingController.didMove(toParent: self)
+        
+        hostingController.view.backgroundColor = .clear
         
         hostingController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -164,7 +158,7 @@ extension DriverDetailsViewController: DriverDetailsViewModelDelegate {
     public func driverDetailsFetched(_ driverDetails: [DriverDetailsEntity]) {
         guard let firstDriver = driverDetails.first else { return }
         driverNameLabel.text = firstDriver.name
-        driverNumberLabel.text = "Driver Number: \(firstDriver.driverNumber)"
+        driverNumberLabel.text = "Driver Number \(firstDriver.driverNumber)"
         teamNameLabel.text = firstDriver.teamName
         driverImageView.image = UIImage(named: viewModel.driver.familyName, in: Bundle.module, with: nil)
         

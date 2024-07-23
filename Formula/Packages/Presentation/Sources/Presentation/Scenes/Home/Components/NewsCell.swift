@@ -28,16 +28,21 @@ final class NewsCell: UITableViewCell {
     
     // MARK: - UI Setup
     private func setupUI() {
-        mainStackView.backgroundColor = UIColor(named: "CustomCellBackground")
-        mainStackView.layer.cornerRadius = 10
-        mainStackView.layer.masksToBounds = true
-        setupMainStackView()
-        setupNewsImage()
-        setupTitleLabel()
-    }
-    
-    private func setupMainStackView() {
-        contentView.addSubview(mainStackView)
+        let customBackgroundView = UIView()
+        customBackgroundView.backgroundColor = UIColor(named: "CustomCellBackground")
+        customBackgroundView.layer.cornerRadius = 10
+        customBackgroundView.layer.masksToBounds = true
+        
+        contentView.addSubview(customBackgroundView)
+        customBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            customBackgroundView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            customBackgroundView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            customBackgroundView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            customBackgroundView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
+        ])
+        
+        customBackgroundView.addSubview(mainStackView)
         
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
         mainStackView.axis = .vertical
@@ -46,11 +51,14 @@ final class NewsCell: UITableViewCell {
         mainStackView.spacing = 10
         
         NSLayoutConstraint.activate([
-            mainStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            mainStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            mainStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            mainStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            mainStackView.leadingAnchor.constraint(equalTo: customBackgroundView.leadingAnchor),
+            mainStackView.trailingAnchor.constraint(equalTo: customBackgroundView.trailingAnchor),
+            mainStackView.topAnchor.constraint(equalTo: customBackgroundView.topAnchor),
+            mainStackView.bottomAnchor.constraint(equalTo: customBackgroundView.bottomAnchor)
         ])
+        
+        setupNewsImage()
+        setupTitleLabel()
     }
     
     private func setupNewsImage() {

@@ -1,5 +1,5 @@
 //
-//  SwiftUIView.swift
+//  CoverFlowView.swift
 //
 //
 //  Created by Bakar Kharabadze on 7/4/24.

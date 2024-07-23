@@ -1,6 +1,6 @@
 //
 //  StandingViewModelTests.swift
-//  
+//
 //
 //  Created by Bakar Kharabadze on 7/19/24.
 //
@@ -16,6 +16,8 @@ final class StandingViewModelTests: XCTestCase {
     var viewModel: StandingViewModel!
     var driversUseCase: MockGetDriversUseCase!
     var teamsUseCase: MockGetTeamsUseCase!
+    var getDriverDetailsUseCase: MockGetDriversDetailsUseCase!
+    var getTeamDetailsUseCase: MockGetTeamsDetailsUseCase!
     var router: MockStandingViewRouter!
     var delegate: MockStandingViewModelDelegate!
     
@@ -23,10 +25,17 @@ final class StandingViewModelTests: XCTestCase {
         super.setUp()
         driversUseCase = MockGetDriversUseCase()
         teamsUseCase = MockGetTeamsUseCase()
+        getDriverDetailsUseCase = MockGetDriversDetailsUseCase()
+        getTeamDetailsUseCase = MockGetTeamsDetailsUseCase()
         router = MockStandingViewRouter()
         delegate = MockStandingViewModelDelegate()
         
-        viewModel = StandingViewModel(getDriversUseCase: driversUseCase, getTeamsUseCase: teamsUseCase)
+        viewModel = StandingViewModel(
+            getDriversUseCase: driversUseCase,
+            getTeamsUseCase: teamsUseCase,
+            getDriverDetailsUseCase: getDriverDetailsUseCase,
+            getTeamDetailsUseCase: getTeamDetailsUseCase
+        )
         viewModel.router = router
         viewModel.delegate = delegate
     }
@@ -34,6 +43,8 @@ final class StandingViewModelTests: XCTestCase {
     override func tearDown() {
         driversUseCase = nil
         teamsUseCase = nil
+        getDriverDetailsUseCase = nil
+        getTeamDetailsUseCase = nil
         router = nil
         delegate = nil
         viewModel = nil
@@ -43,7 +54,7 @@ final class StandingViewModelTests: XCTestCase {
     func testViewDidLoadFetchesDriversAndTeamsSuccessfully() {
         // Given
         let expectedDrivers = [DriverEntity(driverId: "1", position: "1", givenName: "Lewis", familyName: "Hamilton", constructorName: "Mercedes", points: "347", driverImage: "image_url")]
-        let expectedTeams = [TeamsEntity(position: "1", constructorName: "Mercedes", points: "573", nationality: "German", liveryImage: "livery_url")]
+        let expectedTeams = [TeamsEntity(position: "1", constructorName: "Mercedes", points: "573", nationality: "German", liveryImage: "livery_url", constructorID: "1")]
         
         driversUseCase.result = .success(expectedDrivers)
         teamsUseCase.result = .success(expectedTeams)
@@ -87,7 +98,7 @@ final class StandingViewModelTests: XCTestCase {
     
     func testTeamsViewTapped() {
         // Given
-        let teams = [TeamsEntity(position: "1", constructorName: "Mercedes", points: "573", nationality: "German", liveryImage: "livery_url")]
+        let teams = [TeamsEntity(position: "1", constructorName: "Mercedes", points: "573", nationality: "German", liveryImage: "livery_url", constructorID: "1")]
         viewModel.teams = teams
         
         // When
@@ -110,7 +121,7 @@ final class StandingViewModelTests: XCTestCase {
 
 
 // Mock GetDriversUseCase
-public final class  MockGetDriversUseCase: GetDriversUseCase {
+public final class MockGetDriversUseCase: GetDriversUseCase {
     var result: Result<[DriverEntity], Error>?
     
     public init() {}
@@ -124,7 +135,7 @@ public final class  MockGetDriversUseCase: GetDriversUseCase {
 }
 
 // Mock GetTeamsUseCase
-public final class  MockGetTeamsUseCase: GetTeamsUseCase {
+public final class MockGetTeamsUseCase: GetTeamsUseCase {
     var result: Result<[TeamsEntity], Error>?
     
     public init() {}
@@ -137,8 +148,28 @@ public final class  MockGetTeamsUseCase: GetTeamsUseCase {
     }
 }
 
+// Mock GetDriverDetailsUseCase
+public final class MockGetDriversDetailsUseCase: GetDriverDetailsUseCase {
+    public init() {}
+    
+    public func execute(for name: String, completion: @escaping (Result<[DriverDetailsEntity], Error>) -> Void) -> Cancellable? {
+        // Implement mock functionality here
+        return nil
+    }
+}
+
+// Mock GetTeamDetailsUseCase
+public final class MockGetTeamsDetailsUseCase: GetTeamDetailsUseCase {
+    public init() {}
+    
+    public func execute(for name: String, completion: @escaping (Result<[TeamDetailsEntity], Error>) -> Void) -> Cancellable? {
+        // Implement mock functionality here
+        return nil
+    }
+}
+
 // Mock Router
-public final class  MockStandingViewRouter: StandingViewRouter {
+public final class MockStandingViewRouter: StandingViewRouter {
     var performedRoute: StandingViewRoute?
     
     public func perform(to route: StandingViewRoute) {
@@ -147,7 +178,7 @@ public final class  MockStandingViewRouter: StandingViewRouter {
 }
 
 // Mock Delegate
-public final class  MockStandingViewModelDelegate: StandingViewModelDelegate {
+public final class MockStandingViewModelDelegate: StandingViewModelDelegate {
     var fetchedDrivers: [DriverEntity]?
     var fetchedTeams: [TeamsEntity]?
     var driversExpectation: XCTestExpectation?

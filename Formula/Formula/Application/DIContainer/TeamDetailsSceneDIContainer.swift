@@ -44,13 +44,6 @@ extension TeamDetailsSceneDIContainer {
 
 //MARK: - TeamDetailsViewController Factory
 extension TeamDetailsSceneDIContainer  {
-//    func makeDriverDetailsViewController(with viewModel: DriverDetailsViewModel) -> DriverDetailsViewController {
-//        DriverDetailsViewController.create(with: viewModel)
-//    }
-//    
-//    func makeDriverDetailsViewModel(with driverEntity: DriverEntity) -> DriverDetailsViewModel {
-//        DriverDetailsViewModel(driver: driverEntity, getDriverDetailsUseCase: makeGetDriverDetailsUseCase())
-//    }
     
     func makeTeamDetailsViewController(with viewModel: TeamDetailsViewModel) -> TeamDetailsViewController {
         TeamDetailsViewController.create(with: viewModel)

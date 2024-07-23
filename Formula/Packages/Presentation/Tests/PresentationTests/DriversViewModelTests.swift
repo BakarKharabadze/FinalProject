@@ -1,12 +1,13 @@
 //
-//  File.swift
-//  
+//  DriversViewModelTests.swift
+//
 //
 //  Created by Bakar Kharabadze on 7/19/24.
 //
 
 import XCTest
 import Domain
+import Common
 @testable import Presentation
 
 // Test case
@@ -14,10 +15,12 @@ final class DriversViewModelTests: XCTestCase {
     
     var viewModel: DriversViewModel!
     var router: MockDriversViewRouter!
+    var getDriverDetailsUseCase: MockGetDriverDetailsUseCase!
     
     override func setUp() {
         super.setUp()
         router = MockDriversViewRouter()
+        getDriverDetailsUseCase = MockGetDriverDetailsUseCase()
         
         let drivers = [DriverEntity(
             driverId: "1",
@@ -28,13 +31,14 @@ final class DriversViewModelTests: XCTestCase {
             points: "347",
             driverImage: "image_url"
         )]
-        viewModel = DriversViewModel(drivers: drivers)
+        viewModel = DriversViewModel(getDriverDetailsUseCase: getDriverDetailsUseCase, drivers: drivers)
         viewModel.router = router
     }
     
     override func tearDown() {
         router = nil
         viewModel = nil
+        getDriverDetailsUseCase = nil
         super.tearDown()
     }
     
@@ -77,5 +81,12 @@ public final class MockDriversViewRouter: DriversViewRouter {
     
     public func perform(to route: DriversViewRoute) {
         performedRoute = route
+    }
+}
+
+// Mock UseCase
+class MockGetDriverDetailsUseCase: GetDriverDetailsUseCase {
+    func execute(for name: String, completion: @escaping (Result<[Domain.DriverDetailsEntity], any Error>) -> Void) -> (any Common.Cancellable)? {
+        return nil
     }
 }

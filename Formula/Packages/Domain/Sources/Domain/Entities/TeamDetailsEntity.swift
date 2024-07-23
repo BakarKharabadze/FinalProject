@@ -17,8 +17,9 @@ public struct TeamDetailsEntity: Equatable {
     public let president: String
     public let director: String
     public let technicalManeger: String
+    public let logo: String
     
-    public init(name: String, worldTitle: String, raceWins: String, polePositions: String, fastesLaps: String, base: String, president: String, director: String, technicalManeger: String) {
+    public init(name: String, worldTitle: String, raceWins: String, polePositions: String, fastesLaps: String, base: String, president: String, director: String, technicalManeger: String, logo: String) {
         self.name = name
         self.worldTitle = worldTitle
         self.raceWins = raceWins
@@ -28,5 +29,6 @@ public struct TeamDetailsEntity: Equatable {
         self.president = president
         self.director = director
         self.technicalManeger = technicalManeger
+        self.logo = logo
     }
 }
