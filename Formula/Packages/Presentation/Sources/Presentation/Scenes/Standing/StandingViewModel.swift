@@ -65,7 +65,7 @@ public final class StandingViewModel {
     
     // MARK: - Private Methods
     private func fetchDrivers() {
-        getDriversUseCase.execute { [weak self] result in
+        _ = getDriversUseCase.execute { [weak self] result in
             switch result {
             case .success(let drivers):
                 self?.drivers = drivers
@@ -79,7 +79,7 @@ public final class StandingViewModel {
     }
     
     private func fetchTeams() {
-        getTeamsUseCase.execute { [weak self] result in
+        _ = getTeamsUseCase.execute { [weak self] result in
             switch result {
             case .success(let teams):
                 self?.teams = teams

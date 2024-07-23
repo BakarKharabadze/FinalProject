@@ -10,14 +10,14 @@ import Foundation
 // MARK: - TeamDetailsResponse
 struct TeamDetailsResponse: Decodable {
     let get: String
-    let parameters: Parameters
+    let parameters: Parameters?
     let errors: [String]
     let results: Int
     let response: [Team]
     
     // MARK: - Parameters
     struct Parameters: Decodable {
-        let id: String
+        let id: String?
     }
     
     // MARK: - Team

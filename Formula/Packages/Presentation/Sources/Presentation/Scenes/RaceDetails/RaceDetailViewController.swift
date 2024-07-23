@@ -170,7 +170,6 @@ final public class RaceDetailViewController: UIViewController {
     
     private func setupCircuitMapImageView() {
         circuitMapImageView.contentMode = .scaleAspectFit
-        circuitMapImageView.image = UIImage(systemName: "heart.fill")
         circuitMapImageView.tintColor = .systemBlue
         circuitMapImageView.translatesAutoresizingMaskIntoConstraints = false
         

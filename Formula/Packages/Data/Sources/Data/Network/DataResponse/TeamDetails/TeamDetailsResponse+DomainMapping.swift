@@ -20,7 +20,8 @@ extension TeamDetailsEntity {
                 base: team.base,
                 president: team.president,
                 director: team.director,
-                technicalManeger: team.technicalManager
+                technicalManeger: team.technicalManager, 
+                logo: team.logo
             )
         }
     }

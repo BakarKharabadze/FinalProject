@@ -12,8 +12,9 @@ import Network
 struct TeamDetailsAPIEndpoints {
     
     static func details(teamName: String) -> DataEndpoint<TeamDetailsResponse> {
-        DataEndpoint(path: "drivers",
-                     queryParameters: ["search": teamName],
-                     headerParamaters: ["X-RapidAPI-Host": "api-formula-1.p.rapidapi.com"])
+        let firstWord = teamName.split(separator: " ").first?.lowercased() ?? ""
+        return DataEndpoint(path: "teams",
+                            queryParameters: ["search": firstWord],
+                            headerParamaters: ["X-RapidAPI-Host": "api-formula-1.p.rapidapi.com"])
     }
 }

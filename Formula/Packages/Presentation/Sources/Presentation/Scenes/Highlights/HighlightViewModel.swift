@@ -31,7 +31,7 @@ public final class HighlightsViewModel {
     }
     
     private func fetchVideos(channelId: String, maxResults: Int, order: String, apiKey: String) {
-        getVideosUseCase.execute(channelId: channelId, maxResults: maxResults, order: order, apiKey: apiKey) { [weak self] result in
+        _ = getVideosUseCase.execute(channelId: channelId, maxResults: maxResults, order: order, apiKey: apiKey) { [weak self] result in
             switch result {
             case .success(let videos):
                 self?.videos = videos

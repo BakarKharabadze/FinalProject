@@ -18,7 +18,7 @@ public struct DriverDetailsEntity: Equatable {
     public let nationality: String
     public let birthday: String
     public let birthPlace: String
-    
+
     public init(name: String, driverNumber: String, teamName: String, races: String, worldTitle: String, raceWins: String, podiums: String, nationality: String, birthday: String, birthPlace: String) {
         self.name = name
         self.driverNumber = driverNumber

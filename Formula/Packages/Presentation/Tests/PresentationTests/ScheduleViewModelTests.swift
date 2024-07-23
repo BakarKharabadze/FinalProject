@@ -44,12 +44,24 @@ final class ScheduleViewModelTests: XCTestCase {
         // Given
         let expectedRaces = [RaceEntity(
             round: "1",
-            grandPrixName: "British Grand Prix",
-            date: "2024-07-02",
-            image: "http://race1.com/image",
-            startsIn: "1",
-            countryFlag: "http://race1.com/image",
-            circuitID: "1"
+            grandPrixName: "Australian Grand Prix",
+            circuitName: "Albert Park Circuit",
+            date: "2024-03-17",
+            time: "16:00",
+            image: "australian_gp_image_url",
+            startsIn: "2 weeks",
+            countryFlag: "australian_flag_url",
+            circuitID: "albert_park",
+            turns: "16",
+            topSpeed: "320 km/h",
+            practiceOneDate: "2024-03-15",
+            practiceOneTime: "12:00",
+            practiceTwoDate: "2024-03-15",
+            practiceTwoTime: "16:00",
+            practiceThreeDate: "2024-03-16",
+            practiceThreeTime: "13:00",
+            qualificationDate: "2024-03-16",
+            qualificationTime: "16:00"
         )]
         let expectedRaceResults = [RaceResultEntity(
             round: "1",
@@ -81,14 +93,26 @@ final class ScheduleViewModelTests: XCTestCase {
     
     func testRaceViewTapped() {
         // Given
-        let race = RaceEntity(
+        let race =  RaceEntity(
             round: "1",
-            grandPrixName: "British Grand Prix",
-            date: "2024-07-02",
-            image: "http://race1.com/image",
-            startsIn: "1",
-            countryFlag: "http://race1.com/image",
-            circuitID: "1"
+            grandPrixName: "Australian Grand Prix",
+            circuitName: "Albert Park Circuit",
+            date: "2024-03-17",
+            time: "16:00",
+            image: "australian_gp_image_url",
+            startsIn: "2 weeks",
+            countryFlag: "australian_flag_url",
+            circuitID: "albert_park",
+            turns: "16",
+            topSpeed: "320 km/h",
+            practiceOneDate: "2024-03-15",
+            practiceOneTime: "12:00",
+            practiceTwoDate: "2024-03-15",
+            practiceTwoTime: "16:00",
+            practiceThreeDate: "2024-03-16",
+            practiceThreeTime: "13:00",
+            qualificationDate: "2024-03-16",
+            qualificationTime: "16:00"
         )
         viewModel.upcomingRaces = [race]
         

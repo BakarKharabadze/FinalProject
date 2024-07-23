@@ -10,27 +10,27 @@ import SwiftUI
 import Domain
 
 public final class HomeViewController: UIViewController {
-
+    
     // MARK: - Properties
     private let tableView = UITableView()
     public var viewModel: HomeViewModel!
-
+    
     // MARK: - Initialization
     public class func create(with viewModel: HomeViewModel, newsViewControllersFactory: NewsDetailViewControllerFactory) -> HomeViewController {
         let vc = HomeViewController(viewModel: viewModel)
         vc.viewModel.router = DefaultHomeViewRouter(view: vc, newsViewControllerFactory: newsViewControllersFactory)
         return vc
     }
-
+    
     init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     // MARK: - Life Cycle
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,17 +42,17 @@ public final class HomeViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
     }
-
+    
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setupNavigationBarLogo()
     }
-
+    
     // MARK: - UI Setup
     private func setupUI() {
         setupTableView()
     }
-
+    
     private func setupTableView() {
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -68,14 +68,14 @@ public final class HomeViewController: UIViewController {
         tableView.register(NewsCell.self, forCellReuseIdentifier: "NewsCell")
         tableView.separatorStyle = .none
     }
-
+    
     private func setupNavigationBarLogo() {
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 150, height: 40))
         imageView.contentMode = .scaleAspectFit
         imageView.image = UIImage(named: "Formula1Logo")
         navigationItem.titleView = imageView
     }
-
+    
     // MARK: - Cell Configuration
     private func configureTitleCell(_ title: String) -> UITableViewCell {
         let cell = UITableViewCell()
@@ -87,7 +87,7 @@ public final class HomeViewController: UIViewController {
         cell.selectionStyle = .none
         return cell
     }
-
+    
     private func configureRaceViewCell(_ tableView: UITableView, indexPath: IndexPath, race: RaceEntity) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RaceViewCell", for: indexPath)
         cell.contentView.backgroundColor = .clear
@@ -108,11 +108,11 @@ public final class HomeViewController: UIViewController {
         raceViewHostingController.didMove(toParent: self)
         return cell
     }
-
+    
     private func configureTopDriversCell(_ tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TopDriversCell", for: indexPath)
         cell.contentView.backgroundColor = .clear
-        cell.backgroundColor = .clear        
+        cell.backgroundColor = .clear
         cell.selectionStyle = .none
         let topDriversHostingController = UIHostingController(rootView: TopDriversCoverFlowView(drivers: viewModel.drivers))
         addChild(topDriversHostingController)
@@ -120,7 +120,7 @@ public final class HomeViewController: UIViewController {
         topDriversHostingController.view.backgroundColor = .clear
         topDriversHostingController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            topDriversHostingController.view.topAnchor.constraint(equalTo: cell.contentView.topAnchor),
+            topDriversHostingController.view.topAnchor.constraint(equalTo: cell.contentView.topAnchor, constant: -16),
             topDriversHostingController.view.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
             topDriversHostingController.view.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor),
             topDriversHostingController.view.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor)
@@ -128,8 +128,6 @@ public final class HomeViewController: UIViewController {
         topDriversHostingController.didMove(toParent: self)
         return cell
     }
-
-
 }
 
 // MARK: - UITableViewDataSource, UITableViewDelegate
@@ -137,7 +135,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     public func numberOfSections(in tableView: UITableView) -> Int {
         3
     }
-
+    
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
@@ -160,7 +158,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         cell.selectionStyle = .none
         return cell
     }
-
+    
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         switch indexPath.section {
@@ -177,7 +175,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         case 1:
             if indexPath.row == 0 {
                 return configureBoldTitleCell("Top Drivers")
-                
             } else {
                 return configureTopDriversCell(tableView, indexPath: indexPath)
             }
@@ -191,13 +188,15 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.selectionStyle = .none
                 let newsEntity = viewModel.news[indexPath.row - 1]
                 cell.configure(with: newsEntity)
+                
                 return cell
             }
         default:
             return UITableViewCell()
         }
     }
-
+    
+    
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 2 && indexPath.row > 0 {
             let selectedNews = viewModel.news[indexPath.row - 1]
@@ -219,7 +218,7 @@ extension HomeViewController: HomeViewModelDelegate {
             self.tableView.reloadSections(IndexSet(integer: 2), with: .automatic)
         }
     }
-
+    
     public func driversFetched(_ drivers: [DriverEntity]) {
         DispatchQueue.main.async {
             self.tableView.reloadSections(IndexSet(integer: 1), with: .automatic)

@@ -92,14 +92,12 @@ public final class TeamDetailsViewController: UIViewController {
         teamNameStackView.axis = .horizontal
         teamNameStackView.alignment = .center
         teamNameStackView.distribution = .fill
-        teamNameStackView.spacing = 10
+        teamNameStackView.spacing = 50
         
         teamNameLabel.font = .systemFont(ofSize: 30, weight: .bold)
         teamNameLabel.textColor = .white
-        teamNameLabel.text = "Red Bull Racing"
         teamNameLabel.numberOfLines = 0
         
-        teamImageView.image = UIImage(named: "Merco", in: Bundle.module, with: nil)
         teamImageView.tintColor = .white
         teamImageView.contentMode = .scaleAspectFit
         teamImageView.layer.cornerRadius = 10
@@ -126,6 +124,8 @@ public final class TeamDetailsViewController: UIViewController {
         contentView.addSubview(hostingController.view)
         hostingController.didMove(toParent: self)
         
+        hostingController.view.backgroundColor = .clear
+        
         hostingController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             hostingController.view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -137,10 +137,14 @@ public final class TeamDetailsViewController: UIViewController {
 }
 
 extension TeamDetailsViewController: TeamDetailsViewModelDelegate {
-    public func teamDetailsFetched(_ teamDetails: [Domain.TeamDetailsEntity]) {
+    public func teamDetailsFetched(_ teamDetails: [Domain.TeamDetailsEntity], logoData: Data?) {
         guard let firstTeam = teamDetails.first else { return }
         teamNameLabel.text = firstTeam.name
-        teamImageView.image = UIImage(named: viewModel.team.constructorID)
+        if let data = logoData {
+            teamImageView.image = UIImage(data: data)
+        } else {
+            teamImageView.image = UIImage(named: viewModel.team.constructorID, in: Bundle.module, with: nil)
+        }
         
         setupSwiftUIHosting(with: firstTeam)
     }

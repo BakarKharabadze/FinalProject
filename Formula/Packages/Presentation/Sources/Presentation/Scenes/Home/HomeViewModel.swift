@@ -58,7 +58,7 @@ public final class HomeViewModel {
     
     // MARK: - Private Methods
     private func fetchNews(query: String, from: String, sortBy: String, language: String, apiKey: String) {
-        getNewsUseCase.execute(query: query, from: from, sortBy: sortBy, language: language, apiKey: apiKey) { [weak self] result in
+        _ = getNewsUseCase.execute(query: query, from: from, sortBy: sortBy, language: language, apiKey: apiKey) { [weak self] result in
             switch result {
             case .success(let news):
                 self?.news = news
@@ -72,7 +72,7 @@ public final class HomeViewModel {
     }
     
     private func fetchDrivers() {
-        getDriversUseCase.execute { [weak self] result in
+        _ = getDriversUseCase.execute { [weak self] result in
             switch result {
             case .success(let drivers):
                 DispatchQueue.main.async {
@@ -86,7 +86,7 @@ public final class HomeViewModel {
     }
     
     private func fetchUpcomingRace() {
-        getUpcomingRacesUseCase.execute { [weak self] result in
+       _ = getUpcomingRacesUseCase.execute { [weak self] result in
             switch result {
             case .success(let races):
                 if let nextRace = races.first(where: { race in
