@@ -9,7 +9,7 @@ import Foundation
 import Common
 
 public protocol GetTeamDetailsUseCase {
-    func execute(completion: @escaping (Result<[TeamDetailsEntity], Error>) -> Void) -> Cancellable?
+    func execute(for teamName: String, completion: @escaping (Result<[TeamDetailsEntity], Error>) -> Void) -> Cancellable?
 }
 
 public final class DefaultGetTeamDetailsUseCase: GetTeamDetailsUseCase {
@@ -20,7 +20,7 @@ public final class DefaultGetTeamDetailsUseCase: GetTeamDetailsUseCase {
         self.repository = repository
     }
     
-    public func execute(completion: @escaping (Result<[TeamDetailsEntity], any Error>) -> Void) -> (any Common.Cancellable)? {
-        repository.getTeamDetails(completion: completion)
+    public func execute(for teamName: String, completion: @escaping (Result<[TeamDetailsEntity], any Error>) -> Void) -> (any Common.Cancellable)? {
+        repository.getTeamDetails(for: teamName, completion: completion)
     }
 }

@@ -18,6 +18,7 @@ final class StandingSceneDIContainer {
         let formulaApiDataTransferService: DataTransfer
         let driverViewControllerFactory: DriversViewControllerFactory
         let teamsViewControllerFactory: TeamsViewControllerFactory
+        let formulaSportApiDataTransferService: DataTransfer
     }
     
     //MARK: - Properties
@@ -38,6 +39,14 @@ extension StandingSceneDIContainer {
     func makeGetTeamsUseCase() -> GetTeamsUseCase {
         DefaultGetTeamsUseCase(repository: makeTeamsRepository())
     }
+    
+    func makeGetDriverDetailsUseCase() -> GetDriverDetailsUseCase {
+        DefaultGetDriversDetailsUseCase(repository: makeDriverDetailsRepository())
+    }
+    
+    func makeGetTeamDetailsUseCase() -> GetTeamDetailsUseCase {
+        DefaultGetTeamDetailsUseCase(repository: makeTeamDetailsRepository())
+    }
 }
 
 //MARK: - Repository
@@ -49,15 +58,32 @@ extension StandingSceneDIContainer {
     func makeTeamsRepository() -> TeamsRepository {
         DefaultTeamsRepository(dataTransferService: dependencies.formulaApiDataTransferService)
     }
+    
+    func makeDriverDetailsRepository() -> DriverDetailsRepository {
+        DefaultDriverDetailsRepository(dataTransferService: dependencies.formulaSportApiDataTransferService)
+    }
+    
+    func makeTeamDetailsRepository() -> TeamDetailsRepository {
+        DefaultTeamDetailsRepository(dataTransferService: dependencies.formulaSportApiDataTransferService)
+    }
 }
 
 //MARK: - StandingSceneDIContainer Factory
-extension StandingSceneDIContainer: StandingViewControllerFactory  {
+extension StandingSceneDIContainer: StandingViewControllerFactory {
     func makeStandingViewController() -> UIViewController {
-        return StandingViewController.create(with: makeStandingViewModel(), driversViewControllerFactory: dependencies.driverViewControllerFactory, teamsViewControllerFactory: dependencies.teamsViewControllerFactory)
+        return StandingViewController.create(
+            with: makeStandingViewModel(),
+            driversViewControllerFactory: dependencies.driverViewControllerFactory,
+            teamsViewControllerFactory: dependencies.teamsViewControllerFactory
+        )
     }
     
     func makeStandingViewModel() -> StandingViewModel {
-        return StandingViewModel(getDriversUseCase: makeGetDriversUseCase(), getTeamsUseCase: makeGetTeamsUseCase())
+        return StandingViewModel(
+            getDriversUseCase: makeGetDriversUseCase(),
+            getTeamsUseCase: makeGetTeamsUseCase(),
+            getDriverDetailsUseCase: makeGetDriverDetailsUseCase(),
+            getTeamDetailsUseCase: makeGetTeamDetailsUseCase()
+        )
     }
 }

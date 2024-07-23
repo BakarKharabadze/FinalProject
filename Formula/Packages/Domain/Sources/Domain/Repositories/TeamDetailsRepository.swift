@@ -9,5 +9,5 @@ import Foundation
 import Common
 
 public protocol TeamDetailsRepository {
-    func getTeamDetails(completion: @escaping (Result<[TeamDetailsEntity], Error>) -> Void) -> Cancellable?
+    func getTeamDetails(for teamName: String, completion: @escaping (Result<[TeamDetailsEntity], Error>) -> Void) -> Cancellable?
 }

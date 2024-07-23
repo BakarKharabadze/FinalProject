@@ -33,8 +33,9 @@ public final class TeamDetailsViewController: UIViewController {
         view.backgroundColor = UIColor(named: "CustomBackground")
         navigationController?.navigationBar.barTintColor = UIColor(named: "CustomBackground")
         navigationController?.setNavigationBarHidden(false, animated: false)
+        viewModel.delegate = self
+        viewModel.viewDidLoad()
         setupUI()
-        setupSwiftUIHosting()
     }
     
     // MARK: - Setup Functions
@@ -96,14 +97,18 @@ public final class TeamDetailsViewController: UIViewController {
         teamNameLabel.font = .systemFont(ofSize: 30, weight: .bold)
         teamNameLabel.textColor = .white
         teamNameLabel.text = "Red Bull Racing"
+        teamNameLabel.numberOfLines = 0
         
-        teamImageView.image = UIImage(systemName: "person.3.fill")
+        teamImageView.image = UIImage(named: "Merco", in: Bundle.module, with: nil)
         teamImageView.tintColor = .white
         teamImageView.contentMode = .scaleAspectFit
+        teamImageView.layer.cornerRadius = 10
+        teamImageView.clipsToBounds = true
+        
         teamImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            teamImageView.widthAnchor.constraint(equalToConstant: 80),
-            teamImageView.heightAnchor.constraint(equalToConstant: 80)
+            teamImageView.widthAnchor.constraint(equalToConstant: 150),
+            teamImageView.heightAnchor.constraint(equalToConstant: 150)
         ])
         
         teamNameStackView.addArrangedSubview(teamNameLabel)
@@ -113,19 +118,8 @@ public final class TeamDetailsViewController: UIViewController {
     }
     
     // MARK: - SwiftUI Hosting
-    private func setupSwiftUIHosting() {
-        let swiftUIView = TeamDetailsSwiftUIView(team: TeamDetailsEntity(
-            name: "Red Bull Racing",
-            worldTitle: "4",
-            raceWins: "92",
-            polePositions: "100",
-            fastesLaps: "50",
-            base: "Milton Keynes, UK",
-            president: "Christian Horner",
-            director: "Adrian Newey",
-            technicalManeger: "Pierre Waché"
-        ))
-        
+    private func setupSwiftUIHosting(with teamDetails: TeamDetailsEntity) {
+        let swiftUIView = TeamDetailsSwiftUIView(teamDetails: teamDetails)
         let hostingController = UIHostingController(rootView: swiftUIView)
         
         addChild(hostingController)
@@ -142,7 +136,12 @@ public final class TeamDetailsViewController: UIViewController {
     }
 }
 
-
-#Preview {
-    TeamDetailsViewController()
+extension TeamDetailsViewController: TeamDetailsViewModelDelegate {
+    public func teamDetailsFetched(_ teamDetails: [Domain.TeamDetailsEntity]) {
+        guard let firstTeam = teamDetails.first else { return }
+        teamNameLabel.text = firstTeam.name
+        teamImageView.image = UIImage(named: viewModel.team.constructorID)
+        
+        setupSwiftUIHosting(with: firstTeam)
+    }
 }

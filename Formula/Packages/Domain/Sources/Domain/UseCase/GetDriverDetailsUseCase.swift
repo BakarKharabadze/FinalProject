@@ -9,7 +9,7 @@ import Foundation
 import Common
 
 public protocol GetDriverDetailsUseCase {
-    func execute(completion: @escaping (Result<[DriverDetailsEntity], Error>) -> Void) -> Cancellable?
+    func execute(for name: String, completion: @escaping (Result<[DriverDetailsEntity], Error>) -> Void) -> Cancellable?
 }
 
 public final class DefaultGetDriversDetailsUseCase: GetDriverDetailsUseCase {
@@ -20,7 +20,7 @@ public final class DefaultGetDriversDetailsUseCase: GetDriverDetailsUseCase {
         self.repository = repository
     }
     
-    public func execute(completion: @escaping (Result<[DriverDetailsEntity], any Error>) -> Void) -> Cancellable? {
-        repository.getCircuitDetails(completion: completion)
+    public func execute(for name: String, completion: @escaping (Result<[DriverDetailsEntity], any Error>) -> Void) -> Cancellable? {
+        repository.getCircuitDetails(for: name, completion: completion)
     }
 }

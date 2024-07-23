@@ -29,20 +29,35 @@ final class TeamDetailsSceneDIContainer {
 
 //MARK: - Use Cases
 extension TeamDetailsSceneDIContainer {
-    
+    func makeGetTeamDetailsUseCase() -> GetTeamDetailsUseCase {
+        DefaultGetTeamDetailsUseCase(repository: makeTeamDetailsRepository())
+    }
 }
 
 //MARK: - Repository
 extension TeamDetailsSceneDIContainer {
-    
+    func  makeTeamDetailsRepository() -> TeamDetailsRepository {
+        DefaultTeamDetailsRepository(dataTransferService: dependencies.detailsApiDataTransferService)
+    }
 }
 
 
 //MARK: - TeamDetailsViewController Factory
 extension TeamDetailsSceneDIContainer  {
-//    func makeRaceDetailViewController(with viewModel: RaceDetailViewModel) -> RaceDetailViewController {
-//        RaceDetailViewController.create(with: viewModel)
+//    func makeDriverDetailsViewController(with viewModel: DriverDetailsViewModel) -> DriverDetailsViewController {
+//        DriverDetailsViewController.create(with: viewModel)
+//    }
+//    
+//    func makeDriverDetailsViewModel(with driverEntity: DriverEntity) -> DriverDetailsViewModel {
+//        DriverDetailsViewModel(driver: driverEntity, getDriverDetailsUseCase: makeGetDriverDetailsUseCase())
 //    }
     
+    func makeTeamDetailsViewController(with viewModel: TeamDetailsViewModel) -> TeamDetailsViewController {
+        TeamDetailsViewController.create(with: viewModel)
+    }
+    
+    func makeTeamDetailsViewModel(with teamEntity: TeamsEntity) -> TeamDetailsViewModel {
+        TeamDetailsViewModel(getTeamDetailsUseCase: makeGetTeamDetailsUseCase(), team: teamEntity)
+    }
 }
 

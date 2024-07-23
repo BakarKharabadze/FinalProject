@@ -11,12 +11,12 @@ final class DefaultTeamsViewRouter: TeamsViewRouter {
     
     // MARK: - Properties
     private weak var viewController: TeamsViewController?
-    private let teamsViewControllerFactory: TeamsViewControllerFactory
+    private let teamDetailsViewControllerFactory: TeamDetailsViewControllerFactory
     
     // MARK: - Initialization
-    public init(viewController: TeamsViewController? = nil, teamsViewControllerFactory: TeamsViewControllerFactory) {
+    public init(viewController: TeamsViewController? = nil, teamDetailsViewControllerFactory: TeamDetailsViewControllerFactory) {
         self.viewController = viewController
-        self.teamsViewControllerFactory = teamsViewControllerFactory
+        self.teamDetailsViewControllerFactory = teamDetailsViewControllerFactory
     }
     
     // MARK: - Navigation
@@ -28,3 +28,5 @@ final class DefaultTeamsViewRouter: TeamsViewRouter {
         }
     }
 }
+
+

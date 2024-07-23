@@ -16,6 +16,7 @@ final class TeamsSceneDIContainer {
     //MARK: - Dependencies
     struct Dependencies {
         let formulaApiDataTransferService: DataTransfer
+        let formulaSportApiDataTransferService: DataTransfer
     }
     
     //MARK: - Properties
@@ -32,12 +33,20 @@ extension TeamsSceneDIContainer {
     func makeGetTeamsUseCase() -> GetTeamsUseCase {
         DefaultGetTeamsUseCase(repository: makeTeamsRepository())
     }
+    
+    func makeGetTeamDetailsUseCase() -> GetTeamDetailsUseCase {
+        DefaultGetTeamDetailsUseCase(repository: makeTeamDetailsRepository())
+    }
 }
 
 //MARK: - Repository
 extension TeamsSceneDIContainer {
     func makeTeamsRepository() -> TeamsRepository {
         DefaultTeamsRepository(dataTransferService: dependencies.formulaApiDataTransferService)
+    }
+    
+    func makeTeamDetailsRepository() -> TeamDetailsRepository {
+        DefaultTeamDetailsRepository(dataTransferService: dependencies.formulaSportApiDataTransferService)
     }
 }
 
@@ -52,6 +61,6 @@ extension TeamsSceneDIContainer: TeamsViewControllerFactory  {
     }
     
     func makeTeamsDetailViewModel() -> TeamsViewModel {
-        TeamsViewModel(teams: [])
+        TeamsViewModel(teams: [], getTeamDetailsUseCase: makeGetTeamDetailsUseCase())
     }
 }
