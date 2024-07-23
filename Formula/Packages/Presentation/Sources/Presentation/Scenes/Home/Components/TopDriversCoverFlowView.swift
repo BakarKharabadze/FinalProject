@@ -1,10 +1,3 @@
-//
-//  SwiftUIView.swift
-//  
-//
-//  Created by Bakar Kharabadze on 7/4/24.
-//
-
 import SwiftUI
 import Domain
 
@@ -14,7 +7,7 @@ struct TopDriversCoverFlowView: View {
     @State private var spacing: CGFloat = 0
     @State private var rotation: CGFloat = 65
     @State private var enableReflection: Bool = false
-    @State private var currentPage: Int = 0 
+    @State private var currentPage: Int = 0
 
     let drivers: [DriverEntity]
     
@@ -29,49 +22,49 @@ struct TopDriversCoverFlowView: View {
                 rotation: rotation,
                 items: Array(topDrivers)
             ) { driver in
-                HStack {
-                    VStack(alignment: .leading) {
-                        HStack {
+                ZStack {
+                    HStack {
+                        VStack(alignment: .leading) {
                             Text(driver.givenName + " " + driver.familyName)
                                 .font(.title2)
                                 .foregroundStyle(.white)
                                 .bold()
+                                .padding(.top, 10) // Adjust padding as needed
                             
-                            if let position = Int(driver.position), position <= 3 {
-                                Image("\(position)", bundle: .module)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 50, height: 50)
-                                    .offset(x: 10, y: -30)
+                            Text(driver.constructorName)
+                                .font(.subheadline)
+                                .foregroundStyle(.gray)
+                            
+                            HStack {
+                                Text("\(driver.points)")
+                                    .font(.headline)
+                                    .foregroundColor(.blue)
+                                Text("PTS")
+                                    .font(.subheadline)
+                                    .foregroundColor(.white)
                             }
                         }
+                        .padding()
                         
-                        Text(driver.constructorName)
-                            .font(.subheadline)
-                            .foregroundStyle(.gray)
+                        Spacer()
                         
-                        HStack {
-                            Text("\(driver.points)")
-                                .font(.headline)
-                                .foregroundColor(.blue)
-                            Text("PTS")
-                                .font(.subheadline)
-                                .foregroundColor(.white)
-                        }
+                        Image(driver.givenName, bundle: .module)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(height: 150)
+                            .padding(.trailing, 15)
                     }
-                    .padding()
+                    .frame(width: 340, height: 150)
+                    .background(Color("CustomCellBackground"))
+                    .cornerRadius(10)
                     
-                    Spacer()
-                    
-                    Image(driver.givenName, bundle: .module)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(height: 150)
-                        .padding(.trailing, 15)
+                    if let position = Int(driver.position), position <= 3 {
+                        Text(positionString(for: position))
+                            .font(.varsity(.regular, size: 20))
+                            .foregroundColor(.white)
+                            .position(x: 170, y: 30) // Adjust position as needed
+                    }
                 }
-                .frame(width: 340, height: 150)
-                .background(Color("CustomCellBackground"))
-                .cornerRadius(10)
             }
             .frame(height: 180)
             .onPageChanged { newPage in
@@ -81,6 +74,22 @@ struct TopDriversCoverFlowView: View {
             PageControl(numberOfPages: topDrivers.count, currentPage: $currentPage)
                 .padding(.top, -20)
                 
+        }
+        .onAppear {
+            VarsityFont.registerFonts()
+        }
+    }
+    
+    private func positionString(for position: Int) -> String {
+        switch position {
+        case 1:
+            return "01"
+        case 2:
+            return "02"
+        case 3:
+            return "03"
+        default:
+            return ""
         }
     }
 }

@@ -11,12 +11,12 @@ final class DefaultDriversViewRouter: DriversViewRouter {
     
     // MARK: - Properties
     private weak var viewController: DriversViewController?
-    private let driverViewControllerFactory: DriversViewControllerFactory
+    private let driverDetailsVIewControllerFactory: DriverDetailsViewControllerFactory
     
     // MARK: - Initialization
-    init(view: DriversViewController, driversViewControllerFactory: DriversViewControllerFactory) {
+    init(view: DriversViewController, driverDetailsVIewControllerFactory: DriverDetailsViewControllerFactory) {
         self.viewController = view
-        self.driverViewControllerFactory = driversViewControllerFactory
+        self.driverDetailsVIewControllerFactory = driverDetailsVIewControllerFactory
     }
     
     // MARK: - Navigation
@@ -28,3 +28,4 @@ final class DefaultDriversViewRouter: DriversViewRouter {
         }
     }
 }
+

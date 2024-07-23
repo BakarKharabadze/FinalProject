@@ -1,6 +1,6 @@
 //
 //  StandingViewModel.swift
-//  
+//
 //
 //  Created by Bakar Kharabadze on 7/11/24.
 //
@@ -33,14 +33,18 @@ public final class StandingViewModel {
     public var router: StandingViewRouter?
     private let getDriversUseCase: GetDriversUseCase
     private let getTeamsUseCase: GetTeamsUseCase
+    private let getDriverDetailsUseCase: GetDriverDetailsUseCase
+    private let getTeamDetailsUseCase: GetTeamDetailsUseCase
     public weak var delegate: StandingViewModelDelegate?
     var drivers: [DriverEntity] = []
     var teams: [TeamsEntity] = []
     
     // MARK: - Initialization
-    public init(getDriversUseCase: GetDriversUseCase, getTeamsUseCase: GetTeamsUseCase) {
+    public init(getDriversUseCase: GetDriversUseCase, getTeamsUseCase: GetTeamsUseCase, getDriverDetailsUseCase: GetDriverDetailsUseCase, getTeamDetailsUseCase: GetTeamDetailsUseCase) {
         self.getDriversUseCase = getDriversUseCase
         self.getTeamsUseCase = getTeamsUseCase
+        self.getDriverDetailsUseCase = getDriverDetailsUseCase
+        self.getTeamDetailsUseCase = getTeamDetailsUseCase
     }
     
     // MARK: - Public Methods
@@ -50,11 +54,13 @@ public final class StandingViewModel {
     }
     
     func driversViewTapped() {
-        router?.perform(to: .showDriversDetail(viewModel: DriversViewModel(drivers: drivers)))
+        let driversViewModel = DriversViewModel(getDriverDetailsUseCase: getDriverDetailsUseCase, drivers: drivers)
+        router?.perform(to: .showDriversDetail(viewModel: driversViewModel))
     }
     
     func teamsViewTapped() {
-        router?.perform(to: .showTeamsDetail(viewModel: TeamsViewModel(teams: teams)))
+        let teamsViewModel = TeamsViewModel(teams: teams, getTeamDetailsUseCase: getTeamDetailsUseCase)
+        router?.perform(to: .showTeamsDetail(viewModel: teamsViewModel))
     }
     
     // MARK: - Private Methods
