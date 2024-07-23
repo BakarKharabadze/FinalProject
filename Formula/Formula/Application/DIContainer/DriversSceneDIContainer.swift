@@ -16,6 +16,7 @@ final class DriversSceneDIContainer {
     //MARK: - Dependencies
     struct Dependencies {
         let formulaApiDataTransferService: DataTransfer
+        let formulaSportApiDataTransferService: DataTransfer
     }
     
     //MARK: - Properties
@@ -32,12 +33,20 @@ extension DriversSceneDIContainer {
     func makeGetDriversUseCase() -> GetDriversUseCase {
         DefaultGetDriversUseCase(repository: makeDriverRepository())
     }
+    
+    func makeGetDriverDetailUseCase() -> GetDriverDetailsUseCase {
+        DefaultGetDriversDetailsUseCase(repository: makeDriverDetailsRepository())
+    }
 }
 
 //MARK: - Repository
 extension DriversSceneDIContainer {
     func makeDriverRepository() -> DriversRepository {
         DefaultDriversRepository(dataTransferService: dependencies.formulaApiDataTransferService)
+    }
+    
+    func makeDriverDetailsRepository() -> DriverDetailsRepository {
+        DefaultDriverDetailsRepository(dataTransferService: dependencies.formulaSportApiDataTransferService)
     }
 }
 
@@ -48,11 +57,7 @@ extension DriversSceneDIContainer: DriversViewControllerFactory  {
         DriversViewController.create(with: viewModel)
     }
     
-//    func makeDriversViewController() -> UIViewController {
-//        DriversViewController.create(with: makeDriversDetailViewModel())
-//    }
-    
     func makeDriversDetailViewModel() -> DriversViewModel {
-        DriversViewModel(drivers: [])
+        DriversViewModel(getDriverDetailsUseCase: makeGetDriverDetailUseCase(), drivers: [])
     }
 }

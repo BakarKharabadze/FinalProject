@@ -29,19 +29,27 @@ final class DriverDetailsSceneDIContainer {
 
 //MARK: - Use Cases
 extension DriverDetailsSceneDIContainer {
-    
+    func makeGetDriverDetailsUseCase() -> GetDriverDetailsUseCase {
+        DefaultGetDriversDetailsUseCase(repository: makeDriverDetailsRepository())
+    }
 }
 
 //MARK: - Repository
 extension DriverDetailsSceneDIContainer {
-    
+    func makeDriverDetailsRepository() -> DriverDetailsRepository {
+        DefaultDriverDetailsRepository(dataTransferService: dependencies.detailsApiDataTransferService)
+    }
 }
 
 
 //MARK: - DriverDetailsViewConroller Factory
 extension DriverDetailsSceneDIContainer  {
-//    func makeRaceDetailViewController(with viewModel: RaceDetailViewModel) -> RaceDetailViewController {
-//        RaceDetailViewController.create(with: viewModel)
-//    }
     
+    func makeDriverDetailsViewController(with viewModel: DriverDetailsViewModel) -> DriverDetailsViewController {
+        DriverDetailsViewController.create(with: viewModel)
+    }
+    
+    func makeDriverDetailsViewModel(with driverEntity: DriverEntity) -> DriverDetailsViewModel {
+        DriverDetailsViewModel(driver: driverEntity, getDriverDetailsUseCase: makeGetDriverDetailsUseCase())
+    }
 }

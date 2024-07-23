@@ -70,26 +70,36 @@ class AppDIContainer {
     func makeStandingSceneDIContainer() -> StandingSceneDIContainer {
            let dependencies = StandingSceneDIContainer.Dependencies(
                formulaApiDataTransferService: formulaApiDataTransferService,
-               driverViewControllerFactory: makeDriversSceneDIContainer(), teamsViewControllerFactory: makeTeamsSceneDIContainer()
+               driverViewControllerFactory: makeDriversSceneDIContainer(), teamsViewControllerFactory: makeTeamsSceneDIContainer(), formulaSportApiDataTransferService: formulaSportsApiDataTransferService
            )
            return StandingSceneDIContainer(dependencies: dependencies)
        }
     
     func makeDriversSceneDIContainer() -> DriversSceneDIContainer {
          let dependencies = DriversSceneDIContainer.Dependencies(
-             formulaApiDataTransferService: formulaApiDataTransferService
+            formulaApiDataTransferService: formulaApiDataTransferService, formulaSportApiDataTransferService: formulaSportsApiDataTransferService
          )
          return DriversSceneDIContainer(dependencies: dependencies)
      }
     
     func makeTeamsSceneDIContainer() -> TeamsSceneDIContainer {
-        let dependencies = TeamsSceneDIContainer.Dependencies(formulaApiDataTransferService: formulaApiDataTransferService)
+        let dependencies = TeamsSceneDIContainer.Dependencies(formulaApiDataTransferService: formulaApiDataTransferService, formulaSportApiDataTransferService: formulaSportsApiDataTransferService)
         return TeamsSceneDIContainer(dependencies: dependencies)
     }
     
     func makeHighlightSceneDIContainer() -> HighlighsSceneDIContainer {
         let dependencies = HighlighsSceneDIContainer.Dependencies(googleApiDataTransferService: googleApiDataTransferService)
         return HighlighsSceneDIContainer(dependencies: dependencies)
+    }
+    
+    func makeDriverDetailsSceneDIContainer() -> DriverDetailsSceneDIContainer {
+        let dependencies = DriverDetailsSceneDIContainer.Dependencies(detailsApiDataTransferService: formulaSportsApiDataTransferService)
+        return DriverDetailsSceneDIContainer(dependencies: dependencies)
+    }
+    
+    func makeTeamDetailsScemeDIContainer() -> TeamDetailsSceneDIContainer {
+        let dependencies = TeamDetailsSceneDIContainer.Dependencies(detailsApiDataTransferService: formulaSportsApiDataTransferService)
+        return TeamDetailsSceneDIContainer(dependencies: dependencies)
     }
     
  }
