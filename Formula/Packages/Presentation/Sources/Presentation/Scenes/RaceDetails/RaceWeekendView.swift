@@ -4,9 +4,11 @@
 //
 
 import SwiftUI
+import Domain
 
 // MARK: - RaceWeekendView
 struct RaceWeekendView: View {
+    var race: RaceEntity
     
     // MARK: - Body
     var body: some View {
@@ -16,37 +18,16 @@ struct RaceWeekendView: View {
                 .foregroundColor(.gray)
                 .padding(.bottom, 10)
             
-            ForEach(raceSessions, id: \.self) { session in
-                VStack(alignment: .leading, spacing: 5) {
-                    HStack {
-                        VStack {
-                            Text(session.date)
-                                .font(.subheadline)
-                                .fontWeight(.bold)
-                                .foregroundStyle(.white)
-                            Text(session.month)
-                                .font(.caption)
-                                .foregroundColor(.gray)
-                        }
-                        .frame(width: 50)
-                        .background(Color.black.opacity(0.1))
-                        .cornerRadius(8)
-                        
-                        Divider()
-                            .frame(height: 40)
-                            .padding(.horizontal, 5)
-                        
-                        VStack(alignment: .leading) {
-                            Text(session.title)
-                                .font(.subheadline)
-                                .foregroundStyle(.white)
-                            Text("\(session.startTime) - \(session.endTime)")
-                                .font(.caption)
-                                .foregroundStyle(.gray)
-                        }
-                    }
-                    Divider()
-                }
+            VStack(alignment: .leading, spacing: 5) {
+                raceSessionView(date: race.practiceOneDate, title: "Practice 1", time: race.practiceOneTime)
+                Divider()
+                raceSessionView(date: race.practiceTwoDate, title: "Practice 2", time: race.practiceTwoTime)
+                Divider()
+                raceSessionView(date: race.practiceThreeDate, title: "Practice 3", time: race.practiceThreeTime)
+                Divider()
+                raceSessionView(date: race.qualificationDate, title: "Qualifying", time: race.qualificationTime)
+                Divider()
+                raceSessionView(date: race.date, title: "Race", time: race.time)
             }
         }
         .padding()
@@ -54,31 +35,54 @@ struct RaceWeekendView: View {
         .cornerRadius(10)
         .padding()
     }
-}
-
-// MARK: - RaceSession
-struct RaceSession: Hashable {
-    let date: String
-    let month: String
-    let title: String
-    let startTime: String
-    let endTime: String
-}
-
-// MARK: - Sample Data
-let raceSessions = [
-    RaceSession(date: "22", month: "Mar", title: "Practice 1", startTime: "06:30", endTime: "07:30"),
-    RaceSession(date: "22", month: "Mar", title: "Practice 2", startTime: "10:00", endTime: "11:30"),
-    RaceSession(date: "23", month: "Mar", title: "Practice 3", startTime: "06:30", endTime: "07:30"),
-    RaceSession(date: "23", month: "Mar", title: "Qualifying", startTime: "10:00", endTime: "11:00"),
-    RaceSession(date: "24", month: "Mar", title: "Race", startTime: "10:00", endTime: "12:00")
-]
-
-// MARK: - Previews
-struct RaceWeekendView_Previews: PreviewProvider {
-    static var previews: some View {
-        RaceWeekendView()
-            .previewLayout(.sizeThatFits)
+    
+    private func raceSessionView(date: String, title: String, time: String) -> some View {
+        HStack {
+            VStack {
+                let (day, month) = formattedDate(date)
+                Text(day)
+                    .font(.subheadline)
+                    .fontWeight(.bold)
+                    .foregroundStyle(.white)
+                Text(month)
+                    .font(.caption)
+                    .foregroundColor(.gray)
+            }
+            .frame(width: 50)
+            .background(Color.black.opacity(0.1))
+            .cornerRadius(8)
+            
+            Divider()
+                .frame(height: 40)
+                .padding(.horizontal, 5)
+            
+            VStack(alignment: .leading) {
+                Text(title)
+                    .font(.subheadline)
+                    .foregroundStyle(.white)
+                Text(time)
+                    .font(.caption)
+                    .foregroundStyle(.gray)
+            }
+        }
+    }
+    
+    private func formattedDate(_ date: String) -> (String, String) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        if let dateObject = dateFormatter.date(from: date) {
+            let dayFormatter = DateFormatter()
+            dayFormatter.dateFormat = "dd"
+            let day = dayFormatter.string(from: dateObject)
+            
+            let monthFormatter = DateFormatter()
+            monthFormatter.dateFormat = "MMMM"
+            let month = monthFormatter.string(from: dateObject)
+            
+            return (day, month)
+        } else {
+            return (date, "")
+        }
     }
 }
-

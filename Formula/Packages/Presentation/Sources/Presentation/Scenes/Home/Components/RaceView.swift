@@ -18,7 +18,7 @@ struct RaceView: View {
         HStack {
             VStack(alignment: .leading) {
                 HStack {
-                    Image(race.countryFlag, bundle: .module)
+                    Image(race.grandPrixName, bundle: .module)
                         .resizable()
                         .frame(width: 25, height: 15)
                     Text(race.date)
