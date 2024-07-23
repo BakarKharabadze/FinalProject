@@ -34,7 +34,9 @@ final class GetTeamsUseCaseTests: XCTestCase {
             constructorName: "",
             points: "",
             nationality: "",
-            liveryImage: "")]
+            liveryImage: "",
+            constructorID: ""
+        )]
         repository.result = .success(expectedTeams)
         
         // When
@@ -88,7 +90,7 @@ public final class  MockTeamsRepository: TeamsRepository {
     
     var result: Result<[TeamsEntity], Error>?
     
-    func getTeams(completion: @escaping (Result<[TeamsEntity], Error>) -> Void) -> Cancellable? {
+    public func getTeams(completion: @escaping (Result<[TeamsEntity], Error>) -> Void) -> Cancellable? {
         if let result = result {
             completion(result)
         }

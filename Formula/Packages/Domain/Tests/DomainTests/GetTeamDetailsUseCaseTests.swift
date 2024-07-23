@@ -38,13 +38,14 @@ final class GetTeamDetailsUseCaseTests: XCTestCase {
             base: "",
             president: "",
             director: "",
-            technicalManeger: "")]
+            technicalManeger: ""
+        )]
         repository.result = .success(expectedDetails)
         
         // When
         let expectation = self.expectation(description: "Completion handler called")
         var result: Result<[TeamDetailsEntity], Error>?
-        _ = useCase.execute { response in
+        _ = useCase.execute(for: "Red Bull Racing") { response in
             result = response
             expectation.fulfill()
         }
@@ -68,7 +69,7 @@ final class GetTeamDetailsUseCaseTests: XCTestCase {
         // When
         let expectation = self.expectation(description: "Completion handler called")
         var result: Result<[TeamDetailsEntity], Error>?
-        _ = useCase.execute { response in
+        _ = useCase.execute(for: "Unknown Team") { response in
             result = response
             expectation.fulfill()
         }
@@ -88,15 +89,14 @@ final class GetTeamDetailsUseCaseTests: XCTestCase {
 }
 
 // Mock Repository
-public final class  MockTeamDetailsRepository: TeamDetailsRepository {
+public final class MockTeamDetailsRepository: TeamDetailsRepository {
     
     var result: Result<[TeamDetailsEntity], Error>?
     
-    func getTeamDetails(completion: @escaping (Result<[TeamDetailsEntity], Error>) -> Void) -> Cancellable? {
+    public func getTeamDetails(for teamName: String, completion: @escaping (Result<[TeamDetailsEntity], Error>) -> Void) -> Cancellable? {
         if let result = result {
             completion(result)
         }
-        return nil 
+        return nil
     }
 }
-
