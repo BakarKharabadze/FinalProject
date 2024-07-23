@@ -7,38 +7,61 @@
 
 import Foundation
 
-public struct CircuitDetailsResponse: Decodable {
-    public let response: [CircuitDetail]
+// MARK: - CircuitResponse
+struct CircuitResponse: Decodable {
+    let get: String
+    let parameters: Parameters
+    let errors: [String]
+    let results: Int
+    let response: [Circuit]
+}
 
-    public struct CircuitDetail: Decodable {
-        public let id: Int
-        public let name: String
-        public let image: String
-        public let competition: Competition
-        public let location: CircuitLocation
-        public let firstGrandPrix: Int
-        public let laps: Int
-        public let length: String
-        public let raceDistance: String
-        public let lapRecord: LapRecord?
-        public let capacity: Int?
-        public let opened: Int?
+// MARK: - Parameters
+struct Parameters: Decodable {
+    let search: String
+}
+
+// MARK: - Circuit
+struct Circuit: Decodable {
+    let id: Int
+    let name: String
+    let image: String
+    let competition: Competition
+    let firstGrandPrix: Int
+    let laps: Int
+    let length: String
+    let raceDistance: String
+    let lapRecord: LapRecord
+    let capacity: Int
+    let opened: Int
+    let owner: String?
+
+    enum CodingKeys: String, CodingKey {
+        case id, name, image, competition
+        case firstGrandPrix = "first_grand_prix"
+        case laps, length
+        case raceDistance = "race_distance"
+        case lapRecord = "lap_record"
+        case capacity, opened, owner
     }
+}
 
-    public struct Competition: Decodable {
-        public let id: Int
-        public let name: String
-    }
+// MARK: - Competition
+struct Competition: Decodable {
+    let id: Int
+    let name: String
+    let location: Location
+}
 
-    public struct CircuitLocation: Decodable {
-        public let country: String
-        public let city: String
-    }
+// MARK: - Location
+struct Location: Decodable {
+    let country: String
+    let city: String
+}
 
-    public struct LapRecord: Decodable {
-        public let time: String?
-        public let driver: String?
-        public let year: String?
-    }
-
+// MARK: - LapRecord
+struct LapRecord: Decodable {
+    let time: String
+    let driver: String
+    let year: String
 }
