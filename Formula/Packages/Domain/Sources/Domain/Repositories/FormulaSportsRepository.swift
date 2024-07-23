@@ -9,5 +9,5 @@ import Foundation
 import Common
 
 public protocol FormulaSportsRepository {
-    func getCircuitDetails(for circuit: String, completion: @escaping (Result<[CircuitDetailsEntity], Error>) -> Void) -> Cancellable?
+    func getCircuitDetails(for circuitId: String, completion: @escaping (Result<[CircuitDetailsEntity], Error>) -> Void) -> Cancellable?
 }
