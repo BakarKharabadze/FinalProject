@@ -23,16 +23,19 @@ public final class DriversViewModel {
     
     //MARK: - Properties
     public var router: DriversViewRouter?
+    public var getDriverDetailsUseCase: GetDriverDetailsUseCase!
     var drivers: [DriverEntity]
     
     //MARK: - Init
-    public init(drivers: [DriverEntity]) {
+    public init(router: DriversViewRouter? = nil, getDriverDetailsUseCase: GetDriverDetailsUseCase, drivers: [DriverEntity]) {
+        self.router = router
+        self.getDriverDetailsUseCase = getDriverDetailsUseCase
         self.drivers = drivers
     }
     
     //MARK: - Methods
     func driverViewTapped(driver: DriverEntity) {
-        let driverDetailsViewModel = DriverDetailsViewModel(driver: driver)
+        let driverDetailsViewModel = DriverDetailsViewModel(driver: driver, getDriverDetailsUseCase: getDriverDetailsUseCase)
         router?.perform(to: .showDriverDetails(viewModel: driverDetailsViewModel))
     }
 }

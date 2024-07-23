@@ -7,6 +7,7 @@
 
 import UIKit
 import SwiftUI
+import Domain
 
 public final class DriverDetailsViewController: UIViewController {
     
@@ -34,8 +35,9 @@ public final class DriverDetailsViewController: UIViewController {
         view.backgroundColor = UIColor(named: "CustomBackground")
         navigationController?.navigationBar.barTintColor = UIColor(named: "CustomBackground")
         navigationController?.setNavigationBarHidden(false, animated: false)
+        viewModel.delegate = self
         setupUI()
-        setupSwiftUIHosting()
+        viewModel.viewDidLoad()
     }
     
     // MARK: - UI Setup
@@ -46,6 +48,7 @@ public final class DriverDetailsViewController: UIViewController {
         setupDriverNameStackView()
         setupDriverNumberLabel()
         setupTeamNameLabel()
+        setupDriverImage()
     }
     
     private func setupScrollView() {
@@ -92,26 +95,16 @@ public final class DriverDetailsViewController: UIViewController {
     
     private func setupDriverNameStackView() {
         let driverNameStackView = UIStackView()
-        driverNameStackView.axis = .horizontal
-        driverNameStackView.alignment = .center
+        driverNameStackView.axis = .vertical
+        driverNameStackView.alignment = .leading
         driverNameStackView.distribution = .fill
         driverNameStackView.spacing = 10
         
-        driverNameLabel.font = .systemFont(ofSize: 30, weight: .bold)
+        driverNameLabel.font = .systemFont(ofSize: 24, weight: .bold)
         driverNameLabel.textColor = .white
-        driverNameLabel.text = "Max Verstappen"
-        
-        driverImageView.image = UIImage(systemName: "person.crop.circle")
-        driverImageView.tintColor = .white
-        driverImageView.contentMode = .scaleAspectFit
-        driverImageView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            driverImageView.widthAnchor.constraint(equalToConstant: 80),
-            driverImageView.heightAnchor.constraint(equalToConstant: 80)
-        ])
+        driverNameLabel.numberOfLines = 0
         
         driverNameStackView.addArrangedSubview(driverNameLabel)
-        driverNameStackView.addArrangedSubview(driverImageView)
         
         mainStackView.addArrangedSubview(driverNameStackView)
     }
@@ -119,7 +112,6 @@ public final class DriverDetailsViewController: UIViewController {
     private func setupDriverNumberLabel() {
         driverNumberLabel.font = .systemFont(ofSize: 20)
         driverNumberLabel.textColor = .yellow
-        driverNumberLabel.text = "1"
         
         mainStackView.addArrangedSubview(driverNumberLabel)
     }
@@ -127,14 +119,31 @@ public final class DriverDetailsViewController: UIViewController {
     private func setupTeamNameLabel() {
         teamNameLabel.font = .systemFont(ofSize: 16)
         teamNameLabel.textColor = .lightGray
-        teamNameLabel.text = "Red Bull Racing"
+        teamNameLabel.numberOfLines = 0
         
         mainStackView.addArrangedSubview(teamNameLabel)
     }
     
+    private func setupDriverImage() {
+        view.addSubview(driverImageView)
+        
+        driverImageView.tintColor = .white
+        driverImageView.contentMode = .scaleAspectFit
+        driverImageView.layer.cornerRadius = 20
+        driverImageView.clipsToBounds = true
+        driverImageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            driverImageView.widthAnchor.constraint(equalToConstant: 150),
+            driverImageView.heightAnchor.constraint(equalToConstant: 150),
+            driverImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            driverImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100)
+        ])
+    }
+    
     // MARK: - SwiftUI Hosting
-    private func setupSwiftUIHosting() {
-        let swiftUIView = DriverDetailsSwiftUIView()
+    private func setupSwiftUIHosting(with driverDetails: DriverDetailsEntity) {
+        let swiftUIView = DriverDetailsSwiftUIView(driverDetails: driverDetails)
         let hostingController = UIHostingController(rootView: swiftUIView)
         
         addChild(hostingController)
@@ -151,7 +160,14 @@ public final class DriverDetailsViewController: UIViewController {
     }
 }
 
-
-#Preview {
-    DriverDetailsViewController()
+extension DriverDetailsViewController: DriverDetailsViewModelDelegate {
+    public func driverDetailsFetched(_ driverDetails: [DriverDetailsEntity]) {
+        guard let firstDriver = driverDetails.first else { return }
+        driverNameLabel.text = firstDriver.name
+        driverNumberLabel.text = "Driver Number: \(firstDriver.driverNumber)"
+        teamNameLabel.text = firstDriver.teamName
+        driverImageView.image = UIImage(named: viewModel.driver.familyName, in: Bundle.module, with: nil)
+        
+        setupSwiftUIHosting(with: firstDriver)
+    }
 }

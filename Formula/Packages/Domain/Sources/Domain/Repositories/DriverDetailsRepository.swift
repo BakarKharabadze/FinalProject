@@ -9,5 +9,5 @@ import Foundation
 import Common
 
 public protocol DriverDetailsRepository {
-    func getCircuitDetails(completion: @escaping (Result<[DriverDetailsEntity], Error>) -> Void) -> Cancellable?
+    func getCircuitDetails(for name: String, completion: @escaping (Result<[DriverDetailsEntity], Error>) -> Void) -> Cancellable?
 }

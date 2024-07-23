@@ -6,19 +6,22 @@
 //
 
 import SwiftUI
+import Domain
 
 struct DriverDetailsSwiftUIView: View {
+    var driverDetails: DriverDetailsEntity
+    
     
     // MARK: - Body
     var body: some View {
         VStack(alignment: .leading, spacing: 35) {
-            horizontalLabel(labelText: "Races:", valueText: "196")
-            horizontalLabel(labelText: "World Titles:", valueText: "3")
-            horizontalLabel(labelText: "Race Wins:", valueText: "61")
-            horizontalLabel(labelText: "Podiums:", valueText: "106")
-            horizontalLabel(labelText: "Nationality:", valueText: "Netherlands")
-            horizontalLabel(labelText: "Birthday:", valueText: "1997-09-30")
-            horizontalLabel(labelText: "Birth Place:", valueText: "Hasselt, Belgium")
+            horizontalLabel(labelText: "Races:", valueText: driverDetails.races)
+            horizontalLabel(labelText: "World Titles:", valueText: driverDetails.worldTitle)
+            horizontalLabel(labelText: "Race Wins:", valueText: driverDetails.raceWins)
+            horizontalLabel(labelText: "Podiums:", valueText: driverDetails.podiums)
+            horizontalLabel(labelText: "Nationality:", valueText: driverDetails.nationality)
+            horizontalLabel(labelText: "Birthday:", valueText: driverDetails.birthday)
+            horizontalLabel(labelText: "Birth Place:", valueText: driverDetails.birthPlace)
         }
         .padding()
         .background(Color("CustomCellBackground"))
@@ -40,12 +43,3 @@ struct DriverDetailsSwiftUIView: View {
     }
 }
 
-//MARK: - Preview
-struct DriverDetailsSwiftUIView_Previews: PreviewProvider {
-    static var previews: some View {
-        DriverDetailsSwiftUIView()
-            .background(Color.black)
-            .previewLayout(.sizeThatFits)
-            .cornerRadius(10)
-    }
-}
