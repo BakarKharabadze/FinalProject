@@ -224,4 +224,17 @@ extension HomeViewController: HomeViewModelDelegate {
             self.tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
         }
     }
+
+    public func errorOccurred(_ error: Error) {
+        DispatchQueue.main.async {
+            self.showErrorAlert(error)
+        }
+    }
+    
+    private func showErrorAlert(_ error: Error) {
+        let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alertController, animated: true)
+    }
 }
+

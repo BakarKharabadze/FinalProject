@@ -66,9 +66,6 @@ struct TopDriversCoverFlowView: View {
             }
             .frame(height: 180)
         }
-        .onAppear {
-            VarsityFont.registerFonts()
-        }
     }
 }
 
