@@ -12,13 +12,16 @@ public final class DriversViewController: UIViewController {
     
     // MARK: - Properties
     private let tableView = UITableView()
+    private let activityIndicator = UIActivityIndicatorView(style: .large)
     private var viewModel: DriversViewModel!
+    private let errorMessageLabel = UILabel()
     
     // MARK: - Initialization
     public class func create(with viewModel: DriversViewModel) -> DriversViewController {
         let vc = DriversViewController()
         vc.viewModel = viewModel
         vc.viewModel.router = vc
+        vc.viewModel.delegate = vc
         return vc
     }
     
@@ -28,12 +31,15 @@ public final class DriversViewController: UIViewController {
         view.backgroundColor = UIColor(named: "CustomBackground")
         navigationController?.navigationBar.barTintColor = UIColor(named: "CustomBackground")
         setupUI()
+        viewModel.fetchDrivers()
     }
     
     // MARK: - UI Setup
     private func setupUI() {
         setupTableView()
         setupTitleLabel()
+        setupActivityIndicator()
+        setupErrorMessageLabel()
     }
     
     private func setupTableView() {
@@ -59,6 +65,54 @@ public final class DriversViewController: UIViewController {
             NSAttributedString.Key.foregroundColor: UIColor.white,
             NSAttributedString.Key.font: font
         ]
+    }
+    
+    private func setupActivityIndicator() {
+        activityIndicator.color = .white
+        activityIndicator.hidesWhenStopped = true
+        view.addSubview(activityIndicator)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
+    
+    private func setupErrorMessageLabel() {
+        errorMessageLabel.textColor = .white
+        errorMessageLabel.font = .systemFont(ofSize: 22, weight: .bold)
+        errorMessageLabel.numberOfLines = 0
+        errorMessageLabel.textAlignment = .center
+        errorMessageLabel.isHidden = true
+        view.addSubview(errorMessageLabel)
+        errorMessageLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            errorMessageLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            errorMessageLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            errorMessageLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            errorMessageLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+        ])
+    }
+    
+    // MARK: - Loader Functions
+    private func showLoader() {
+        activityIndicator.startAnimating()
+        tableView.isHidden = true
+        errorMessageLabel.isHidden = true
+    }
+    
+    private func hideLoader() {
+        activityIndicator.stopAnimating()
+        tableView.isHidden = false
+    }
+    
+    public func showErrorText(message: String) {
+        errorMessageLabel.text = message
+        errorMessageLabel.isHidden = false
+        tableView.isHidden = true
+        activityIndicator.stopAnimating()
     }
 }
 
@@ -95,15 +149,27 @@ extension DriversViewController: DriversViewRouter {
     }
 }
 
-// MARK: - StandingViewModelDelegate
-extension DriversViewController: StandingViewModelDelegate {
+// MARK: - DriversViewModelDelegate
+extension DriversViewController: DriversViewModelDelegate {
     public func teamsFetched(_ teams: [TeamsEntity]) {
-       
     }
     
     public func driversFetched(_ drivers: [DriverEntity]) {
         DispatchQueue.main.async {
+            self.hideLoader()
             self.tableView.reloadData()
         }
+    }
+    
+    public func showLoading() {
+        showLoader()
+    }
+    
+    public func hideLoading() {
+        hideLoader()
+    }
+    
+    public func showError(message: String) {
+        showErrorText(message: message)
     }
 }

@@ -8,7 +8,7 @@
 import Foundation
 import Domain
 
-//MARK: - Protocol
+//MARK: - NewsDetailViewModelDelegate
 public protocol NewsDetailViewModelDelegate: AnyObject {
     func imageFetched(_ imageData: Data?)
 }
