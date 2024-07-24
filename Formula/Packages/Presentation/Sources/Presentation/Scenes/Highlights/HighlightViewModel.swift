@@ -8,25 +8,28 @@
 import Foundation
 import Domain
 
-//MARK: - HighlightsViewModelDelegate
+// MARK: - HighlightsViewModelDelegate
 public protocol HighlightsViewModelDelegate: AnyObject {
     func videosFetched(_ videos: [VideosEntity])
+    func showLoading()
 }
 
-//MARK: - HighlightsViewModel
+// MARK: - HighlightsViewModel
 public final class HighlightsViewModel {
     
-    //MARK: - Properties
+    // MARK: - Properties
     weak var delegate: HighlightsViewModelDelegate?
     private let getVideosUseCase: GetVideosUseCase
     public var videos: [VideosEntity] = []
-    //MARK: - Init
+    
+    // MARK: - Init
     public init(getVideosUseCase: GetVideosUseCase) {
         self.getVideosUseCase = getVideosUseCase
     }
     
-    //MARK: - Methods
-    func viewDidLoad() {
+    // MARK: - Methods
+    public func viewDidLoad() {
+        delegate?.showLoading()
         fetchVideos(channelId: "UCB_qr75-ydFVKSF9Dmo6izg", maxResults: 50, order: "date", apiKey: "AIzaSyBIIfbiqHk725UMvOyR1HYJNtdycXd2z-c")
     }
     
@@ -43,5 +46,4 @@ public final class HighlightsViewModel {
             }
         }
     }
-    
 }
