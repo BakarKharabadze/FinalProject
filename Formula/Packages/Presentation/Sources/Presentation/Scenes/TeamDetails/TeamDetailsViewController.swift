@@ -17,6 +17,8 @@ public final class TeamDetailsViewController: UIViewController {
     private let mainStackView = UIStackView()
     private let teamNameLabel = UILabel()
     private let teamImageView = UIImageView()
+    private let activityIndicator = UIActivityIndicatorView(style: .large)
+    private let errorMessageLabel = UILabel()
     
     private var viewModel: TeamDetailsViewModel!
     
@@ -44,6 +46,8 @@ public final class TeamDetailsViewController: UIViewController {
         setupContentView()
         setupMainStackView()
         setupTeamNameStackView()
+        setupActivityIndicator()
+        setupErrorMessageLabel()
     }
     
     private func setupScrollView() {
@@ -115,6 +119,43 @@ public final class TeamDetailsViewController: UIViewController {
         mainStackView.addArrangedSubview(teamNameStackView)
     }
     
+    private func setupActivityIndicator() {
+        activityIndicator.color = .white
+        activityIndicator.hidesWhenStopped = true
+        view.addSubview(activityIndicator)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
+
+    private func setupErrorMessageLabel() {
+        errorMessageLabel.textColor = .red
+        errorMessageLabel.font = .systemFont(ofSize: 20)
+        errorMessageLabel.textAlignment = .center
+        errorMessageLabel.numberOfLines = 0
+        errorMessageLabel.isHidden = true
+
+        view.addSubview(errorMessageLabel)
+        errorMessageLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            errorMessageLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            errorMessageLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            errorMessageLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            errorMessageLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+        ])
+    }
+
+    public func showErrorText(message: String) {
+        errorMessageLabel.text = message
+        errorMessageLabel.isHidden = false
+        activityIndicator.stopAnimating()
+        scrollView.isHidden = true
+    }
+    
     // MARK: - SwiftUI Hosting
     private func setupSwiftUIHosting(with teamDetails: TeamDetailsEntity) {
         let swiftUIView = TeamDetailsSwiftUIView(teamDetails: teamDetails)
@@ -134,11 +175,23 @@ public final class TeamDetailsViewController: UIViewController {
             hostingController.view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
+    
+    // MARK: - Loader Functions
+    public func showLoader() {
+        activityIndicator.startAnimating()
+        errorMessageLabel.isHidden = true
+        scrollView.isHidden = false
+    }
+    
+    public func hideLoader() {
+        activityIndicator.stopAnimating()
+    }
 }
 
 //MARK: - TeamDetailsViewModelDelegate
 extension TeamDetailsViewController: TeamDetailsViewModelDelegate {
     public func teamDetailsFetched(_ teamDetails: [Domain.TeamDetailsEntity], logoData: Data?) {
+        hideLoader()
         guard let firstTeam = teamDetails.first else { return }
         teamNameLabel.text = firstTeam.name
         if let data = logoData {
@@ -148,5 +201,9 @@ extension TeamDetailsViewController: TeamDetailsViewModelDelegate {
         }
         
         setupSwiftUIHosting(with: firstTeam)
+    }
+    
+    public func showError(message: String) {
+        showErrorText(message: message)
     }
 }

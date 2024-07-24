@@ -19,10 +19,7 @@ final class AppConfigurations {
     
     lazy var formulaSportsApiKey = Bundle.main.object(forInfoDictionaryKey: "FormulaSportsApiKey") as! String
     lazy var formulaSportsApiBaseURL = Bundle.main.object(forInfoDictionaryKey: "FormulaSportsApiBaseURL") as! String
-    
-    init() {
-        VarsityFont.registerFonts()
-    }
+
 }
 
 

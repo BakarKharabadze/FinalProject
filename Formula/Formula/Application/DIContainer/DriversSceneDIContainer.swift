@@ -58,6 +58,6 @@ extension DriversSceneDIContainer: DriversViewControllerFactory  {
     }
     
     func makeDriversDetailViewModel() -> DriversViewModel {
-        DriversViewModel(getDriverDetailsUseCase: makeGetDriverDetailUseCase(), drivers: [])
+        DriversViewModel(getDriverDetailsUseCase: makeGetDriverDetailUseCase(), getDriversUseCase: makeGetDriversUseCase())
     }
 }

@@ -13,6 +13,9 @@ import Common
 public protocol StandingViewModelDelegate: AnyObject {
     func driversFetched(_ drivers: [DriverEntity])
     func teamsFetched(_ teams: [TeamsEntity])
+    func showLoading()
+    func hideLoading()
+    func showError(message: String)
 }
 
 //MARK: - StandingViewRoute
@@ -49,30 +52,36 @@ public final class StandingViewModel {
     
     // MARK: - Public Methods
     func viewDidLoad() {
+        delegate?.showLoading()
         fetchDrivers()
         fetchTeams()
     }
     
     func driversViewTapped() {
-        let driversViewModel = DriversViewModel(getDriverDetailsUseCase: getDriverDetailsUseCase, drivers: drivers)
+        let driversViewModel = DriversViewModel(getDriverDetailsUseCase: getDriverDetailsUseCase, getDriversUseCase: getDriversUseCase)
         router?.perform(to: .showDriversDetail(viewModel: driversViewModel))
     }
     
     func teamsViewTapped() {
-        let teamsViewModel = TeamsViewModel(teams: teams, getTeamDetailsUseCase: getTeamDetailsUseCase)
+        let teamsViewModel = TeamsViewModel(getTeamDetailsUseCase: getTeamDetailsUseCase, getTeamsUseCase: getTeamsUseCase)
         router?.perform(to: .showTeamsDetail(viewModel: teamsViewModel))
     }
     
     // MARK: - Private Methods
     private func fetchDrivers() {
         _ = getDriversUseCase.execute { [weak self] result in
+            guard let self = self else { return }
+            self.delegate?.hideLoading()
             switch result {
             case .success(let drivers):
-                self?.drivers = drivers
+                self.drivers = drivers
                 DispatchQueue.main.async {
-                    self?.delegate?.driversFetched(drivers)
+                    self.delegate?.driversFetched(drivers)
                 }
             case .failure(let error):
+                DispatchQueue.main.async {
+                    self.delegate?.showError(message: "Failed to load drivers. Please try again.")
+                }
                 print(error)
             }
         }
@@ -80,13 +89,18 @@ public final class StandingViewModel {
     
     private func fetchTeams() {
         _ = getTeamsUseCase.execute { [weak self] result in
+            guard let self = self else { return }
+            self.delegate?.hideLoading()
             switch result {
             case .success(let teams):
-                self?.teams = teams
+                self.teams = teams
                 DispatchQueue.main.async {
-                    self?.delegate?.teamsFetched(teams)
+                    self.delegate?.teamsFetched(teams)
                 }
             case .failure(let error):
+                DispatchQueue.main.async {
+                    self.delegate?.showError(message: "Failed to load teams. Please try again.")
+                }
                 print(error)
             }
         }

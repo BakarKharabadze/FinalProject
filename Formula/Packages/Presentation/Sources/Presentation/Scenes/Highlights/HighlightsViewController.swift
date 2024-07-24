@@ -15,6 +15,7 @@ public final class HighlightsViewController: UIViewController {
     private let mainStackView = UIStackView()
     private let logoImageView = UIImageView()
     private let highlightsTableView = UITableView()
+    private let activityIndicator = UIActivityIndicatorView(style: .large)
     public var viewModel: HighlightsViewModel!
     
     // MARK: - Initialization
@@ -48,6 +49,7 @@ public final class HighlightsViewController: UIViewController {
         setupMainStackView()
         setupLogoImageView()
         setupHighlightsTableView()
+        setupActivityIndicator()
     }
     
     private func setupMainStackView() {
@@ -99,6 +101,19 @@ public final class HighlightsViewController: UIViewController {
         ])
     }
     
+    private func setupActivityIndicator() {
+        view.addSubview(activityIndicator)
+        
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.color = .white
+        activityIndicator.hidesWhenStopped = true
+        
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
+    
     // MARK: - Video Handling
     private func openVideoOnYouTube(videoURL: URL) {
         let webViewController = WebViewController(url: videoURL)
@@ -133,7 +148,12 @@ extension HighlightsViewController: UITableViewDataSource, UITableViewDelegate {
 extension HighlightsViewController: HighlightsViewModelDelegate {
     public func videosFetched(_ videos: [VideosEntity]) {
         DispatchQueue.main.async {
+            self.activityIndicator.stopAnimating()
             self.highlightsTableView.reloadData()
         }
+    }
+    
+    public func showLoading() {
+        activityIndicator.startAnimating()
     }
 }

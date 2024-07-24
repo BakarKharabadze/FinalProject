@@ -9,12 +9,14 @@ import Foundation
 import Domain
 import Common
 
-// MARK: - Protocols
+// MARK: - HomeViewModelDelegate
 public protocol HomeViewModelDelegate: AnyObject {
     func newsFetched(_ news: [NewsEntity])
     func driversFetched(_ drivers: [DriverEntity])
     func raceFetched(_ race: RaceEntity)
+    func errorOccurred(_ error: Error)
 }
+
 
 //MARK: - HomeViewRoute
 public enum HomeViewRoute {
@@ -66,11 +68,13 @@ public final class HomeViewModel {
                     self?.delegate?.newsFetched(news)
                 }
             case .failure(let error):
-                print(error)
+                DispatchQueue.main.async {
+                    self?.delegate?.errorOccurred(error)
+                }
             }
         }
     }
-    
+
     private func fetchDrivers() {
         _ = getDriversUseCase.execute { [weak self] result in
             switch result {
@@ -80,13 +84,15 @@ public final class HomeViewModel {
                     self?.delegate?.driversFetched(drivers)
                 }
             case .failure(let error):
-                print(error)
+                DispatchQueue.main.async {
+                    self?.delegate?.errorOccurred(error)
+                }
             }
         }
     }
-    
+
     private func fetchUpcomingRace() {
-       _ = getUpcomingRacesUseCase.execute { [weak self] result in
+        _ = getUpcomingRacesUseCase.execute { [weak self] result in
             switch result {
             case .success(let races):
                 if let nextRace = races.first(where: { race in
@@ -101,10 +107,13 @@ public final class HomeViewModel {
                     }
                 }
             case .failure(let error):
-                print(error)
+                DispatchQueue.main.async {
+                    self?.delegate?.errorOccurred(error)
+                }
             }
         }
     }
+
     
     // MARK: - Navigation
     func newsViewTapped(news: NewsEntity) {

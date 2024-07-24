@@ -19,6 +19,8 @@ public final class DriverDetailsViewController: UIViewController {
     private let driverNumberLabel = UILabel()
     private let teamNameLabel = UILabel()
     private let driverImageView = UIImageView()
+    private let activityIndicator = UIActivityIndicatorView(style: .large)
+    private let errorMessageLabel = UILabel()
     
     private var viewModel: DriverDetailsViewModel!
     
@@ -49,6 +51,8 @@ public final class DriverDetailsViewController: UIViewController {
         setupDriverNumberLabel()
         setupTeamNameLabel()
         setupDriverImage()
+        setupActivityIndicator()
+        setupErrorMessageLabel()
     }
     
     private func setupScrollView() {
@@ -133,6 +137,44 @@ public final class DriverDetailsViewController: UIViewController {
         ])
     }
     
+    private func setupActivityIndicator() {
+        view.addSubview(activityIndicator)
+        
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.color = .white
+        activityIndicator.hidesWhenStopped = true
+        
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
+
+    private func setupErrorMessageLabel() {
+        errorMessageLabel.textColor = .white
+        errorMessageLabel.font = .systemFont(ofSize: 22, weight: .bold)
+        errorMessageLabel.textAlignment = .center
+        errorMessageLabel.numberOfLines = 0
+        errorMessageLabel.isHidden = true
+
+        view.addSubview(errorMessageLabel)
+        errorMessageLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            errorMessageLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            errorMessageLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            errorMessageLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            errorMessageLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+        ])
+    }
+
+    public func showErrorText(message: String) {
+        errorMessageLabel.text = message
+        errorMessageLabel.isHidden = false
+        activityIndicator.stopAnimating()
+        scrollView.isHidden = true
+    }
+    
     // MARK: - SwiftUI Hosting
     private func setupSwiftUIHosting(with driverDetails: DriverDetailsEntity) {
         let swiftUIView = DriverDetailsSwiftUIView(driverDetails: driverDetails)
@@ -156,7 +198,12 @@ public final class DriverDetailsViewController: UIViewController {
 
 //MARK: - DriverDetailsViewModelDelegate
 extension DriverDetailsViewController: DriverDetailsViewModelDelegate {
+    public func showError(message: String) {
+        showErrorText(message: message)
+    }
+    
     public func driverDetailsFetched(_ driverDetails: [DriverDetailsEntity]) {
+        activityIndicator.stopAnimating()
         guard let firstDriver = driverDetails.first else { return }
         driverNameLabel.text = firstDriver.name
         driverNumberLabel.text = "Driver Number \(firstDriver.driverNumber)"
@@ -164,5 +211,11 @@ extension DriverDetailsViewController: DriverDetailsViewModelDelegate {
         driverImageView.image = UIImage(named: viewModel.driver.familyName, in: Bundle.module, with: nil)
         
         setupSwiftUIHosting(with: firstDriver)
+    }
+    
+    public func showLoading() {
+        activityIndicator.startAnimating()
+        errorMessageLabel.isHidden = true
+        scrollView.isHidden = false
     }
 }

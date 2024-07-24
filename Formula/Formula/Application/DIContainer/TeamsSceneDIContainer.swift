@@ -61,6 +61,6 @@ extension TeamsSceneDIContainer: TeamsViewControllerFactory  {
     }
     
     func makeTeamsDetailViewModel() -> TeamsViewModel {
-        TeamsViewModel(teams: [], getTeamDetailsUseCase: makeGetTeamDetailsUseCase())
+        TeamsViewModel(getTeamDetailsUseCase: makeGetTeamDetailsUseCase(), getTeamsUseCase: makeGetTeamsUseCase())
     }
 }

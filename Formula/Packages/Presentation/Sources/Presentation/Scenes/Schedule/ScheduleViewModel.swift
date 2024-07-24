@@ -13,6 +13,9 @@ import Common
 public protocol ScheduleViewModelDelegate: AnyObject {
     func racesFetched(_ races: [RaceEntity])
     func raceResultFetched(_ raceResults: [RaceResultEntity])
+    func showLoader()
+    func hideLoader()
+    func showError()
 }
 
 //MARK: - ScheduleViewRoute
@@ -45,6 +48,7 @@ public final class ScheduleViewModel {
     
     // MARK: - Methods
     func viewDidLoad() {
+        delegate?.showLoader()
         fetchRaces()
         fetchRaceResult()
     }
@@ -59,6 +63,9 @@ public final class ScheduleViewModel {
                     self?.delegate?.racesFetched(races)
                 }
             case .failure(let error):
+                DispatchQueue.main.async {
+                    self?.delegate?.showError()
+                }
                 print("Failed to fetch races: \(error.localizedDescription)")
             }
         }
@@ -73,6 +80,9 @@ public final class ScheduleViewModel {
                     self?.delegate?.raceResultFetched(raceResults)
                 }
             case .failure(let error):
+                DispatchQueue.main.async {
+                    self?.delegate?.showError()
+                }
                 print("Failed to fetch race results: \(error.localizedDescription)")
             }
         }
