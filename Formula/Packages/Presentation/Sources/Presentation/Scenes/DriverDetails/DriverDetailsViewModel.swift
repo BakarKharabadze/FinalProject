@@ -11,6 +11,8 @@ import Domain
 //MARK: -DriverDetailsViewModelDelegate
 public protocol DriverDetailsViewModelDelegate: AnyObject {
     func driverDetailsFetched(_ driverDetails: [DriverDetailsEntity])
+    func showLoading()
+    func showError(message: String)
 }
 
 public final class DriverDetailsViewModel {
@@ -29,6 +31,7 @@ public final class DriverDetailsViewModel {
     
     //MARK: - Methods
     public func viewDidLoad() {
+        delegate?.showLoading()
         fetchDriverDetails()
     }
     
@@ -41,6 +44,9 @@ public final class DriverDetailsViewModel {
                     self?.delegate?.driverDetailsFetched(driverDetails)
                 }
             case .failure(let error):
+                DispatchQueue.main.async {
+                    self?.delegate?.showError(message: "Failed to load driver details. Please try again later.")
+                }
                 print(error)
             }
         })
