@@ -10,6 +10,9 @@ import Domain
 
 public protocol TeamDetailsViewModelDelegate: AnyObject {
     func teamDetailsFetched(_ teamDetails: [TeamDetailsEntity], logoData: Data?)
+    func showLoader()
+    func hideLoader()
+    func showError(message: String)
 }
 
 public final class TeamDetailsViewModel {
@@ -27,6 +30,7 @@ public final class TeamDetailsViewModel {
     
     //MARK: - Methods
     public func viewDidLoad() {
+        delegate?.showLoader()
         fetchTeamDetails()
     }
     
@@ -37,6 +41,10 @@ public final class TeamDetailsViewModel {
                 self?.teamDetails = teamDetails
                 self?.fetchTeamLogo()
             case .failure(let error):
+                DispatchQueue.main.async {
+                    self?.delegate?.hideLoader()
+                    self?.delegate?.showError(message: "Failed to load team details. Please try again later.")
+                }
                 print(error)
             }
         }
@@ -44,13 +52,17 @@ public final class TeamDetailsViewModel {
     
     private func fetchTeamLogo() {
         guard let logoUrlString = teamDetails.first?.logo, let logoUrl = URL(string: logoUrlString) else {
-            delegate?.teamDetailsFetched(teamDetails, logoData: nil)
+            DispatchQueue.main.async {
+                self.delegate?.teamDetailsFetched(self.teamDetails, logoData: nil)
+                self.delegate?.hideLoader()
+            }
             return
         }
         
         let task = URLSession.shared.dataTask(with: logoUrl) { [weak self] data, response, error in
             DispatchQueue.main.async {
                 self?.delegate?.teamDetailsFetched(self?.teamDetails ?? [], logoData: data)
+                self?.delegate?.hideLoader()
             }
         }
         task.resume()
