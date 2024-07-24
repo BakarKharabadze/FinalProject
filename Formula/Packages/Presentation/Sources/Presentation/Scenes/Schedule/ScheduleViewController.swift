@@ -36,9 +36,22 @@ public final class ScheduleViewController: UIViewController {
         return view
     }()
     
+    private let errorLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Failed to load data. Please try again later."
+        label.font = .systemFont(ofSize: 22, weight: .bold)
+        label.numberOfLines = 0
+        label.textColor = .white
+        label.textAlignment = .center
+        label.isHidden = true
+        return label
+    }()
+    
+    private let activityIndicator = UIActivityIndicatorView(style: .large)
     private let containerView = UIView()
     private let upcomingTableView = UITableView()
     private let pastTableView = UITableView()
+    
     public var viewModel: ScheduleViewModel!
     
     // MARK: - Initialization
@@ -56,7 +69,6 @@ public final class ScheduleViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: false)
         setupUI()
         viewModel.viewDidLoad()
-        viewModel.delegate = self
     }
     
     // MARK: - UI Setup
@@ -66,6 +78,8 @@ public final class ScheduleViewController: UIViewController {
         setupUnderlineView()
         setupContainerView()
         setupTableViews()
+        setupActivityIndicator()
+        setupErrorLabel()
         showUpcoming()
     }
     
@@ -148,6 +162,30 @@ public final class ScheduleViewController: UIViewController {
         tableView.isHidden = true
     }
     
+    private func setupActivityIndicator() {
+        activityIndicator.color = .white
+        activityIndicator.hidesWhenStopped = true
+        view.addSubview(activityIndicator)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
+    
+    private func setupErrorLabel() {
+        view.addSubview(errorLabel)
+        errorLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            errorLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            errorLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            errorLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            errorLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+        ])
+    }
+    
     // MARK: - Actions
     @objc private func showUpcoming() {
         updateButtonColors(selectedButton: upcomingButton, deselectedButton: pastButton)
@@ -185,15 +223,39 @@ public final class ScheduleViewController: UIViewController {
         upcomingTableView.isHidden = true
         pastTableView.isHidden = true
     }
+    
+    public func showLoader() {
+        activityIndicator.startAnimating()
+        errorLabel.isHidden = true
+    }
+    
+    public func hideLoader() {
+        activityIndicator.stopAnimating()
+    }
+    
+    public func showErrorText() {
+        hideLoader()
+        errorLabel.isHidden = false
+        upcomingTableView.isHidden = true
+        pastTableView.isHidden = true
+    }
 }
 
 // MARK: - UITableViewDataSource, UITableViewDelegate
 extension ScheduleViewController: UITableViewDataSource, UITableViewDelegate {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == upcomingTableView {
-            return viewModel.upcomingRaces.count + 1
+            let count = viewModel.upcomingRaces.count
+            if count > 0 {
+                errorLabel.isHidden = true
+            }
+            return count + 1
         } else if tableView == pastTableView {
-            return viewModel.pastRaces.count + 1
+            let count = viewModel.pastRaces.count
+            if count > 0 {
+                errorLabel.isHidden = true
+            }
+            return count + 1
         }
         return 0
     }
@@ -234,30 +296,41 @@ extension ScheduleViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            tableView.deselectRow(at: indexPath, animated: true)
-            if tableView == upcomingTableView && indexPath.row > 0 {
-                let race = viewModel.upcomingRaces[indexPath.row - 1]
-                viewModel.raceViewTapped(race: race)
-            } else if tableView == pastTableView && indexPath.row > 0 {
-                let race = viewModel.pastRaces[indexPath.row - 1]
-                viewModel.raceViewTapped(race: race)
-            } else if tableView == upcomingTableView && indexPath.row == 0 {
-                let race = viewModel.upcomingRaces[indexPath.row]
-                viewModel.raceViewTapped(race: race)
-            } else if tableView == pastTableView && indexPath.row == 0 {
-                let race = viewModel.pastRaces[indexPath.row]
-                viewModel.raceViewTapped(race: race)
-            }
+        tableView.deselectRow(at: indexPath, animated: true)
+        if tableView == upcomingTableView && indexPath.row > 0 {
+            let race = viewModel.upcomingRaces[indexPath.row - 1]
+            viewModel.raceViewTapped(race: race)
+        } else if tableView == pastTableView && indexPath.row > 0 {
+            let race = viewModel.pastRaces[indexPath.row - 1]
+            viewModel.raceViewTapped(race: race)
+        } else if tableView == upcomingTableView && indexPath.row == 0 {
+            let race = viewModel.upcomingRaces[indexPath.row]
+            viewModel.raceViewTapped(race: race)
+        } else if tableView == pastTableView && indexPath.row == 0 {
+            let race = viewModel.pastRaces[indexPath.row]
+            viewModel.raceViewTapped(race: race)
         }
+    }
 }
 
 // MARK: - ScheduleViewModelDelegate
 extension ScheduleViewController: ScheduleViewModelDelegate {
+    public func showError() {
+        hideLoader()
+        errorLabel.isHidden = false
+        upcomingTableView.isHidden = true
+        pastTableView.isHidden = true
+    }
+    
     public func raceResultFetched(_ raceResults: [Domain.RaceResultEntity]) {
-        self.pastTableView.reloadData()
+        hideLoader()
+        DispatchQueue.main.async {
+            self.pastTableView.reloadData()
+        }
     }
     
     public func racesFetched(_ races: [RaceEntity]) {
+        hideLoader()
         DispatchQueue.main.async {
             self.upcomingTableView.reloadData()
             self.pastTableView.reloadData()
