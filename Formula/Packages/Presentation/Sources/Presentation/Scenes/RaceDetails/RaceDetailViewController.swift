@@ -28,6 +28,8 @@ final public class RaceDetailViewController: UIViewController {
     private let circuitMapImageView = UIImageView()
     private let horizontalStackView = UIStackView()
     private let infoStackView = UIStackView()
+    private let activityIndicator = UIActivityIndicatorView(style: .large)
+    private let errorMessageLabel = UILabel()
     
     private var viewModel: RaceDetailViewModel!
     
@@ -64,6 +66,8 @@ final public class RaceDetailViewController: UIViewController {
         setupCircuitMapImageView()
         setupRaceWeekendContainer()
         setupCustomSpacing()
+        setupActivityIndicator()
+        setupErrorMessageLabel()
     }
     
     private func setupScrollView() {
@@ -197,7 +201,7 @@ final public class RaceDetailViewController: UIViewController {
             circuitMapImageView.widthAnchor.constraint(equalToConstant: 200),
             circuitMapImageView.heightAnchor.constraint(equalToConstant: 200),
             horizontalStackView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor),
-            horizontalStackView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor)    
+            horizontalStackView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor)
         ])
     }
     
@@ -241,17 +245,67 @@ final public class RaceDetailViewController: UIViewController {
             raceWeekendContainer.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor, constant: 17)
         ])
     }
+    
+    private func setupActivityIndicator() {
+        view.addSubview(activityIndicator)
+        
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.color = .white
+        activityIndicator.hidesWhenStopped = true
+        
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
+
+    private func setupErrorMessageLabel() {
+        errorMessageLabel.textColor = .red
+        errorMessageLabel.font = .systemFont(ofSize: 20)
+        errorMessageLabel.textAlignment = .center
+        errorMessageLabel.numberOfLines = 0
+        errorMessageLabel.isHidden = true
+
+        view.addSubview(errorMessageLabel)
+        errorMessageLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            errorMessageLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            errorMessageLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            errorMessageLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            errorMessageLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+        ])
+    }
+
+    public func showErrorText(message: String) {
+        errorMessageLabel.text = message
+        errorMessageLabel.isHidden = false
+        activityIndicator.stopAnimating()
+        scrollView.isHidden = true
+    }
 }
 
 extension RaceDetailViewController: RaceDetailViewModelDelegate {
+    public func showError(message: String) {
+        showErrorText(message: message)
+    }
+    
     public func circuitFetched(_ circuit: [Domain.CircuitDetailsEntity]) {
-        countryNameLabel.text = circuit.first?.countryName
-        grandPrixNameLabel.text = circuit.first?.grandPrixName
-        dateLabel.text = "Opened in \(circuit.first?.date ?? "") year"
-        circuitLenghtLabel.text = "Circuit Lenghts"
-        circuitLentght.text = circuit.first?.circuitLenght
-        circuitDistanceLabel.text = circuit.first?.raceDistance
-        lapsQuantity.text = circuit.first?.laps
+        activityIndicator.stopAnimating()
+        guard let firstCircuit = circuit.first else { return }
+        countryNameLabel.text = firstCircuit.countryName
+        grandPrixNameLabel.text = firstCircuit.grandPrixName
+        dateLabel.text = "Opened in \(firstCircuit.date) year"
+        circuitLenghtLabel.text = "Circuit Length"
+        circuitLentght.text = firstCircuit.circuitLenght
+        circuitDistanceLabel.text = firstCircuit.raceDistance
+        lapsQuantity.text = firstCircuit.laps
         circuitMapImageView.image = UIImage(named: viewModel.race.round, in: Bundle.module, with: nil)
+    }
+    
+    public func showLoading() {
+        activityIndicator.startAnimating()
+        errorMessageLabel.isHidden = true
+        scrollView.isHidden = false
     }
 }

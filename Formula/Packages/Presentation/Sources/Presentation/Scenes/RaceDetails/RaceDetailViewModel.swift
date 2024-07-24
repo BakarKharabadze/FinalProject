@@ -11,6 +11,7 @@ import Domain
 //MARK: - RaceDetailViewModelDelegate
 public protocol RaceDetailViewModelDelegate: AnyObject {
     func circuitFetched(_ circuit: [CircuitDetailsEntity])
+    func showLoading()
 }
 
 
@@ -31,6 +32,7 @@ public final class RaceDetailViewModel {
     
     //MARK: - Methods
     public func viewDidLoad() {
+        delegate?.showLoading()
         fetchCircuit()
     }
     
@@ -40,7 +42,7 @@ public final class RaceDetailViewModel {
             case .success(let circuit):
                 DispatchQueue.main.async {
                     self?.circuit = circuit
-                    self?.delegate?.circuitFetched(circuit) 
+                    self?.delegate?.circuitFetched(circuit)
                 }
             case .failure(let error):
                 print(error)
