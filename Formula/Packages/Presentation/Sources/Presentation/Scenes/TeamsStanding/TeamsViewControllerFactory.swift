@@ -6,7 +6,8 @@
 //
 
 import UIKit
+import Domain
 
 public protocol TeamsViewControllerFactory {
-    func makeTeamsViewController(with viewModel: TeamsViewModel) -> TeamsViewController
+    func makeTeamsViewController(for teams: TeamsEntity) -> TeamsViewController
 }

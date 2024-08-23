@@ -80,6 +80,10 @@ class HighlightsViewModelTests: XCTestCase {
     }
     
     class MockHighlightsViewModelDelegate: HighlightsViewModelDelegate {
+        func showLoading() {
+            
+        }
+        
         var videosFetchedCalled = false
         
         func videosFetched(_ videos: [VideosEntity]) {

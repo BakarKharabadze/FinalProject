@@ -19,7 +19,7 @@ public final class StandingViewController: UIViewController {
     private let teamsView = UIView()
     private let teamsTitle = UILabel()
     private let teamsImage = UIImageView()
-    var viewModel: StandingViewModel!
+    private var viewModel: StandingViewModel!
     
     // MARK: - Initialization
     public class func create(with viewModel: StandingViewModel, driversViewControllerFactory: DriversViewControllerFactory, teamsViewControllerFactory: TeamsViewControllerFactory) -> StandingViewController {
@@ -169,11 +169,12 @@ public final class StandingViewController: UIViewController {
     
     // MARK: - Actions
     @objc private func driversViewTapped() {
-        viewModel.driversViewTapped()
+        guard let firstDriver = viewModel.drivers.first else { return }
+        viewModel.driversViewTapped(drivers: firstDriver)
     }
     
     @objc private func teamsViewTapped() {
-        viewModel.teamsViewTapped()
+        guard let firstTeam = viewModel.teams.first else { return }
+        viewModel.teamsViewTapped(teams: firstTeam)
     }
 }
-

@@ -43,12 +43,11 @@ extension DriverDetailsSceneDIContainer {
 
 
 //MARK: - DriverDetailsViewConroller Factory
-extension DriverDetailsSceneDIContainer  {
-    
-    func makeDriverDetailsViewController(with viewModel: DriverDetailsViewModel) -> DriverDetailsViewController {
-        DriverDetailsViewController.create(with: viewModel)
+extension DriverDetailsSceneDIContainer: DriverDetailsViewControllerFactory  {
+    func makeDriverDetailsViewController(for drivers: DriverEntity) -> DriverDetailsViewController {
+        DriverDetailsViewController.create(with: makeDriverDetailsViewModel(with: drivers))
     }
-    
+
     func makeDriverDetailsViewModel(with driverEntity: DriverEntity) -> DriverDetailsViewModel {
         DriverDetailsViewModel(driver: driverEntity, getDriverDetailsUseCase: makeGetDriverDetailsUseCase())
     }

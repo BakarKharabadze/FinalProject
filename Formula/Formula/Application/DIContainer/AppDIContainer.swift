@@ -77,13 +77,13 @@ class AppDIContainer {
     
     func makeDriversSceneDIContainer() -> DriversSceneDIContainer {
          let dependencies = DriversSceneDIContainer.Dependencies(
-            formulaApiDataTransferService: formulaApiDataTransferService, formulaSportApiDataTransferService: formulaSportsApiDataTransferService
+            formulaApiDataTransferService: formulaApiDataTransferService, formulaSportApiDataTransferService: formulaSportsApiDataTransferService, driverDetailsVIewControllerFactory: makeDriverDetailsSceneDIContainer()
          )
          return DriversSceneDIContainer(dependencies: dependencies)
      }
     
     func makeTeamsSceneDIContainer() -> TeamsSceneDIContainer {
-        let dependencies = TeamsSceneDIContainer.Dependencies(formulaApiDataTransferService: formulaApiDataTransferService, formulaSportApiDataTransferService: formulaSportsApiDataTransferService)
+        let dependencies = TeamsSceneDIContainer.Dependencies(formulaApiDataTransferService: formulaApiDataTransferService, formulaSportApiDataTransferService: formulaSportsApiDataTransferService, teamDetailsViewControllerFactory: makeTeamDetailsScemeDIContainer())
         return TeamsSceneDIContainer(dependencies: dependencies)
     }
     

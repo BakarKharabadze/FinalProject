@@ -43,10 +43,9 @@ extension TeamDetailsSceneDIContainer {
 
 
 //MARK: - TeamDetailsViewController Factory
-extension TeamDetailsSceneDIContainer  {
-    
-    func makeTeamDetailsViewController(with viewModel: TeamDetailsViewModel) -> TeamDetailsViewController {
-        TeamDetailsViewController.create(with: viewModel)
+extension TeamDetailsSceneDIContainer: TeamDetailsViewControllerFactory  {
+    func makeTeamDetailsViewController(for teams: TeamsEntity) -> TeamDetailsViewController {
+        TeamDetailsViewController.create(with: makeTeamDetailsViewModel(with: teams))
     }
     
     func makeTeamDetailsViewModel(with teamEntity: TeamsEntity) -> TeamDetailsViewModel {

@@ -38,7 +38,8 @@ final class GetTeamDetailsUseCaseTests: XCTestCase {
             base: "",
             president: "",
             director: "",
-            technicalManeger: ""
+            technicalManeger: "",
+            logo: ""
         )]
         repository.result = .success(expectedDetails)
         

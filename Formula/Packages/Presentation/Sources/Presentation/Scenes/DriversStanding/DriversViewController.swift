@@ -17,10 +17,10 @@ public final class DriversViewController: UIViewController {
     private let errorMessageLabel = UILabel()
     
     // MARK: - Initialization
-    public class func create(with viewModel: DriversViewModel) -> DriversViewController {
+    public class func create(with viewModel: DriversViewModel, driverDetailsVIewControllerFactory: DriverDetailsViewControllerFactory) -> DriversViewController {
         let vc = DriversViewController()
         vc.viewModel = viewModel
-        vc.viewModel.router = vc
+        vc.viewModel.router = DefaultDriversViewRouter(view: vc, driverDetailsVIewControllerFactory: driverDetailsVIewControllerFactory)
         vc.viewModel.delegate = vc
         return vc
     }
@@ -119,7 +119,7 @@ public final class DriversViewController: UIViewController {
 // MARK: - UITableViewDataSource
 extension DriversViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.drivers.count
+        viewModel.drivers.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -138,21 +138,8 @@ extension DriversViewController: UITableViewDelegate {
     }
 }
 
-// MARK: - DriversViewRouter
-extension DriversViewController: DriversViewRouter {
-    public func perform(to route: DriversViewRoute) {
-        switch route {
-        case .showDriverDetails(let viewModel):
-            let driverDetailsVC = DriverDetailsViewController.create(with: viewModel)
-            navigationController?.pushViewController(driverDetailsVC, animated: true)
-        }
-    }
-}
-
 // MARK: - DriversViewModelDelegate
 extension DriversViewController: DriversViewModelDelegate {
-    public func teamsFetched(_ teams: [TeamsEntity]) {
-    }
     
     public func driversFetched(_ drivers: [DriverEntity]) {
         DispatchQueue.main.async {

@@ -6,7 +6,8 @@
 //
 
 import UIKit
+import Domain
 
 public protocol TeamDetailsViewControllerFactory {
-    func makeTeamDetailsViewController(with viewModel: TeamDetailsViewModel) -> TeamDetailsViewController
+    func makeTeamDetailsViewController(for teams: TeamsEntity) -> TeamDetailsViewController
 }

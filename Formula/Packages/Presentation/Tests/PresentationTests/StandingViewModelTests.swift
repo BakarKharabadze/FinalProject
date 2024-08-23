@@ -179,6 +179,18 @@ public final class MockStandingViewRouter: StandingViewRouter {
 
 // Mock Delegate
 public final class MockStandingViewModelDelegate: StandingViewModelDelegate {
+    public func showLoading() {
+        
+    }
+    
+    public func hideLoading() {
+        
+    }
+    
+    public func showError(message: String) {
+        
+    }
+    
     var fetchedDrivers: [DriverEntity]?
     var fetchedTeams: [TeamsEntity]?
     var driversExpectation: XCTestExpectation?

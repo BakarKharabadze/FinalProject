@@ -14,7 +14,6 @@ public protocol RaceDetailViewModelDelegate: AnyObject {
     func showLoading()
 }
 
-
 public final class RaceDetailViewModel {
     
     //MARK: - Properties

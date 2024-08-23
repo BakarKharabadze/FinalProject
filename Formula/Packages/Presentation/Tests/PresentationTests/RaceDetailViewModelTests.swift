@@ -113,6 +113,10 @@ class RaceDetailViewModelTests: XCTestCase {
     
     // Mock Delegate
     class MockRaceDetailViewModelDelegate: RaceDetailViewModelDelegate {
+        func showLoading() {
+            
+        }
+        
         var circuitFetchedCalled = false
         var fetchedCircuit: [CircuitDetailsEntity]?
         var expectation: XCTestExpectation?

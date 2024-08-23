@@ -17,10 +17,10 @@ public final class TeamsViewController: UIViewController {
     private let errorMessageLabel = UILabel()
 
     // MARK: - Initialization
-    public class func create(with viewModel: TeamsViewModel) -> TeamsViewController {
+    public class func create(with viewModel: TeamsViewModel, teamDetailsViewControllerFactory: TeamDetailsViewControllerFactory) -> TeamsViewController {
         let vc = TeamsViewController()
         vc.viewModel = viewModel
-        vc.viewModel.router = vc
+        vc.viewModel.router = DefaultTeamsViewRouter(viewController: vc, teamDetailsViewControllerFactory: teamDetailsViewControllerFactory)
         vc.viewModel.delegate = vc
         return vc
     }
@@ -135,17 +135,6 @@ extension TeamsViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let team = viewModel.teams[indexPath.row]
         viewModel.teamViewTapped(team: team)
-    }
-}
-
-// MARK: - TeamsViewRouter
-extension TeamsViewController: TeamsViewRouter {
-    public func perform(to route: TeamsViewRoute) {
-        switch route {
-        case .showTeamDetails(let viewModel):
-            let teamDetailsVC = TeamDetailsViewController.create(with: viewModel)
-            navigationController?.pushViewController(teamDetailsVC, animated: true)
-        }
     }
 }
 

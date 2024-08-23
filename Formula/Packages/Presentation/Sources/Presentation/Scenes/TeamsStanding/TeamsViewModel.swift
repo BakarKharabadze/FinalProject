@@ -18,7 +18,7 @@ public protocol TeamsViewModelDelegate: AnyObject {
 
 // MARK: - TeamsViewRoute
 public enum TeamsViewRoute {
-    case showTeamDetails(viewModel: TeamDetailsViewModel)
+    case showTeamDetails(for: TeamsEntity)
 }
 
 // MARK: - TeamsViewRouter
@@ -45,8 +45,7 @@ public final class TeamsViewModel {
     
     // MARK: - Methods
     func teamViewTapped(team: TeamsEntity) {
-        let teamDetailsViewModel = TeamDetailsViewModel(getTeamDetailsUseCase: getTeamDetailsUseCase, team: team)
-        router?.perform(to: .showTeamDetails(viewModel: teamDetailsViewModel))
+        router?.perform(to: .showTeamDetails(for: team))
     }
     
     func fetchTeams() {
@@ -56,11 +55,10 @@ public final class TeamsViewModel {
         }
         delegate.showLoading()
         _ = getTeamsUseCase.execute { [weak self] result in
-            guard let self = self else { return }
             delegate.hideLoading()
             switch result {
             case .success(let teams):
-                self.teams = teams
+                self?.teams = teams
                 DispatchQueue.main.async {
                     delegate.teamsFetched(teams)
                 }

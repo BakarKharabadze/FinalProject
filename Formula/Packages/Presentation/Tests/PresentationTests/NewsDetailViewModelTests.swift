@@ -128,6 +128,6 @@ class MockURLProtocol: URLProtocol {
     }
     
     override func stopLoading() {
-        // No-op
+    
     }
 }

@@ -177,6 +177,18 @@ public final class  MockScheduleViewRouter: ScheduleViewRouter {
 
 // Mock Delegate
 public final class MockScheduleViewModelDelegate: ScheduleViewModelDelegate {
+    public func showLoader() {
+        
+    }
+    
+    public func hideLoader() {
+        
+    }
+    
+    public func showError() {
+        
+    }
+    
     var fetchedRaces: [RaceEntity]?
     var fetchedRaceResults: [RaceResultEntity]?
     var racesExpectation: XCTestExpectation?

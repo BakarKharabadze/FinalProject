@@ -194,6 +194,10 @@ class HomeViewModelTests: XCTestCase {
     }
     
     class MockHomeViewModelDelegate: HomeViewModelDelegate {
+        func errorOccurred(_ error: any Error) {
+            
+        }
+        
         var newsFetchedCalled = false
         var driversFetchedCalled = false
         var raceFetchedCalled = false

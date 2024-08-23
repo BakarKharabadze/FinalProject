@@ -104,6 +104,18 @@ class TeamDetailsViewModelTests: XCTestCase {
     
     // Mock Delegate
     class MockTeamDetailsViewModelDelegate: TeamDetailsViewModelDelegate {
+        func showLoader() {
+            
+        }
+        
+        func hideLoader() {
+            
+        }
+        
+        func showError(message: String) {
+            
+        }
+        
         
         var teamDetailsFetchedCalled = false
         var fetchedTeamDetails: [TeamDetailsEntity]?

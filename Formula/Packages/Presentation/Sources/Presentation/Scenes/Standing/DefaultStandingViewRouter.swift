@@ -24,11 +24,11 @@ final class DefaultStandingViewRouter: StandingViewRouter {
     // MARK: - StandingViewRouter
     func perform(to route: StandingViewRoute) {
         switch route {
-        case .showDriversDetail(let viewModel):
-            let vc = driversViewControllerFactory.makeDriversViewController(with: viewModel)
+        case .showDriversDetail(let driverEntity):
+            let vc = driversViewControllerFactory.makeDriversViewController(for: driverEntity)
             view?.navigationController?.pushViewController(vc, animated: false)
-        case .showTeamsDetail(let viewModel):
-            let vc = teamsViewControllerFactory.makeTeamsViewController(with: viewModel)
+        case .showTeamsDetail(let teamsEntity):
+            let vc = teamsViewControllerFactory.makeTeamsViewController(for: teamsEntity)
             view?.navigationController?.pushViewController(vc, animated: false)
         }
     }

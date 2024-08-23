@@ -18,7 +18,7 @@ public protocol DriversViewModelDelegate: AnyObject {
 
 // MARK: - DriversViewRoute
 public enum DriversViewRoute {
-    case showDriverDetails(viewModel: DriverDetailsViewModel)
+    case showDriverDetails(for: DriverEntity)
 }
 
 // MARK: - DriversViewRouter
@@ -45,8 +45,7 @@ public final class DriversViewModel {
     
     // MARK: - Methods
     func driverViewTapped(driver: DriverEntity) {
-        let driverDetailsViewModel = DriverDetailsViewModel(driver: driver, getDriverDetailsUseCase: getDriverDetailsUseCase)
-        router?.perform(to: .showDriverDetails(viewModel: driverDetailsViewModel))
+        router?.perform(to: .showDriverDetails(for: driver))
     }
     
     func fetchDrivers() {

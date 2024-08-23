@@ -105,6 +105,14 @@ class DriverDetailsViewModelTests: XCTestCase {
     
     // Mock Delegate
     class MockDriverDetailsViewModelDelegate: DriverDetailsViewModelDelegate {
+        func showLoading() {
+            
+        }
+        
+        func showError(message: String) {
+            
+        }
+        
         var driverDetailsFetchedCalled = false
         var fetchedDriverDetails: [DriverDetailsEntity]?
         var expectation: XCTestExpectation?

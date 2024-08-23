@@ -22,8 +22,8 @@ final class DefaultTeamsViewRouter: TeamsViewRouter {
     // MARK: - Navigation
     func perform(to route: TeamsViewRoute) {
         switch route {
-        case .showTeamDetails(let viewModel):
-            let teamDetailsVC = TeamDetailsViewController.create(with: viewModel)
+        case .showTeamDetails(let teamsEntity):
+            let teamDetailsVC = teamDetailsViewControllerFactory.makeTeamDetailsViewController(for: teamsEntity)
             viewController?.navigationController?.pushViewController(teamDetailsVC, animated: true)
         }
     }

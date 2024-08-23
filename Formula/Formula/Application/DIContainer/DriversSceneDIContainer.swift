@@ -17,6 +17,7 @@ final class DriversSceneDIContainer {
     struct Dependencies {
         let formulaApiDataTransferService: DataTransfer
         let formulaSportApiDataTransferService: DataTransfer
+        let driverDetailsVIewControllerFactory: DriverDetailsViewControllerFactory
     }
     
     //MARK: - Properties
@@ -52,9 +53,8 @@ extension DriversSceneDIContainer {
 
 //MARK: - DriverSceneDIContainer Factory
 extension DriversSceneDIContainer: DriversViewControllerFactory  {
-    
-    func makeDriversViewController(with viewModel: DriversViewModel) -> DriversViewController {
-        DriversViewController.create(with: viewModel)
+    func makeDriversViewController(for drivers: Domain.DriverEntity) -> Presentation.DriversViewController {
+        DriversViewController.create(with: makeDriversDetailViewModel(), driverDetailsVIewControllerFactory: dependencies.driverDetailsVIewControllerFactory)
     }
     
     func makeDriversDetailViewModel() -> DriversViewModel {

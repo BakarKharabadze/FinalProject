@@ -527,9 +527,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 4ZJAL5T56F;
 				FORMULA_API_BASE_URL = "http://ergast.com";
 				FORMULA_SPORTS_API_BASE_URL = "https://api-formula-1.p.rapidapi.com";
 				FORMULA_SPORTS_API_KEY = 77bd8595afmsh06e7aeb75dc0a5ep109682jsn19ace5726043;
@@ -563,9 +564,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 4ZJAL5T56F;
 				FORMULA_API_BASE_URL = "http://ergast.com";
 				FORMULA_SPORTS_API_BASE_URL = "https://api-formula-1.p.rapidapi.com";
 				FORMULA_SPORTS_API_KEY = 77bd8595afmsh06e7aeb75dc0a5ep109682jsn19ace5726043;

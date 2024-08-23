@@ -20,8 +20,8 @@ public protocol StandingViewModelDelegate: AnyObject {
 
 //MARK: - StandingViewRoute
 public enum StandingViewRoute {
-    case showDriversDetail(viewModel: DriversViewModel)
-    case showTeamsDetail(viewModel: TeamsViewModel)
+    case showDriversDetail(for: DriverEntity)
+    case showTeamsDetail(for: TeamsEntity)
 }
 
 //MARK: - StandingViewRouter
@@ -57,14 +57,12 @@ public final class StandingViewModel {
         fetchTeams()
     }
     
-    func driversViewTapped() {
-        let driversViewModel = DriversViewModel(getDriverDetailsUseCase: getDriverDetailsUseCase, getDriversUseCase: getDriversUseCase)
-        router?.perform(to: .showDriversDetail(viewModel: driversViewModel))
+    func driversViewTapped(drivers: DriverEntity) {
+        router?.perform(to: .showDriversDetail(for: drivers))
     }
     
-    func teamsViewTapped() {
-        let teamsViewModel = TeamsViewModel(getTeamDetailsUseCase: getTeamDetailsUseCase, getTeamsUseCase: getTeamsUseCase)
-        router?.perform(to: .showTeamsDetail(viewModel: teamsViewModel))
+    func teamsViewTapped(teams: TeamsEntity) {
+        router?.perform(to: .showTeamsDetail(for: teams))
     }
     
     // MARK: - Private Methods

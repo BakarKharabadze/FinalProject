@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  GetCircuitDetailsUseCaseTests.swift
+//
 //
 //  Created by Bakar Kharabadze on 7/19/24.
 //

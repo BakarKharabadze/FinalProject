@@ -17,6 +17,7 @@ final class TeamsSceneDIContainer {
     struct Dependencies {
         let formulaApiDataTransferService: DataTransfer
         let formulaSportApiDataTransferService: DataTransfer
+        let teamDetailsViewControllerFactory: TeamDetailsViewControllerFactory
     }
     
     //MARK: - Properties
@@ -52,12 +53,8 @@ extension TeamsSceneDIContainer {
 
 //MARK: - TeamsSceneDIContainer Factory
 extension TeamsSceneDIContainer: TeamsViewControllerFactory  {
-    func makeTeamsViewController(with viewModel: TeamsViewModel) -> TeamsViewController {
-        TeamsViewController.create(with: viewModel)
-    }
-    
-    func makeTeamsViewController() -> UIViewController {
-        TeamsViewController.create(with: makeTeamsDetailViewModel())
+    func makeTeamsViewController(for teams: Domain.TeamsEntity) -> Presentation.TeamsViewController {
+        TeamsViewController.create(with: makeTeamsDetailViewModel(), teamDetailsViewControllerFactory: dependencies.teamDetailsViewControllerFactory)
     }
     
     func makeTeamsDetailViewModel() -> TeamsViewModel {

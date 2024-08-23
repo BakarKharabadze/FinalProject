@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import Domain
 
 public protocol DriversViewControllerFactory {
-    func makeDriversViewController(with viewModel: DriversViewModel) -> DriversViewController
+    func makeDriversViewController(for drivers: DriverEntity) -> DriversViewController
 }
 

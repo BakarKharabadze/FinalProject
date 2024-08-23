@@ -17,20 +17,14 @@ final class TeamsViewModelTests: XCTestCase {
     var viewModel: TeamsViewModel!
     var router: MockTeamsViewRouter!
     var getTeamDetailsUseCase: MockGetTeamDetailsUseCase!
+    var getTeamsUseCase: MockGetTeamsUseCase!
     
     override func setUp() {
         super.setUp()
         router = MockTeamsViewRouter()
         getTeamDetailsUseCase = MockGetTeamDetailsUseCase()
-        let teams = [TeamsEntity(
-            position: "1",
-            constructorName: "Team A",
-            points: "500",
-            nationality: "British",
-            liveryImage: "team_a_image",
-            constructorID: "team_a_id"
-        )]
-        viewModel = TeamsViewModel(teams: teams, getTeamDetailsUseCase: getTeamDetailsUseCase)
+        getTeamsUseCase = MockGetTeamsUseCase()
+        viewModel = TeamsViewModel(getTeamDetailsUseCase: getTeamDetailsUseCase, getTeamsUseCase: getTeamsUseCase)
         viewModel.router = router
     }
     
@@ -38,11 +32,12 @@ final class TeamsViewModelTests: XCTestCase {
         router = nil
         viewModel = nil
         getTeamDetailsUseCase = nil
+        getTeamsUseCase = nil 
         super.tearDown()
     }
     
     func testTeamViewTapped() {
-        // Given
+        // მოცემული
         let team = TeamsEntity(
             position: "1",
             constructorName: "Team A",
@@ -52,10 +47,10 @@ final class TeamsViewModelTests: XCTestCase {
             constructorID: "team_a_id"
         )
         
-        // When
+        // როდესაც
         viewModel.teamViewTapped(team: team)
         
-        // Then
+        // მაშინ
         guard let performedRoute = router.performedRoute else {
             XCTFail("Expected router to perform a route, but it did not.")
             return
@@ -84,3 +79,4 @@ class MockGetTeamDetailsUseCase: GetTeamDetailsUseCase {
         return nil
     }
 }
+

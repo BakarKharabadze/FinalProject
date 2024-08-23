@@ -22,8 +22,8 @@ final class DefaultDriversViewRouter: DriversViewRouter {
     // MARK: - Navigation
     func perform(to route: DriversViewRoute) {
         switch route {
-        case .showDriverDetails(let viewModel):
-            let driverDetailsVC = DriverDetailsViewController.create(with: viewModel)
+        case .showDriverDetails(let DriverEntity):
+            let driverDetailsVC = driverDetailsVIewControllerFactory.makeDriverDetailsViewController(for: DriverEntity)
             viewController?.navigationController?.pushViewController(driverDetailsVC, animated: true)
         }
     }

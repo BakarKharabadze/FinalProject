@@ -16,13 +16,15 @@ final class DriversViewModelTests: XCTestCase {
     var viewModel: DriversViewModel!
     var router: MockDriversViewRouter!
     var getDriverDetailsUseCase: MockGetDriverDetailsUseCase!
+    var getDriversUseCase: MockGetDriversUseCase!
     
     override func setUp() {
         super.setUp()
         router = MockDriversViewRouter()
         getDriverDetailsUseCase = MockGetDriverDetailsUseCase()
+        getDriversUseCase = MockGetDriversUseCase()
         
-        let drivers = [DriverEntity(
+        _ = [DriverEntity(
             driverId: "1",
             position: "1",
             givenName: "Lewis",
@@ -31,7 +33,7 @@ final class DriversViewModelTests: XCTestCase {
             points: "347",
             driverImage: "image_url"
         )]
-        viewModel = DriversViewModel(getDriverDetailsUseCase: getDriverDetailsUseCase, drivers: drivers)
+        viewModel = DriversViewModel(getDriverDetailsUseCase: getDriverDetailsUseCase, getDriversUseCase: getDriversUseCase)
         viewModel.router = router
     }
     
@@ -39,6 +41,7 @@ final class DriversViewModelTests: XCTestCase {
         router = nil
         viewModel = nil
         getDriverDetailsUseCase = nil
+        getDriversUseCase = nil
         super.tearDown()
     }
     
@@ -90,3 +93,4 @@ class MockGetDriverDetailsUseCase: GetDriverDetailsUseCase {
         return nil
     }
 }
+
