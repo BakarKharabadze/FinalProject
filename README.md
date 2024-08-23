@@ -48,7 +48,7 @@ From api-sports.io API
 # Installation
 
 1. Clone the repository to your local machine:
-* git clone[ https://github.com/BakarKharabadze/FinalProject.git
+* git clone https://github.com/BakarKharabadze/FinalProject.git
 
 2. Open the project in Xcode:
 * cd formula open Formula.xcodeproj
